@@ -17,3 +17,4 @@ spec_script
 !spec/*.DS_Store
 *.png
 !spec/*.png
+*.gem
