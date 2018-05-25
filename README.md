@@ -6,7 +6,7 @@ bundle install
 bundle exec rake pry
 
 ## Contributing
-1. Fork it ( http://github.com/Arafatk/ruplot/fork )
+1. Fork it ( https://github.com/Arafatk/magick-rubyplot/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Make sure you run Rubocop on your changes
 4. Commit your changes (`git commit -am 'Add some feature'`)
