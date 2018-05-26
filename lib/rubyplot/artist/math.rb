@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   class Artist
     include Magick
     # Make copy of data with values scaled between 0-100

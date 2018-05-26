@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   class Artist
     include Magick
     # You can set a theme manually. Assign a hash to this method before you

@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   class Artist
     include Magick
     # Parameters are an array where the first element is the name of the dataset

@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   class Artist
     # Used for navigating the array of data to plot
     DATA_LABEL_INDEX = 0

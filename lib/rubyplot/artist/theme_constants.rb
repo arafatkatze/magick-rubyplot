@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   # This module is a set of constants to define themes constant variables
   # to be used with the RMagick code to make beautiful looking plots.
   module Themes

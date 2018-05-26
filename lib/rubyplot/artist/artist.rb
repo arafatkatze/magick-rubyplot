@@ -1,4 +1,4 @@
-module Ruplot
+module Rubyplot
   class Artist
     include Magick
 
