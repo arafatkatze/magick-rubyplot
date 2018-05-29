@@ -22,6 +22,7 @@ module Rubyplot
       setup_drawing
       draw_legend
       draw_line_markers
+      draw_title
       draw_axis_labels
     end
 
@@ -205,6 +206,22 @@ module Rubyplot
     def render_gradiated_background(top_color, _bottom_color, _direct = :top_bottom)
       gradient_fill = GradientFill.new(0, 0, 100, 0, '#FF6A6A', top_color)
       Image.new(@columns, @rows, gradient_fill)
+    end
+
+    # Draws a title on the graph.
+    def draw_title
+      return if @hide_title || @title.nil?
+
+      @d.fill = @font_color
+      @d.font = @title_font || @font if @title_font || @font
+      @d.stroke('transparent')
+      @d.pointsize = scale_fontsize(@title_font_size)
+      @d.font_weight = @bold_title ? BoldWeight : NormalWeight
+      @d.gravity = NorthGravity
+      @d = @d.annotate_scaled(@base_image,
+                              @raw_columns, 1.0,
+                              0, @top_margin,
+                              @title, @scale)
     end
 
     private
