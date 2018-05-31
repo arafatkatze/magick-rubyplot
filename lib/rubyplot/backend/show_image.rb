@@ -50,5 +50,5 @@ class RubyApp < Gtk::Window
   end
 end
 
-window = RubyApp.new
+RubyApp.new
 Gtk.main

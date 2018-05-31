@@ -11,20 +11,20 @@ class Pics
     pic3 = 'c.png'
     @pile = [pic1, pic2, pic3]
     @picindex = 0
-    getImage
+    get_image
     @box = Gtk::EventBox.new.add(@image)
   end
 
-  def batterUp
+  def batter_up
     @box.remove(@image)
     @picindex += 1
     @picindex = 0 if @picindex == @pile.length
-    getImage
+    get_image
     @box.add(@image)
     @box.show
   end
 
-  def getImage
+  def get_image
     @atBat = @pile[@picindex]
     img = GdkPixbuf::Pixbuf.new(@atBat, 200, 200)
     @image = Gtk::Image.new(pixbuf: img)
@@ -33,7 +33,7 @@ class Pics
 end # class Pics
 
 pics = Pics.new
-pics.box.signal_connect('button_press_event') { pics.batterUp }
+pics.box.signal_connect('button_press_event') { pics.batter_up }
 pics.window.set_default_size(200, 250)
 pics.window.add(pics.box)
 pics.window.show_all
