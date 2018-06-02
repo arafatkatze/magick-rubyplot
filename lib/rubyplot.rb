@@ -1,13 +1,26 @@
 require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
+
+# Artist Layer Base
 require 'rubyplot/artist/base/constantsAndAttributes'
 require 'rubyplot/artist/base/initialize'
 require 'rubyplot/artist/base/data'
 require 'rubyplot/artist/base/artist'
 require 'rubyplot/artist/base/math'
 require 'rubyplot/artist/base/themes'
-require 'rubyplot/artist/dot/dot'
 require 'rubyplot/artist/base/magick'
-require 'rubyplot/artist/version'
 require 'rubyplot/artist/base/theme_constants'
+
+# Dot Plot
+require 'rubyplot/artist/dot/dot'
+
+# Line Plot
+require 'rubyplot/artist/line/line_constants'
+require 'rubyplot/artist/line/line_data'
+require 'rubyplot/artist/line/line_draw'
+require 'rubyplot/artist/line/dotrender'
+
+# Version
+require 'rubyplot/version'
+# Backend
