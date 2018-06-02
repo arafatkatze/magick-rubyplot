@@ -15,6 +15,10 @@ module Rubyplot
       end
     end
 
+    def clip_value_if_greater_than(value, max_value) # :nodoc:
+      value > max_value ? max_value : value
+    end
+
     # Calculates the spread of the data.
     def calculate_spread
       @spread = @maximum_value.to_f - @minimum_value.to_f
