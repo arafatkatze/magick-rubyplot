@@ -3,11 +3,8 @@ module Rubyplot
     include Magick
 
     # Writes the plot to a file. Defaults to 'plot.png'
-    # Example:
-    #   write('graphs/scatter_plot.png')
     def write(filename = 'plot.png')
       draw
-
       @base_image.write(filename)
     end
 
@@ -44,14 +41,13 @@ module Rubyplot
     # gap pixels of Legends, Labels and Titles.
     def setup_graph_measurements
       @marker_caps_height = calculate_caps_height(@marker_font_size)
-      print @marker_caps_height, '<- Marker Caps', "\n"
+
       @title_caps_height = @hide_title || @title.nil? ? 0 :
           calculate_caps_height(@title_font_size) * @title.lines.to_a.size
       # Initially the title is nil.
-      print @title_caps_height, '<- title_caps_height ', "\n"
 
       @legend_caps_height = calculate_caps_height(@legend_font_size)
-      print @legend_caps_height, '<- legend_caps_height ', "\n"
+
       # For Now the labels feature only focuses on the dot graph so it makes sense to only have
       # this as an attribute for this kind of graph and not for others.
       if @has_left_labels
@@ -61,7 +57,6 @@ module Rubyplot
         longest_left_label_width = calculate_width(@marker_font_size,
                                                    label(@maximum_value.to_f, @increment))
       end
-      print longest_left_label_width, '<- longest_left_label_width', "\n"
 
       # Shift graph if left line numbers are hidden
       line_number_width = @hide_line_numbers && !@has_left_labels ?
@@ -71,7 +66,6 @@ module Rubyplot
       @graph_left = @left_margin +
                     line_number_width +
                     (@y_axis_label.nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
-      print @graph_left, '<- graph_left', "\n"
 
       # Make space for half the width of the rightmost column label.
       last_label = @labels.keys.max.to_i
@@ -125,6 +119,22 @@ module Rubyplot
                                  @y_axis_label, @scale)
         @d.rotation = 90.0
       end
+    end
+
+    # Draws a title on the graph.
+    def draw_title
+      return if @hide_title || @title.nil?
+
+      @d.fill = @font_color
+      @d.font = @title_font || @font if @title_font || @font
+      @d.stroke('transparent')
+      @d.pointsize = scale_fontsize(@title_font_size)
+      @d.font_weight = @bold_title ? BoldWeight : NormalWeight
+      @d.gravity = NorthGravity
+      @d = @d.scale_annotation(@base_image,
+                               @raw_columns, 1.0,
+                               0, @top_margin,
+                               @title, @scale)
     end
 
     ##
@@ -202,26 +212,115 @@ module Rubyplot
       @color_index = 0
     end
 
+    # Draws horizontal background lines and labels
+    def draw_line_markers
+      return if @hide_line_markers
+
+      @d = @d.stroke_antialias false
+
+      if @y_axis_increment.nil?
+        # Try to use a number of horizontal lines that will come out even.
+        #
+        # TODO Do the same for larger numbers...100, 75, 50, 25
+        if @marker_count.nil?
+          (3..7).each do |lines|
+            if @spread % lines == 0.0
+              @marker_count = lines
+              break
+            end
+          end
+          @marker_count ||= 4
+        end
+        @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
+      else
+        # TODO: Make this work for negative values
+        @marker_count = (@spread / @y_axis_increment).to_i
+        @increment = @y_axis_increment
+      end
+      @increment_scaled = @graph_height.to_f / (@spread / @increment)
+
+      # Draw horizontal line markers and annotate with numbers
+      (0..@marker_count).each do |index|
+        y = @graph_top + @graph_height - index.to_f * @increment_scaled
+
+        @d = @d.fill(@marker_color)
+
+        @d = @d.line(@graph_left, y, @graph_right, y)
+        # If the user specified a marker shadow color, draw a shadow just below it
+        unless @marker_shadow_color.nil?
+          @d = @d.fill(@marker_shadow_color)
+          @d = @d.line(@graph_left, y + 1, @graph_right, y + 1)
+        end
+
+        marker_label = BigDecimal(index.to_s) * BigDecimal(@increment.to_s) +
+                       BigDecimal(@minimum_value.to_s)
+
+        next if @hide_line_numbers
+        @d.fill = @font_color
+        @d.font = @font if @font
+        @d.stroke('transparent')
+        @d.pointsize = scale_fontsize(@marker_font_size)
+        @d.gravity = EastGravity
+
+        # Vertically center with 1.0 for the height
+        @d = @d.scale_annotation(@base_image,
+                                 @graph_left - LABEL_MARGIN, 1.0,
+                                 0.0, y,
+                                 label(marker_label, @increment), @scale)
+      end
+      @d = @d.stroke_antialias true
+      # string = 'hello' + '.png'
+      # @d.draw(@base_image)
+      # @base_image.write(string)
+    end
+
     # Use with a theme definition method to draw a gradiated background.
     def render_gradiated_background(top_color, _bottom_color, _direct = :top_bottom)
       gradient_fill = GradientFill.new(0, 0, 100, 0, '#FF6A6A', top_color)
       Image.new(@columns, @rows, gradient_fill)
     end
 
-    # Draws a title on the graph.
-    def draw_title
-      return if @hide_title || @title.nil?
+    # Draws column labels below graph, centered over x_offset
+    def draw_label(x_offset, index)
+      return if @hide_line_markers
 
-      @d.fill = @font_color
-      @d.font = @title_font || @font if @title_font || @font
-      @d.stroke('transparent')
-      @d.pointsize = scale_fontsize(@title_font_size)
-      @d.font_weight = @bold_title ? BoldWeight : NormalWeight
-      @d.gravity = NorthGravity
-      @d = @d.annotate_scaled(@base_image,
-                              @raw_columns, 1.0,
-                              0, @top_margin,
-                              @title, @scale)
+      if !@labels[index].nil? && @labels_seen[index].nil?
+        y_offset = @graph_bottom + LABEL_MARGIN
+
+        # TESTME
+        # TODO: See if index.odd? is the best stragegy
+        y_offset += @label_stagger_height if index.odd?
+
+        label_text = labels[index].to_s
+
+        # TESTME
+        # FIXME: Consider chart types other than bar
+        if label_text.size > @label_max_size
+          if @label_truncation_style == :trailing_dots
+            if @label_max_size > 3
+              # 4 because '...' takes up 3 chars
+              label_text = "#{label_text[0..(@label_max_size - 4)]}..."
+            end
+          else # @label_truncation_style is :absolute (default)
+            label_text = label_text[0..(@label_max_size - 1)]
+          end
+
+        end
+
+        if x_offset >= @graph_left && x_offset <= @graph_right
+          @d.fill = @font_color
+          @d.font = @font if @font
+          @d.stroke('transparent')
+          @d.font_weight = NormalWeight
+          @d.pointsize = scale_fontsize(@marker_font_size)
+          @d.gravity = NorthGravity
+          @d = @d.scale_annotation(@base_image,
+                                   1.0, 1.0,
+                                   x_offset, y_offset,
+                                   label_text, @scale)
+        end
+        @labels_seen[index] = 1
+      end
     end
 
     private
