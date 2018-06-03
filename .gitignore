@@ -8,7 +8,6 @@
 Gemfile.lock
 doc
 pkg
-dot
 test.rb
 test.png
 gtk_test
