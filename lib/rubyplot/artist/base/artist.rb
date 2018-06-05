@@ -213,7 +213,7 @@ module Rubyplot
     end
 
     # Draws horizontal background lines and labels
-    def draw_line_markers
+    def draw_line_markers!
       return if @hide_line_markers
 
       @d = @d.stroke_antialias false
