@@ -66,7 +66,7 @@ class Rubyplot::Line < Rubyplot::Artist
     end
   end
 
-  def normalize!
+  def normalize
     # First call the standard math function to normalize the values based on spread.
     super
     # TODO: Take care of the reference_lines
