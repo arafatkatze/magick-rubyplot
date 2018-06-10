@@ -18,7 +18,7 @@ module Rubyplot
       return unless @has_data
       setup_drawing
       draw_legend
-      draw_line_markers
+      draw_line_markers!
       draw_title
       draw_axis_labels
     end
