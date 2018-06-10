@@ -21,6 +21,12 @@ require 'rubyplot/artist/line/line_data'
 require 'rubyplot/artist/line/line_draw'
 require 'rubyplot/artist/line/dotrender'
 
+# Scatter
+require 'rubyplot/artist/scatter/scatter'
+require 'rubyplot/artist/scatter/constant'
+require 'rubyplot/artist/scatter/data'
+require 'rubyplot/artist/scatter/init'
+
 # Version
 require 'rubyplot/version'
 # Backend
