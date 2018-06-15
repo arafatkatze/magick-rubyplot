@@ -15,6 +15,9 @@ require 'rubyplot/artist/base/theme_constants'
 # Dot Plot
 require 'rubyplot/artist/dot/dot'
 
+# Bar Plot
+require 'rubyplot/artist/bar/data_conversion'
+
 # Line Plot
 require 'rubyplot/artist/line/line_constants'
 require 'rubyplot/artist/line/line_data'
