@@ -73,6 +73,9 @@ module Rubyplot
     # Will be scaled down if the graph is smaller than 800px wide.
     attr_accessor :legend_font_size
 
+    # The number of horizontal lines shown for reference
+    attr_accessor :marker_count
+
     # The color of the auxiliary lines
     attr_accessor :marker_color
     attr_accessor :marker_shadow_color
