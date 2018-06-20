@@ -50,14 +50,14 @@ class Rubyplot::Bar < Rubyplot::Artist
     # Set up the right mode [1,2,3] see BarConversion for further explanation
     if @minimum_value >= 0
       # all bars go from zero to positiv
-      conversion.mode = 1
+      conversion.mode = :positive
     else
       # all bars go from 0 to negativ
       if @maximum_value <= 0
-        conversion.mode = 2
+        conversion.mode = :negative
       else
         # bars either go from zero to negativ or to positiv
-        conversion.mode = 3
+        conversion.mode = :both
         conversion.spread = @spread
         conversion.minimum_value = @minimum_value
         conversion.zero = -@minimum_value / @spread

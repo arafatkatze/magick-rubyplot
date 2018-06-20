@@ -17,16 +17,16 @@ class Rubyplot::BarConversion
 
   def get_left_y_right_y_scaled(data_point, result)
     case @mode
-    when 1 then # Case one
-      # minimum value >= 0 ( only positiv values )
+    when :positive then # Case one
+      # minimum value >= 0 ( only positiv values ) -> all the bars go in the +ve direction
       result[0] = @graph_top + @graph_height * (1 - data_point) + 1
       result[1] = @graph_top + @graph_height - 1
-    when 2 then # Case two
-      # only negativ values
+    when :negative then # Case two
+      # only negative values -> all the bars go in the -ve direction
       result[0] = @graph_top + 1
       result[1] = @graph_top + @graph_height * (1 - data_point) - 1
-    when 3 then # Case three
-      # positiv and negativ values
+    when :both then # Case three
+      # positive and negative values -> bars go in both the +ve and -ve direction
       val = data_point - @minimum_value / @spread
       if data_point >= @zero
         result[0] = @graph_top + @graph_height * (1 - (val - @zero)) + 1
