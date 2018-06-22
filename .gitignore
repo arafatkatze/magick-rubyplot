@@ -14,6 +14,4 @@ gtk_test
 spec_script
 *.DS_Store
 !spec/*.DS_Store
-*.png
-!spec/*.png
 *.gem
