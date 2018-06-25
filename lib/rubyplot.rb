@@ -3,33 +3,33 @@ require 'rmagick'
 require 'bigdecimal'
 
 # Artist Layer Base
-require 'rubyplot/artist/base/constantsAndAttributes'
-require 'rubyplot/artist/base/initialize'
-require 'rubyplot/artist/base/data'
-require 'rubyplot/artist/base/artist'
-require 'rubyplot/artist/base/math'
-require 'rubyplot/artist/base/themes'
-require 'rubyplot/artist/base/magick'
-require 'rubyplot/artist/base/theme_constants'
+require 'rubyplot/artist/constantsAndAttributes'
+require 'rubyplot/artist/initialize'
+require 'rubyplot/artist/data'
+require 'rubyplot/artist/artist'
+require 'rubyplot/artist/math'
+require 'rubyplot/artist/themes'
+require 'rubyplot/artist/magick'
+require 'rubyplot/artist/theme_constants'
 
 # Dot Plot
-require 'rubyplot/artist/dot/dot'
+require 'rubyplot/scripting/dot/dot'
 
 # Bar Plot
-require 'rubyplot/artist/bar/bar'
-require 'rubyplot/artist/bar/data_conversion'
+require 'rubyplot/scripting/bar/bar'
+require 'rubyplot/scripting/bar/data_conversion'
 
 # Line Plot
-require 'rubyplot/artist/line/line_constants'
-require 'rubyplot/artist/line/line_data'
-require 'rubyplot/artist/line/line_draw'
-require 'rubyplot/artist/line/dotrender'
+require 'rubyplot/scripting/line/line_constants'
+require 'rubyplot/scripting/line/line_data'
+require 'rubyplot/scripting/line/line_draw'
+require 'rubyplot/scripting/line/dotrender'
 
 # Scatter
-require 'rubyplot/artist/scatter/scatter'
-require 'rubyplot/artist/scatter/constant'
-require 'rubyplot/artist/scatter/data'
-require 'rubyplot/artist/scatter/init'
+require 'rubyplot/scripting/scatter/scatter'
+require 'rubyplot/scripting/scatter/constant'
+require 'rubyplot/scripting/scatter/data'
+require 'rubyplot/scripting/scatter/init'
 
 # Version
 require 'rubyplot/version'
