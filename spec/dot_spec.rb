@@ -14,7 +14,7 @@ describe 'Graph' do
 
     g.minimum_value = 0
     g.write('spec/reference_images/dot-test-1.png')
-    expect(compare_with_reference?('dot.png', 'dot-test-1.png')).to eq(true)
+    expect(compare_with_reference?('dot.png', 'dot-test-1.png', 10)).to eq(true)
   end
 
   it 'Fails to match with the reference image' do
@@ -30,6 +30,6 @@ describe 'Graph' do
 
     g.minimum_value = 0
     g.write('spec/reference_images/dot-test-2.png')
-    expect(compare_with_reference?('dot.png', 'dot-test-2.png')).to eq(false)
+    expect(compare_with_reference?('dot.png', 'dot-test-2.png', 10)).to eq(false)
   end
 end

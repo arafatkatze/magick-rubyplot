@@ -12,7 +12,7 @@ describe 'Graph' do
     g.data(:John, [1, 53, 76, 18])
     # Starting the ultimate Write script of the whole thing.
     g.write('spec/reference_images/line-test-1.png')
-    expect(compare_with_reference?('line.png', 'line-test-1.png')).to eq(true)
+    expect(compare_with_reference?('line.png', 'line-test-1.png', 10)).to eq(true)
   end
 
   it 'Fails to match with the reference image' do
@@ -27,6 +27,6 @@ describe 'Graph' do
     g.data(:John, [1, 53, 76, 19])
     # Starting the ultimate Write script of the whole thing.
     g.write('spec/reference_images/line-test-2.png')
-    expect(compare_with_reference?('line.png', 'line-test-2.png')).to eq(false)
+    expect(compare_with_reference?('line.png', 'line-test-2.png', 10)).to eq(false)
   end
 end
