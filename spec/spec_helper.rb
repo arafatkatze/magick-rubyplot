@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'rubyplot'
-require 'pry'
+
 def compare_with_reference?(test_image, reference_image, tolerance)
   compute_rms(test_image, reference_image) < tolerance
 end

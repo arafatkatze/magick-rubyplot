@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Arafatk/magick-rubyplot.svg?branch=master)](https://travis-ci.org/Arafatk/magick-rubyplot)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Arafatk/magick-rubyplot/blob/master/LICENSE)
+
 # MagickPlot-RubyPlot
 MagickPlot-RubyPlot is Matplotlib for Ruby.
 
