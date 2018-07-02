@@ -45,7 +45,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
     @d.draw(@base_image)
   end
 
-  protected
+  
 
   def draw_line_markers
     # do all of the stuff for the horizontal lines on the y-axis

@@ -37,7 +37,7 @@ class Rubyplot::Dot < Rubyplot::Artist
     @d.draw(@base_image)
   end
 
-  protected
+  
 
   # Instead of base class version, draws vertical background lines and label
   def draw_line_markers

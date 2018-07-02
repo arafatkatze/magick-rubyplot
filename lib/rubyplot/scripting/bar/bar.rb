@@ -30,8 +30,6 @@ class Rubyplot::Bar < Rubyplot::Artist
     @spacing_factor = (1 - space_percent)
   end
 
-  protected
-
   def draw_bars
     # Setup spacing.
     #

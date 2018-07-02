@@ -8,8 +8,6 @@ module Rubyplot
       @base_image.write(filename)
     end
 
-    protected
-
     # Basic Rendering function that takes pre-processed input and plots it on
     # a figure canvas. This function only contains the generalized layout of a
     # plot. Based on individual cases the actual drawing function of a plot will
@@ -351,7 +349,6 @@ module Rubyplot
               else
                 value.to_s
               end
-
       parts = label.split('.')
       parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{THOUSAND_SEPARATOR}")
       parts.join('.')
