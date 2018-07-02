@@ -23,3 +23,13 @@ def compute_rms(test_image, reference_image)
   end
   Math.sqrt(diff / (512 * 512))
 end
+
+def setup_data
+  @datasets = [
+    [:Moon, [25, 36, 86, 39]],
+    [:Sun, [80, 54, 67, 54]],
+    [:Earth, [22, 29, 35, 38]],
+    [:Mars, [95, 95, 95, 90, 85, 80, 88, 100]],
+    [:Venus, [90, 34, 23, 12, 78, 89, 98, 88]]
+  ]
+end
