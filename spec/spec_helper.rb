@@ -4,6 +4,7 @@ require 'bar_gen'
 require 'dot_gen'
 require 'line_gen'
 require 'scatter_gen'
+require 'bubble_gen'
 
 def compare_with_reference?(test_image, reference_image, tolerance)
   compute_rms(test_image, reference_image) < tolerance

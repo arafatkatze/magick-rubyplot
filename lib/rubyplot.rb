@@ -31,6 +31,11 @@ require 'rubyplot/scripting/scatter/constant'
 require 'rubyplot/scripting/scatter/data'
 require 'rubyplot/scripting/scatter/init'
 
+# Bubble
+require 'rubyplot/scripting/bubble/init'
+require 'rubyplot/scripting/bubble/draw'
+require 'rubyplot/scripting/bubble/data'
+
 # Version
 require 'rubyplot/version'
 # Backend
