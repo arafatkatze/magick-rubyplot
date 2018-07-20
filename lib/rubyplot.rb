@@ -36,6 +36,11 @@ require 'rubyplot/scripting/bubble/init'
 require 'rubyplot/scripting/bubble/draw'
 require 'rubyplot/scripting/bubble/data'
 
+# Stacked Bar
+require 'rubyplot/scripting/stacked_bar/data'
+require 'rubyplot/scripting/stacked_bar/draw'
+require 'rubyplot/scripting/stacked_bar/init'
+
 # Version
 require 'rubyplot/version'
 # Backend
