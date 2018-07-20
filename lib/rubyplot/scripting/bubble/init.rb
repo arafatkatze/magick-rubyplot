@@ -8,5 +8,6 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     super
     @all_colors_array = Magick.colors
     @plot_colors = []
+    @z_data = []
   end
 end

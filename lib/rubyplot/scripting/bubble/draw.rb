@@ -56,7 +56,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
         @d.fill_color(@plot_colors[data_row_index])
         @d = @d.stroke_width @stroke_width || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 4), 5.0)
 
-        circle_radius = @z_data[index]
+        circle_radius = 2 * @z_data[data_row_index][index]
         @d = @d.circle(new_x, new_y, new_x - circle_radius, new_y)
       end
     end

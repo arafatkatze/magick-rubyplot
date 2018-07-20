@@ -77,7 +77,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     if @maximum_x_value.nil? && @minimum_x_value.nil?
       @maximum_x_value = @minimum_x_value = x_data_points.first
     end
-    @z_data = z_data_points
+    @z_data << z_data_points
     x_z_array_sum = [x_data_points, z_data_points].transpose.map { |x| x.reduce(:+) }
     x_z_array_diff = [x_data_points, z_data_points].transpose.map { |x| x.reduce(:-) }
 
