@@ -8,13 +8,17 @@ module Rubyplot
       @base_image.write(filename)
     end
 
-    protected
-
     # Basic Rendering function that takes pre-processed input and plots it on
     # a figure canvas. This function only contains the generalized layout of a
     # plot. Based on individual cases the actual drawing function of a plot will
     # use super to call this method. And then draw upon the figure canvas.
     def draw
+      artist_draw
+    end
+
+    # An alias to draw function to facilitate the ease of function calling
+    # with subclasses.
+    def artist_draw
       return unless @has_data
       setup_drawing
       draw_legend
@@ -181,6 +185,7 @@ module Rubyplot
         # Now draw box with color of this dataset
         @d = @d.stroke('transparent')
         @d = @d.fill('black')
+        @d = @d.fill(@plot_colors[_index]) if defined? @plot_colors
         @d = @d.rectangle(current_x_offset,
                           current_y_offset - legend_square_width / 2.0,
                           current_x_offset + legend_square_width,
@@ -351,7 +356,6 @@ module Rubyplot
               else
                 value.to_s
               end
-
       parts = label.split('.')
       parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{THOUSAND_SEPARATOR}")
       parts.join('.')

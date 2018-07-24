@@ -9,22 +9,10 @@ class Rubyplot::Scatter < Rubyplot::Artist
   def draw
     super
     return unless @has_data
+
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
 
-    # ~ if (defined?(@norm_y_baseline)) then
-    # ~ level = @graph_top + (@graph_height - @norm_baseline * @graph_height)
-    # ~ @d = @d.push
-    # ~ @d.stroke_color @baseline_color
-    # ~ @d.fill_opacity 0.0
-    # ~ @d.stroke_dasharray(10, 20)
-    # ~ @d.stroke_width 5
-    # ~ @d.line(@graph_left, level, @graph_left + @graph_width, level)
-    # ~ @d = @d.pop
-    # ~ end
-
-    # ~ if (defined?(@norm_x_baseline)) then
-    # ~ end
     @norm_data.each do |data_row|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
         x_value = data_row[DATA_VALUES_X_INDEX][index]
@@ -47,11 +35,10 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
   protected
 
-  def draw_line_markers
+  def draw_line_markers!
     # do all of the stuff for the horizontal lines on the y-axis
     super
     return if @hide_line_markers
-
     @d = @d.stroke_antialias false
 
     if @x_axis_increment.nil?

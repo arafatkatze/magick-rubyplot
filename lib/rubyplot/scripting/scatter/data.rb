@@ -34,11 +34,6 @@ class Rubyplot::Scatter < Rubyplot::Artist
   # g.data('bitter_melon', [3,5,6], [6,7,8], '#000000')
   #
   def data(name, x_data_points = [], y_data_points = [], _color = nil)
-    raise ArgumentError, 'Data Points contain nil Value!' if x_data_points.include?(nil) || y_data_points.include?(nil)
-    raise ArgumentError, 'x_data_points is empty!' if x_data_points.empty?
-    raise ArgumentError, 'y_data_points is empty!' if y_data_points.empty?
-    raise ArgumentError, 'x_data_points.length != y_data_points.length!' if x_data_points.length != y_data_points.length
-
     # Call the existing data routine for the y axis data
     super(name, y_data_points)
 

@@ -22,7 +22,6 @@ class Rubyplot::Scatter < Rubyplot::Artist
   end
 
   def setup_drawing
-    # TODO: Need to get x-axis labels working. Current behavior will be to not allow.
     @labels = {}
 
     super
