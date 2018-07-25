@@ -74,21 +74,21 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     last_elem = @data.length - 1
     @data[last_elem] << x_data_points
 
-    if @maximum_x_value.nil? && @minimum_x_value.nil?
-      @maximum_x_value = @minimum_x_value = x_data_points.first
+    if @geometry.maximum_x_value.nil? && @geometry.minimum_x_value.nil?
+      @geometry.maximum_x_value = @geometry.minimum_x_value = x_data_points.first
     end
     @z_data << z_data_points
     x_z_array_sum = [x_data_points, z_data_points].transpose.map { |x| x.reduce(:+) }
     x_z_array_diff = [x_data_points, z_data_points].transpose.map { |x| x.reduce(:-) }
 
-    @maximum_x_value = x_z_array_sum.max > @maximum_x_value ?
-                        x_z_array_sum.max : @maximum_x_value
-    @minimum_x_value = x_z_array_sum.min < @minimum_x_value ?
-                        x_z_array_sum.min : @minimum_x_value
+    @geometry.maximum_x_value = x_z_array_sum.max > @geometry.maximum_x_value ?
+                        x_z_array_sum.max : @geometry.maximum_x_value
+    @geometry.minimum_x_value = x_z_array_sum.min < @geometry.minimum_x_value ?
+                        x_z_array_sum.min : @geometry.minimum_x_value
 
-    @maximum_x_value = x_z_array_diff.max > @maximum_x_value ?
-                        x_z_array_diff.max : @maximum_x_value
-    @minimum_x_value = x_z_array_diff.min < @minimum_x_value ?
-                        x_z_array_diff.min : @minimum_x_value
+    @geometry.maximum_x_value = x_z_array_diff.max > @geometry.maximum_x_value ?
+                        x_z_array_diff.max : @geometry.maximum_x_value
+    @geometry.minimum_x_value = x_z_array_diff.min < @geometry.minimum_x_value ?
+                        x_z_array_diff.min : @geometry.minimum_x_value
   end
 end

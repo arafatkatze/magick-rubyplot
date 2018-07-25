@@ -10,13 +10,6 @@ class Rubyplot::StackedBar < Rubyplot::Bar
   #
   def initialize(*)
     super
-    @all_colors_array = Magick.colors
-    @plot_colors = []
+    @geometry = Rubyplot::StackedBarGeometry.new
   end
-
-  # Spacing factor applied between bars
-  attr_accessor :bar_spacing
-
-  # Number of pixels between bar segments
-  attr_accessor :segment_spacing
 end

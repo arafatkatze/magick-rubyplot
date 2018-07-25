@@ -55,14 +55,14 @@ class Rubyplot::Line < Rubyplot::Artist
       next if x_data_point.nil?
 
       # Setup max/min so spread starts at the low end of the data points
-      if @maximum_x_value.nil? && @minimum_x_value.nil?
-        @maximum_x_value = @minimum_x_value = x_data_point
+      if @geometry.maximum_x_value.nil? && @geometry.minimum_x_value.nil?
+        @geometry.maximum_x_value = @geometry.minimum_x_value = x_data_point
       end
 
-      @maximum_x_value = x_data_point > @maximum_x_value ?
-          x_data_point : @maximum_x_value
-      @minimum_x_value = x_data_point < @minimum_x_value ?
-          x_data_point : @minimum_x_value
+      @geometry.maximum_x_value = x_data_point > @geometry.maximum_x_value ?
+          x_data_point : @geometry.maximum_x_value
+      @geometry.minimum_x_value = x_data_point < @geometry.minimum_x_value ?
+          x_data_point : @geometry.minimum_x_value
     end
   end
 
@@ -76,7 +76,7 @@ class Rubyplot::Line < Rubyplot::Artist
       norm_x_data_points = []
       next if data_row[DATA_VALUES_X_INDEX].nil?
       data_row[DATA_VALUES_X_INDEX].each do |x_data_point|
-        norm_x_data_points << ((x_data_point.to_f - @minimum_x_value.to_f) / (@maximum_x_value.to_f - @minimum_x_value.to_f))
+        norm_x_data_points << ((x_data_point.to_f - @geometry.minimum_x_value.to_f) / (@geometry.maximum_x_value.to_f - @geometry.minimum_x_value.to_f))
       end
       @norm_data[index] << norm_x_data_points
     end

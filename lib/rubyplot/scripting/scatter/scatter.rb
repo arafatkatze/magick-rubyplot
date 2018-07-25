@@ -23,9 +23,9 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
         # Reset each time to avoid thin-line errors
         @d = @d.stroke_opacity 1.0
-        @d = @d.stroke_width @stroke_width || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 4), 5.0)
+        @d = @d.stroke_width @geometry.stroke_width || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 4), 5.0)
 
-        circle_radius = @circle_radius || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 2.5), 5.0)
+        circle_radius = @geometry.circle_radius || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 2.5), 5.0)
         @d = @d.circle(new_x, new_y, new_x - circle_radius, new_y)
       end
     end
@@ -43,23 +43,23 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
     if @x_axis_increment.nil?
       # TODO: Do the same for larger numbers...100, 75, 50, 25
-      if @marker_x_count.nil?
+      if @geometry.marker_x_count.nil?
         (3..7).each do |lines|
           if @x_spread % lines == 0.0
-            @marker_x_count = lines
+            @geometry.marker_x_count = lines
             break
           end
         end
-        @marker_x_count ||= 4
+        @geometry.marker_x_count ||= 4
       end
-      @x_increment = @x_spread > 0 ? (@x_spread / @marker_x_count) : 1
-      unless @disable_significant_rounding_x_axis
+      @x_increment = @x_spread > 0 ? (@x_spread / @geometry.marker_x_count) : 1
+      unless @geometry.disable_significant_rounding_x_axis
         @x_increment = significant(@x_increment)
       end
     else
       # TODO: Make this work for negative values
-      @maximum_x_value = [@maximum_value.ceil, @x_axis_increment].max
-      @minimum_x_value = @minimum_x_value.floor
+      @geometry.maximum_x_value = [@maximum_value.ceil, @x_axis_increment].max
+      @geometry.minimum_x_value = @geometry.minimum_x_value.floor
       calculate_spread
       normalize(true)
 
@@ -69,9 +69,9 @@ class Rubyplot::Scatter < Rubyplot::Artist
     @increment_x_scaled = @graph_width.to_f / (@x_spread / @x_increment)
 
     # Draw vertical line markers and annotate with numbers
-    (0..@marker_x_count).each do |index|
+    (0..@geometry.marker_x_count).each do |index|
       # TODO: Fix the vertical lines, and enable them by default. Not pretty when they don't match up with top y-axis line
-      if @enable_vertical_line_markers
+      if @geometry.enable_vertical_line_markers
         x = @graph_left + @graph_width - index.to_f * @increment_x_scaled
         @d = @d.stroke(@marker_color)
         @d = @d.stroke_width 1
@@ -79,8 +79,8 @@ class Rubyplot::Scatter < Rubyplot::Artist
       end
 
       next if @hide_line_numbers
-      marker_label = index * @x_increment + @minimum_x_value.to_f
-      y_offset = @graph_bottom + (@x_label_margin || LABEL_MARGIN)
+      marker_label = index * @x_increment + @geometry.minimum_x_value.to_f
+      y_offset = @graph_bottom + (@geometry.x_label_margin || LABEL_MARGIN)
       x_offset = get_x_coord(index.to_f, @increment_x_scaled, @graph_left)
 
       @d.fill = @font_color
@@ -88,28 +88,28 @@ class Rubyplot::Scatter < Rubyplot::Artist
       @d.stroke('transparent')
       @d.pointsize = scale_fontsize(@marker_font_size)
       @d.gravity = NorthGravity
-      @d.rotation = -90.0 if @use_vertical_x_labels
+      @d.rotation = -90.0 if @geometry.use_vertical_x_labels
       @d = @d.scale_annotation(@base_image,
                                1.0, 1.0,
                                x_offset, y_offset,
                                vertical_label(marker_label, @x_increment), @scale)
-      @d.rotation = 90.0 if @use_vertical_x_labels
+      @d.rotation = 90.0 if @geometry.use_vertical_x_labels
     end
 
     @d = @d.stroke_antialias true
   end
 
   def label(value, increment)
-    if @y_axis_label_format
-      @y_axis_label_format.call(value)
+    if @geometry.y_axis_label_format
+      @geometry.y_axis_label_format.call(value)
     else
       super
     end
   end
 
   def vertical_label(value, increment)
-    if @x_axis_label_format
-      @x_axis_label_format.call(value)
+    if @geometry.x_axis_label_format
+      @geometry.x_axis_label_format.call(value)
     else
       label(value, increment)
     end

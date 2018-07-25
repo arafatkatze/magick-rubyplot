@@ -1,13 +1,13 @@
 class Rubyplot::StackedBar < Rubyplot::Bar
   def construct_colors_array
-    return unless @plot_colors.empty?
+    return unless @geometry.plot_colors.empty?
     0.upto(@norm_data.size - 1) do |_i|
-      @plot_colors.push(@all_colors_array[rand(@all_colors_array.size)].name)
+      @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
     end
   end
 
   def set_colors_array(color_array)
-    @plot_colors = color_array
+    @geometry.plot_colors = color_array
   end
 
   def set_spacings
@@ -39,7 +39,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
 
     @norm_data.each_with_index do |data_row, _row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
-        @d = @d.fill @plot_colors[_row_index]
+        @d = @d.fill @geometry.plot_colors[_row_index]
 
         # Calculate center based on bar_width and current row
         label_center = @graph_left + (@bar_width * point_index) + (@bar_width * @bar_spacing / 2.0)
