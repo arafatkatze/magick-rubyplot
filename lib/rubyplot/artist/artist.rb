@@ -223,7 +223,7 @@ module Rubyplot
 
       @d = @d.stroke_antialias false
 
-      if @y_axis_increment.nil?
+      if @geometry.y_axis_increment .nil?
         # Try to use a number of horizontal lines that will come out even.
         #
         # TODO Do the same for larger numbers...100, 75, 50, 25
@@ -239,8 +239,8 @@ module Rubyplot
         @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
       else
         # TODO: Make this work for negative values
-        @marker_count = (@spread / @y_axis_increment).to_i
-        @increment = @y_axis_increment
+        @marker_count = (@spread / @geometry.y_axis_increment).to_i
+        @increment = @geometry.y_axis_increment
       end
       @increment_scaled = @graph_height.to_f / (@spread / @increment)
 
@@ -347,7 +347,7 @@ module Rubyplot
                 else
                   value.to_s
                 end
-              elsif (@spread.to_f % (@marker_count.to_f == 0 ? 1 : @marker_count.to_f) == 0) || !@y_axis_increment.nil?
+              elsif (@spread.to_f % (@marker_count.to_f == 0 ? 1 : @marker_count.to_f) == 0) || !@geometry.y_axis_increment .nil?
                 value.to_i.to_s
               elsif @spread > 10.0
                 format('%0i', value)

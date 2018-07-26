@@ -17,6 +17,7 @@ module Rubyplot
         @columns = geometric_width.to_f
         @rows = geometric_height.to_f
       end
+      @geometry = Rubyplot::ArtistGeometry.new
       initialize_variables
 
       reset_themes
@@ -76,11 +77,9 @@ module Rubyplot
       @additional_line_colors = []
       @theme_options = {}
 
-      @use_data_label = false
       @x_axis_increment = nil
       @x_axis_label = @y_axis_label = nil
-      @y_axis_increment = nil
-      @stacked = nil
+      @geometry.y_axis_increment = nil
       @norm_data = nil
     end
   end
