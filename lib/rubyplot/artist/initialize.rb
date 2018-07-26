@@ -72,13 +72,6 @@ module Rubyplot
       @label_stagger_height = 0
       @label_max_size = 0
       @label_truncation_style = :absolute
-
-      @additional_line_values = []
-      @additional_line_colors = []
-      @theme_options = {}
-
-      @x_axis_increment = nil
-      @norm_data = nil
     end
   end
 end

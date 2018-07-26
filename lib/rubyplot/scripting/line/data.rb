@@ -78,7 +78,7 @@ class Rubyplot::Line < Rubyplot::Artist
       data_row[DATA_VALUES_X_INDEX].each do |x_data_point|
         norm_x_data_points << ((x_data_point.to_f - @geometry.minimum_x_value.to_f) / (@geometry.maximum_x_value.to_f - @geometry.minimum_x_value.to_f))
       end
-      @norm_data[index] << norm_x_data_points
+      @geometry.norm_data[index] << norm_x_data_points
     end
   end
 

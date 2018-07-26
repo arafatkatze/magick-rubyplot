@@ -97,7 +97,9 @@ module Rubyplot
     attr_accessor :top_margin
     attr_accessor :labels, :labels_seen, :increment, :increment_scaled
     attr_accessor :use_data_label, :legend_box_size, :stacked, :y_axis_increment
-    attr_accessor :x_axis_increment
+    attr_accessor :x_axis_increment, :norm_data, :theme_options, :additional_line_colors
+    attr_accessor :additional_line_values
+
     def initialize(*)
       @spacing_factor = 0.9
       @top_margin = DEFAULT_MARGIN
@@ -105,6 +107,13 @@ module Rubyplot
       @stacked = nil
       @x_axis_label = @y_axis_label = nil
       @y_axis_increment = nil
+
+      @x_axis_increment = nil
+      @norm_data = nil
+
+      @additional_line_values = []
+      @additional_line_colors = []
+      @theme_options = {}
     end
   end
 end

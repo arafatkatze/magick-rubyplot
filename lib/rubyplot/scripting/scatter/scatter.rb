@@ -13,7 +13,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
 
-    @norm_data.each do |data_row|
+    @geometry.norm_data.each do |data_row|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
         x_value = data_row[DATA_VALUES_X_INDEX][index]
         next if data_point.nil? || x_value.nil?
@@ -23,9 +23,9 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
         # Reset each time to avoid thin-line errors
         @d = @d.stroke_opacity 1.0
-        @d = @d.stroke_width @geometry.stroke_width || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 4), 5.0)
+        @d = @d.stroke_width @geometry.stroke_width || clip_value_if_greater_than(@columns / (@geometry.norm_data.first[1].size * 4), 5.0)
 
-        circle_radius = @geometry.circle_radius || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 2.5), 5.0)
+        circle_radius = @geometry.circle_radius || clip_value_if_greater_than(@columns / (@geometry.norm_data.first[1].size * 2.5), 5.0)
         @d = @d.circle(new_x, new_y, new_x - circle_radius, new_y)
       end
     end
@@ -41,7 +41,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
     return if @hide_line_markers
     @d = @d.stroke_antialias false
 
-    if @x_axis_increment.nil?
+    if @geometry.x_axis_increment.nil?
       # TODO: Do the same for larger numbers...100, 75, 50, 25
       if @geometry.marker_x_count.nil?
         (3..7).each do |lines|
@@ -58,13 +58,13 @@ class Rubyplot::Scatter < Rubyplot::Artist
       end
     else
       # TODO: Make this work for negative values
-      @geometry.maximum_x_value = [@maximum_value.ceil, @x_axis_increment].max
+      @geometry.maximum_x_value = [@maximum_value.ceil, @geometry.x_axis_increment].max
       @geometry.minimum_x_value = @geometry.minimum_x_value.floor
       calculate_spread
       normalize(true)
 
-      @marker_count = (@x_spread / @x_axis_increment).to_i
-      @x_increment = @x_axis_increment
+      @marker_count = (@x_spread / @geometry.x_axis_increment).to_i
+      @x_increment = @geometry.x_axis_increment
     end
     @increment_x_scaled = @graph_width.to_f / (@x_spread / @x_increment)
 

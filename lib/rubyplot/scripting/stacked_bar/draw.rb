@@ -1,7 +1,7 @@
 class Rubyplot::StackedBar < Rubyplot::Bar
   def construct_colors_array
     return unless @geometry.plot_colors.empty?
-    0.upto(@norm_data.size - 1) do |_i|
+    0.upto(@geometry.norm_data.size - 1) do |_i|
       @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
     end
   end
@@ -37,7 +37,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
     @d = @d.stroke_opacity 0.0
     height = Array.new(@column_count, 0)
 
-    @norm_data.each_with_index do |data_row, _row_index|
+    @geometry.norm_data.each_with_index do |data_row, _row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
         @d = @d.fill @geometry.plot_colors[_row_index]
 

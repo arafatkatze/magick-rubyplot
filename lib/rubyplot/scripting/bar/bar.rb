@@ -63,7 +63,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     end
 
     # iterate over all normalised data
-    @norm_data.each_with_index do |data_row, row_index|
+    @geometry.norm_data.each_with_index do |data_row, row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
         # Use incremented x and scaled y
         # x
@@ -84,7 +84,7 @@ class Rubyplot::Bar < Rubyplot::Artist
         # Subtract half a bar width to center left if requested
         draw_label(label_center - (@center_labels_over_point ? @bar_width / 2.0 : 0.0), point_index)
         if @show_labels_for_bar_values
-          val = (@label_formatting || '%.2f') % @norm_data[row_index][3][point_index]
+          val = (@label_formatting || '%.2f') % @geometry.norm_data[row_index][3][point_index]
           draw_value_label(left_x + (right_x - left_x) / 2, conv[0] - 30, val.commify, true)
         end
       end

@@ -8,11 +8,11 @@ class Rubyplot::Dot < Rubyplot::Artist
     # Setup spacing.
     spacing_factor = 1.0
     @items_width = @graph_height / @column_count.to_f
-    @item_width = @items_width * spacing_factor / @norm_data.size
+    @item_width = @items_width * spacing_factor / @geometry.norm_data.size
     @d = @d.stroke_opacity 0.0
     padding = (@items_width * (1 - spacing_factor)) / 2
 
-    @norm_data.each_with_index do |data_row, row_index|
+    @geometry.norm_data.each_with_index do |data_row, row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
         x_pos = @graph_left + (data_point * @graph_width)
         y_pos = @graph_top + (@items_width * point_index) + padding + (@items_width.to_f / 2.0).round
