@@ -78,8 +78,6 @@ module Rubyplot
       @theme_options = {}
 
       @x_axis_increment = nil
-      @x_axis_label = @y_axis_label = nil
-      @geometry.y_axis_increment = nil
       @norm_data = nil
     end
   end

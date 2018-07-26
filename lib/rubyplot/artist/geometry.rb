@@ -97,11 +97,14 @@ module Rubyplot
     attr_accessor :top_margin
     attr_accessor :labels, :labels_seen, :increment, :increment_scaled
     attr_accessor :use_data_label, :legend_box_size, :stacked, :y_axis_increment
+    attr_accessor :x_axis_increment
     def initialize(*)
       @spacing_factor = 0.9
       @top_margin = DEFAULT_MARGIN
       @use_data_label = false
       @stacked = nil
+      @x_axis_label = @y_axis_label = nil
+      @y_axis_increment = nil
     end
   end
 end

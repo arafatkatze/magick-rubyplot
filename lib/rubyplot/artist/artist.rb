@@ -69,7 +69,7 @@ module Rubyplot
 
       @graph_left = @left_margin +
                     line_number_width +
-                    (@y_axis_label.nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
+                    (@geometry.y_axis_label .nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
 
       # Make space for half the width of the rightmost column label.
       last_label = @labels.keys.max.to_i
@@ -87,7 +87,7 @@ module Rubyplot
           (@hide_title ? title_margin : @title_caps_height + title_margin) +
           (@legend_caps_height + legend_margin))
 
-      x_axis_label_height = @x_axis_label.nil? ? 0.0 :
+      x_axis_label_height = @geometry.x_axis_label .nil? ? 0.0 :
           @marker_caps_height + LABEL_MARGIN
       @graph_bottom = @raw_rows - @graph_bottom_margin - x_axis_label_height - @label_stagger_height
       @graph_height = @graph_bottom - @graph_top
@@ -95,7 +95,7 @@ module Rubyplot
 
     # Draw the optional labels for the x axis and y axis.
     def draw_axis_labels
-      unless @x_axis_label.nil?
+      unless @geometry.x_axis_label .nil?
         # X Axis
         # Centered vertically and horizontally by setting the
         # height to 1.0 and the width to the width of the graph.
@@ -110,17 +110,17 @@ module Rubyplot
         @d = @d.scale_annotation(@base_image,
                                  @raw_columns, 1.0,
                                  0.0, x_axis_label_y_coordinate,
-                                 @x_axis_label, @scale)
+                                 @geometry.x_axis_label, @scale)
       end
 
-      unless @y_axis_label.nil?
+      unless @geometry.y_axis_label .nil?
         # Y Axis, rotated vertically
         @d.rotation = -90.0
         @d.gravity = CenterGravity
         @d = @d.scale_annotation(@base_image,
                                  1.0, @raw_rows,
                                  @left_margin + @marker_caps_height / 2.0, 0.0,
-                                 @y_axis_label, @scale)
+                                 @geometry.y_axis_label , @scale)
         @d.rotation = 90.0
       end
     end
