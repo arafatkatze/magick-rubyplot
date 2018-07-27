@@ -63,7 +63,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
       calculate_spread
       normalize(true)
 
-      @marker_count = (@x_spread / @geometry.x_axis_increment).to_i
+      @geometry.marker_count = (@x_spread / @geometry.x_axis_increment).to_i
       @x_increment = @geometry.x_axis_increment
     end
     @increment_x_scaled = @graph_width.to_f / (@x_spread / @x_increment)

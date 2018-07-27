@@ -35,7 +35,6 @@ module Rubyplot
       @raw_columns = 800.0
       @raw_rows = 800.0 * (@rows / @columns)
       @data = []
-      @marker_count = nil
       @maximum_value = @geometry.minimum_value = nil
       @has_data = false
       @increment = nil

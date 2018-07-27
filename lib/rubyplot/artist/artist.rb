@@ -227,25 +227,25 @@ module Rubyplot
         # Try to use a number of horizontal lines that will come out even.
         #
         # TODO Do the same for larger numbers...100, 75, 50, 25
-        if @marker_count.nil?
+        if @geometry.marker_count.nil?
           (3..7).each do |lines|
             if @spread % lines == 0.0
-              @marker_count = lines
+              @geometry.marker_count = lines
               break
             end
           end
-          @marker_count ||= 4
+          @geometry.marker_count ||= 4
         end
-        @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
+        @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
       else
         # TODO: Make this work for negative values
-        @marker_count = (@spread / @geometry.y_axis_increment).to_i
+        @geometry.marker_count = (@spread / @geometry.y_axis_increment).to_i
         @increment = @geometry.y_axis_increment
       end
       @increment_scaled = @graph_height.to_f / (@spread / @increment)
 
       # Draw horizontal line markers and annotate with numbers
-      (0..@marker_count).each do |index|
+      (0..@geometry.marker_count).each do |index|
         y = @graph_top + @graph_height - index.to_f * @increment_scaled
 
         @d = @d.fill(@marker_color)
@@ -347,7 +347,7 @@ module Rubyplot
                 else
                   value.to_s
                 end
-              elsif (@spread.to_f % (@marker_count.to_f == 0 ? 1 : @marker_count.to_f) == 0) || !@geometry.y_axis_increment .nil?
+              elsif (@spread.to_f % (@geometry.marker_count.to_f == 0 ? 1 : @geometry.marker_count.to_f) == 0) || !@geometry.y_axis_increment .nil?
                 value.to_i.to_s
               elsif @spread > 10.0
                 format('%0i', value)

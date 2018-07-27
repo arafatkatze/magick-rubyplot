@@ -53,19 +53,19 @@ class Rubyplot::Dot < Rubyplot::Artist
       # Try to use a number of horizontal lines that will come out even.
       #
       # TODO Do the same for larger numbers...100, 75, 50, 25
-      if @marker_count.nil?
+      if @geometry.marker_count.nil?
         (3..7).each do |lines|
           if @spread % lines == 0.0
-            @marker_count = lines
+            @geometry.marker_count = lines
             break
           end
         end
-        @marker_count ||= 5
+        @geometry.marker_count ||= 5
       end
       # TODO: Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
-      @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
+      @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
 
-      number_of_lines = @marker_count
+      number_of_lines = @geometry.marker_count
       increment = @increment
     end
 
