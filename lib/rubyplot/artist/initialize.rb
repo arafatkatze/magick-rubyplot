@@ -41,10 +41,8 @@ module Rubyplot
       @has_data = false
       @increment = nil
       @labels = {}
-      @label_formatting = nil
       @labels_seen = {}
       @sort = false
-      @sorted_drawing = false
       @title = nil
       @title_font = nil
 

@@ -84,7 +84,7 @@ class Rubyplot::Bar < Rubyplot::Artist
         # Subtract half a bar width to center left if requested
         draw_label(label_center - (@geometry.center_labels_over_point ? @bar_width / 2.0 : 0.0), point_index)
         if @geometry.show_labels_for_bar_values
-          val = (@label_formatting || '%.2f') % @geometry.norm_data[row_index][3][point_index]
+          val = (@geometry.label_formatting || '%.2f') % @geometry.norm_data[row_index][3][point_index]
           draw_value_label(left_x + (right_x - left_x) / 2, conv[0] - 30, val.commify, true)
         end
       end

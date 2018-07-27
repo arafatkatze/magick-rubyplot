@@ -104,7 +104,7 @@ module Rubyplot
     attr_accessor :legend_at_bottom
     attr_accessor :show_labels_for_bar_values, :center_labels_over_point
     attr_accessor :legend_box_size, :has_left_labels, :label_stagger_height, :label_max_size
-    attr_accessor :label_truncation_style
+    attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting
 
     def initialize(*)
       @spacing_factor = 0.9
@@ -128,6 +128,8 @@ module Rubyplot
       @center_labels_over_point = true
 
       @legend_box_size = 20.0
+      @label_formatting = nil
+      @sorted_drawing = false
     end
   end
 end
