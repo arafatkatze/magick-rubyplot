@@ -8,7 +8,7 @@ module Rubyplot
       @data.each do |data_row|
         norm_data_points = []
         data_row[DATA_VALUES_INDEX].each do |data_point|
-          norm_data_points << ((data_point.to_f - @minimum_value.to_f) / @spread)
+          norm_data_points << ((data_point.to_f - @geometry.minimum_value.to_f) / @spread)
           # Add support for nil values in data etc.
         end
         @geometry.norm_data << [data_row[DATA_LABEL_INDEX], norm_data_points]
@@ -21,7 +21,7 @@ module Rubyplot
 
     # Calculates the spread of the data.
     def calculate_spread
-      @spread = @maximum_value.to_f - @minimum_value.to_f
+      @spread = @maximum_value.to_f - @geometry.minimum_value.to_f
     end
 
     # Return the sum of values in an array.

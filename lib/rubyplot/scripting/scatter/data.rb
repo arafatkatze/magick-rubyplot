@@ -65,7 +65,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
       @data.each do |data_row|
         norm_data_points = [data_row[DATA_LABEL_INDEX]]
         norm_data_points << data_row[DATA_VALUES_INDEX].map do |r|
-          (r.to_f - @minimum_value.to_f) / @spread
+          (r.to_f - @geometry.minimum_value.to_f) / @spread
         end
 
         norm_data_points << data_row[DATA_COLOR_INDEX]

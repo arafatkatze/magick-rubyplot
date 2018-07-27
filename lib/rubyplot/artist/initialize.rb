@@ -37,7 +37,7 @@ module Rubyplot
       @column_count = 0
       @data = []
       @marker_count = nil
-      @maximum_value = @minimum_value = nil
+      @maximum_value = @geometry.minimum_value = nil
       @has_data = false
       @increment = nil
       @labels = {}

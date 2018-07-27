@@ -41,24 +41,23 @@ class Rubyplot::Bar < Rubyplot::Artist
     @d = @d.stroke_opacity 0.0
 
     # Setup the BarConversion Object
-    conversion = Rubyplot::BarConversion.new
-    conversion.graph_height = @graph_height
-    conversion.graph_top = @graph_top
+    @graph_height = @graph_height
+    @graph_top = @graph_top
 
     # Set up the right mode [1,2,3] see BarConversion for further explanation
-    if @minimum_value >= 0
+    if @geometry.minimum_value >= 0
       # all bars go from zero to positiv
-      conversion.mode = :positive
+      @mode = :positive
     else
       # all bars go from 0 to negativ
       if @maximum_value <= 0
-        conversion.mode = :negative
+        @mode = :negative
       else
         # bars either go from zero to negativ or to positiv
-        conversion.mode = :both
-        conversion.spread = @spread
-        conversion.minimum_value = @minimum_value
-        conversion.zero = -@minimum_value / @spread
+        @mode = :both
+        @spread = @spread
+        @minimum_value = @geometry.minimum_value
+        @zero = -@geometry.minimum_value / @spread
       end
     end
 
@@ -71,7 +70,7 @@ class Rubyplot::Bar < Rubyplot::Artist
         right_x = left_x + @bar_width * @bar_spacing
         # y
         conv = []
-        conversion.get_left_y_right_y_scaled(data_point, conv)
+        get_left_y_right_y_scaled(data_point, conv)
 
         # create new bar
         @d = @d.rectangle(left_x, conv[0], right_x, conv[1])

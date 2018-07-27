@@ -258,7 +258,7 @@ module Rubyplot
         end
 
         marker_label = BigDecimal(index.to_s) * BigDecimal(@increment.to_s) +
-                       BigDecimal(@minimum_value.to_s)
+                       BigDecimal(@geometry.minimum_value.to_s)
 
         next if @geometry.hide_line_numbers
         @d.fill = @font_color

@@ -23,12 +23,12 @@ module Rubyplot
       data_points.each do |data_point|
         # Initialize the maximum and minimum values so that the spread starts
         # at the lowest points in the data and then changes as iteration.
-        if @maximum_value.nil? && @minimum_value.nil?
-          @maximum_value = @minimum_value = data_point
+        if @maximum_value.nil? && @geometry.minimum_value.nil?
+          @maximum_value = @geometry.minimum_value = data_point
         end
 
         @maximum_value = data_point > @maximum_value ? data_point : @maximum_value
-        @minimum_value = data_point < @minimum_value ? data_point : @minimum_value
+        @geometry.minimum_value = data_point < @geometry.minimum_value ? data_point : @geometry.minimum_value
         @has_data = true
       end
     end

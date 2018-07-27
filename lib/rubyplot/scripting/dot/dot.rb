@@ -70,8 +70,8 @@ class Rubyplot::Dot < Rubyplot::Artist
     end
 
     (0..number_of_lines).each do |index|
-      marker_label = @minimum_value + index * increment
-      x = @graph_left + (marker_label - @minimum_value) * @graph_width / @spread
+      marker_label = @geometry.minimum_value + index * increment
+      x = @graph_left + (marker_label - @geometry.minimum_value) * @graph_width / @spread
       @d = @d.line(x, @graph_bottom, x, @graph_bottom + 0.5 * LABEL_MARGIN)
 
       unless @geometry.hide_line_numbers
