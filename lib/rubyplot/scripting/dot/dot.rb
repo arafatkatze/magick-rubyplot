@@ -74,7 +74,7 @@ class Rubyplot::Dot < Rubyplot::Artist
       x = @graph_left + (marker_label - @minimum_value) * @graph_width / @spread
       @d = @d.line(x, @graph_bottom, x, @graph_bottom + 0.5 * LABEL_MARGIN)
 
-      unless @hide_line_numbers
+      unless @geometry.hide_line_numbers
         @d.fill = @font_color
         @d.font = @font if @font
         @d.stroke = 'transparent'

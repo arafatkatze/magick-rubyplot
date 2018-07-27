@@ -96,9 +96,15 @@ module Rubyplot
     # Blank space above the graph
     attr_accessor :top_margin
     attr_accessor :labels, :labels_seen, :increment, :increment_scaled
-    attr_accessor :use_data_label, :legend_box_size, :stacked, :y_axis_increment
+    attr_accessor :use_data_label, :stacked, :y_axis_increment
     attr_accessor :x_axis_increment, :norm_data, :theme_options, :additional_line_colors
     attr_accessor :additional_line_values
+    attr_accessor :label_truncation_style, :label_max_size, :label_stagger_height
+    attr_accessor :hide_line_markers, :hide_legend, :hide_title, :hide_line_numbers
+    attr_accessor :legend_at_bottom
+    attr_accessor :show_labels_for_bar_values, :center_labels_over_point
+    attr_accessor :legend_box_size, :has_left_labels, :label_stagger_height, :label_max_size
+    attr_accessor :label_truncation_style
 
     def initialize(*)
       @spacing_factor = 0.9
@@ -114,6 +120,14 @@ module Rubyplot
       @additional_line_values = []
       @additional_line_colors = []
       @theme_options = {}
+
+      @label_stagger_height = 0
+      @label_truncation_style = :absolute
+      @label_max_size = 0
+      @hide_line_markers = @hide_legend = @hide_title = @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
+      @center_labels_over_point = true
+
+      @legend_box_size = 20.0
     end
   end
 end

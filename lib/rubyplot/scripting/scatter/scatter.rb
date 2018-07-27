@@ -38,7 +38,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
   def draw_line_markers!
     # do all of the stuff for the horizontal lines on the y-axis
     super
-    return if @hide_line_markers
+    return if @geometry.hide_line_markers
     @d = @d.stroke_antialias false
 
     if @geometry.x_axis_increment.nil?
@@ -78,7 +78,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
         @d = @d.line(x, @graph_top, x, @graph_bottom)
       end
 
-      next if @hide_line_numbers
+      next if @geometry.hide_line_numbers
       marker_label = index * @x_increment + @geometry.minimum_x_value.to_f
       y_offset = @graph_bottom + (@geometry.x_label_margin || LABEL_MARGIN)
       x_offset = get_x_coord(index.to_f, @increment_x_scaled, @graph_left)

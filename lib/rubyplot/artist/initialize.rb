@@ -64,10 +64,7 @@ module Rubyplot
 
       @legend_box_size = 20.0
 
-      @no_data_message = 'No Data'
-
-      @hide_line_markers = @hide_legend = @hide_title = @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
-      @center_labels_over_point = true
+      @geometry.center_labels_over_point = true
       @has_left_labels = false
       @label_stagger_height = 0
       @label_max_size = 0
