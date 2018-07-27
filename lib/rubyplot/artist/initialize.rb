@@ -64,7 +64,6 @@ module Rubyplot
 
       @legend_box_size = 20.0
 
-      @geometry.center_labels_over_point = true
       @has_left_labels = false
       @label_stagger_height = 0
       @label_max_size = 0
