@@ -17,6 +17,6 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
     # Translate our values so that we can use the base methods for drawing
     # the standard chart stuff
-    @column_count = @x_spread
+    @geometry.column_count = @x_spread
   end
 end

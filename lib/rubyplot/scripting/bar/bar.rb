@@ -11,7 +11,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     # Labels will be centered over the left of the bar if
     # there are more labels than columns. This is basically the same
     # as where it would be for a line graph.
-    @geometry.center_labels_over_point = (@labels.keys.length > @column_count)
+    @geometry.center_labels_over_point = (@labels.keys.length > @geometry.column_count)
 
     super
     return unless @has_data
@@ -35,7 +35,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     #
     # Columns sit side-by-side.
     @bar_spacing ||= @geometry.spacing_factor # space between the bars
-    @bar_width = @graph_width / (@column_count * @data.length).to_f
+    @bar_width = @graph_width / (@geometry.column_count * @data.length).to_f
     padding = (@bar_width * (1 - @bar_spacing)) / 2
 
     @d = @d.stroke_opacity 0.0
@@ -90,7 +90,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     end
 
     # Draw the last label if requested
-    draw_label(@graph_right, @column_count) if @geometry.center_labels_over_point
+    draw_label(@graph_right, @geometry.column_count) if @geometry.center_labels_over_point
     @d.draw(@base_image)
   end
 end

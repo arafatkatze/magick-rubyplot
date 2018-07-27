@@ -46,10 +46,10 @@ class Rubyplot::Line < Rubyplot::Artist
     return unless @has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
-    @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
     if @geometry.show_vertical_markers # false in the base case
-      (0..@column_count).each do |column|
+      (0..@geometry.column_count).each do |column|
         x = @graph_left + @graph_width - column.to_f * @x_increment
 
         @d = @d.fill(@marker_color)

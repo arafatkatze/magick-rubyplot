@@ -16,7 +16,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
     # Columns sit stacked.
     @bar_spacing ||= 0.9
     @segment_spacing ||= 1
-    @bar_width = @graph_width / @column_count.to_f
+    @bar_width = @graph_width / @geometry.column_count.to_f
     @padding = (@bar_width * (1 - @bar_spacing)) / 2
   end
 
@@ -35,7 +35,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
 
     set_spacings
     @d = @d.stroke_opacity 0.0
-    height = Array.new(@column_count, 0)
+    height = Array.new(@geometry.column_count, 0)
 
     @geometry.norm_data.each_with_index do |data_row, _row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|

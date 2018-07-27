@@ -27,7 +27,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     draw_axis_labels
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
-    @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
     # ~ if (defined?(@norm_y_baseline)) then
     # ~ level = @graph_top + (@graph_height - @norm_baseline * @graph_height)

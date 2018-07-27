@@ -11,7 +11,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
     return unless @has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
-    @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
     @geometry.norm_data.each do |data_row|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|

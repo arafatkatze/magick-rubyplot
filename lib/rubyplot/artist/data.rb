@@ -17,7 +17,7 @@ module Rubyplot
       color = []
       @data << [name, data_points, color]
       # Set column count if this is larger than previous column counts
-      @column_count = data_points.length > @column_count ? data_points.length : @column_count
+      @geometry.column_count = data_points.length > @geometry.column_count ? data_points.length : @geometry.column_count
 
       # Pre-normalize => Set the max and min values of the data.
       data_points.each do |data_point|

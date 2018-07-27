@@ -15,7 +15,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     color = []
     @data << [name, data_points, color]
     # Set column count if this is larger than previous column counts
-    @column_count = data_points.length > @column_count ? data_points.length : @column_count
+    @geometry.column_count = data_points.length > @geometry.column_count ? data_points.length : @geometry.column_count
 
     y_z_array_sum = [data_points, z_data_points].transpose.map { |x| x.reduce(:+) }
     y_z_array_diff = [data_points, z_data_points].transpose.map { |x| x.reduce(:-) }

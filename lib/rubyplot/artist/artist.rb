@@ -73,7 +73,7 @@ module Rubyplot
 
       # Make space for half the width of the rightmost column label.
       last_label = @labels.keys.max.to_i
-      extra_room_for_long_label = last_label >= (@column_count - 1) && @geometry.center_labels_over_point ?
+      extra_room_for_long_label = last_label >= (@geometry.column_count - 1) && @geometry.center_labels_over_point ?
           calculate_width(@marker_font_size, @labels[last_label]) / 2.0 : 0
       @graph_right_margin = @right_margin + extra_room_for_long_label
 

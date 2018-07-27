@@ -7,7 +7,7 @@ class Rubyplot::Dot < Rubyplot::Artist
 
     # Setup spacing.
     spacing_factor = 1.0
-    @items_width = @graph_height / @column_count.to_f
+    @items_width = @graph_height / @geometry.column_count.to_f
     @item_width = @items_width * spacing_factor / @geometry.norm_data.size
     @d = @d.stroke_opacity 0.0
     padding = (@items_width * (1 - spacing_factor)) / 2
