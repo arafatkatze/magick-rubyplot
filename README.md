@@ -5,7 +5,7 @@ MagickPlot-RubyPlot is Matplotlib for Ruby.
 
 # Testing
 Installation can be done with ``` bundle exec rake install ```     
-Run all the tests with ``` bundle exec rake spec ```       
+Run all the tests with ``` bundle exec rake ```       
 Test the code in pry with ```bundle exec rake pry  ```
 
 ## Contributing

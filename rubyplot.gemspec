@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Rubyplot::VERSION
   s.date        = '2018-05-13'
   s.email       = 'arafat.da.khan@gmail.com'
-  s.summary     = 'A Plotting gem for Ruby.'
+  s.summary     = 'A plotting gem for Ruby.'
   s.description = 'magick-rubyplot is a Ruby plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms.'
-  s.authors     = ['Arafat Dad Khan']
+  s.authors     = ['Arafat Khan']
   s.files       = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   s.license     = 'MIT license'
   s.homepage    = 'https://github.com/Arafatk/magick-rubyplot'

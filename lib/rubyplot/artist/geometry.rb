@@ -107,6 +107,7 @@ module Rubyplot
     attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting, :minimum_value
     attr_accessor :column_count, :marker_count, :has_left_labels, :legend_margin, :raw_columns
     attr_accessor :raw_rows, :maximum_value, :has_data, :increment, :increment_x_scaled
+    attr_accessor :all_colors_array, :plot_colors
 
     def initialize(*)
       @spacing_factor = 0.9
@@ -142,6 +143,9 @@ module Rubyplot
       @has_data = false
 
       @increment = nil
+
+      @all_colors_array = Magick.colors
+      @plot_colors = []
     end
   end
 end

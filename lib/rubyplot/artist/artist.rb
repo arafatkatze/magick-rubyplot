@@ -2,7 +2,20 @@ module Rubyplot
   class Artist
     include Magick
 
+    def construct_colors_array
+      return unless @geometry.plot_colors.empty?
+      0.upto(@geometry.norm_data.size - 1) do |_i|
+        @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+      end
+    end
+
+    def set_colors_array(color_array)
+      @geometry.plot_colors = color_array
+    end
+
     # Writes the plot to a file. Defaults to 'plot.png'
+    # All file writing formats supported by RMagicks are supported by this
+    # function.
     def write(filename = 'plot.png')
       draw
       @base_image.write(filename)
@@ -27,6 +40,7 @@ module Rubyplot
       draw_axis_labels
     end
 
+    ##
     # Calculates size of drawable area and generates normalized data.
     #
     # * line markers
@@ -42,7 +56,7 @@ module Rubyplot
     # Calculates size of drawable area, general font dimensions, etc.
     # This is the most crucial part of the code and is based on geometry.
     # It calcuates the measurments in pixels to figure out the positioning
-    # gap pixels of Legends, Labels and Titles.
+    # gap pixels of Legends, Labels and Titles from the picture edge.
     def setup_graph_measurements
       @marker_caps_height = calculate_caps_height(@marker_font_size)
 
@@ -52,7 +66,7 @@ module Rubyplot
 
       @legend_caps_height = calculate_caps_height(@legend_font_size)
 
-      # For Now the labels feature only focuses on the dot graph so it makes sense to only have
+      # For now, the labels feature only focuses on the dot graph so it makes sense to only have
       # this as an attribute for this kind of graph and not for others.
       if @geometry.has_left_labels
         longest_left_label_width = calculate_width(@marker_font_size,
@@ -64,9 +78,9 @@ module Rubyplot
 
       # Shift graph if left line numbers are hidden
       line_number_width = @geometry.hide_line_numbers && !@geometry.has_left_labels ?
-          0.0 :
-          (longest_left_label_width + LABEL_MARGIN * 2)
+          0.0 : (longest_left_label_width + LABEL_MARGIN * 2)
 
+      # Pixel offset from the left edge of the plot
       @graph_left = @left_margin +
                     line_number_width +
                     (@geometry.y_axis_label .nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
@@ -75,8 +89,9 @@ module Rubyplot
       last_label = @labels.keys.max.to_i
       extra_room_for_long_label = last_label >= (@geometry.column_count - 1) && @geometry.center_labels_over_point ?
           calculate_width(@marker_font_size, @labels[last_label]) / 2.0 : 0
-      @graph_right_margin = @right_margin + extra_room_for_long_label
 
+      # Margins
+      @graph_right_margin = @right_margin + extra_room_for_long_label
       @graph_bottom_margin = @bottom_margin + @marker_caps_height + LABEL_MARGIN
 
       @graph_right = @geometry.raw_columns - @graph_right_margin
@@ -89,6 +104,8 @@ module Rubyplot
 
       x_axis_label_height = @geometry.x_axis_label .nil? ? 0.0 :
           @marker_caps_height + LABEL_MARGIN
+
+      # The actual height of the graph inside the whole image in pixels.
       @graph_bottom = @raw_rows - @graph_bottom_margin - x_axis_label_height - @label_stagger_height
       @graph_height = @graph_bottom - @graph_top
     end
