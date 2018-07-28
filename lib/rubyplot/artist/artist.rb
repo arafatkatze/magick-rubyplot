@@ -54,7 +54,7 @@ module Rubyplot
 
       # For Now the labels feature only focuses on the dot graph so it makes sense to only have
       # this as an attribute for this kind of graph and not for others.
-      if @has_left_labels
+      if @geometry.has_left_labels
         longest_left_label_width = calculate_width(@marker_font_size,
                                                    labels.values.inject('') { |value, memo| value.to_s.length > memo.to_s.length ? value : memo }) * 1.25
       else
@@ -63,7 +63,7 @@ module Rubyplot
       end
 
       # Shift graph if left line numbers are hidden
-      line_number_width = @geometry.hide_line_numbers && !@has_left_labels ?
+      line_number_width = @geometry.hide_line_numbers && !@geometry.has_left_labels ?
           0.0 :
           (longest_left_label_width + LABEL_MARGIN * 2)
 

@@ -46,6 +46,9 @@ require 'rubyplot/scripting/stacked_bar/data'
 require 'rubyplot/scripting/stacked_bar/draw'
 require 'rubyplot/scripting/stacked_bar/init'
 
+# Area
+require 'rubyplot/scripting/area/area'
+
 # Version
 require 'rubyplot/version'
 # Backend

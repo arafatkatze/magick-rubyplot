@@ -60,7 +60,6 @@ module Rubyplot
 
       @legend_box_size = 20.0
 
-      @has_left_labels = false
       @label_stagger_height = 0
       @label_max_size = 0
       @label_truncation_style = :absolute

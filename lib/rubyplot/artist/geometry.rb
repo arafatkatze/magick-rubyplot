@@ -105,7 +105,7 @@ module Rubyplot
     attr_accessor :show_labels_for_bar_values, :center_labels_over_point
     attr_accessor :legend_box_size, :has_left_labels, :label_stagger_height, :label_max_size
     attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting, :minimum_value
-    attr_accessor :column_count, :marker_count
+    attr_accessor :column_count, :marker_count, :has_left_labels, :legend_margin
 
     def initialize(*)
       @spacing_factor = 0.9
@@ -133,7 +133,9 @@ module Rubyplot
       @label_formatting = nil
       @sorted_drawing = false
       @column_count = 0
+      @has_left_labels = false
       @marker_count = nil
+      @legend_margin = LEGEND_MARGIN
     end
   end
 end
