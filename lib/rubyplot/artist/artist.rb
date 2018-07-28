@@ -59,7 +59,7 @@ module Rubyplot
                                                    labels.values.inject('') { |value, memo| value.to_s.length > memo.to_s.length ? value : memo }) * 1.25
       else
         longest_left_label_width = calculate_width(@marker_font_size,
-                                                   label(@geometry.maximum_value.to_f, @increment))
+                                                   label(@geometry.maximum_value.to_f, @geometry.increment))
       end
 
       # Shift graph if left line numbers are hidden
@@ -236,17 +236,17 @@ module Rubyplot
           end
           @geometry.marker_count ||= 4
         end
-        @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
+        @geometry.increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
       else
         # TODO: Make this work for negative values
         @geometry.marker_count = (@spread / @geometry.y_axis_increment).to_i
-        @increment = @geometry.y_axis_increment
+        @geometry.increment = @geometry.y_axis_increment
       end
-      @increment_scaled = @graph_height.to_f / (@spread / @increment)
+      @geometry.increment_scaled = @graph_height.to_f / (@spread / @geometry.increment)
 
       # Draw horizontal line markers and annotate with numbers
       (0..@geometry.marker_count).each do |index|
-        y = @graph_top + @graph_height - index.to_f * @increment_scaled
+        y = @graph_top + @graph_height - index.to_f * @geometry.increment_scaled
 
         @d = @d.fill(@marker_color)
 
@@ -257,7 +257,7 @@ module Rubyplot
           @d = @d.line(@graph_left, y + 1, @graph_right, y + 1)
         end
 
-        marker_label = BigDecimal(index.to_s) * BigDecimal(@increment.to_s) +
+        marker_label = BigDecimal(index.to_s) * BigDecimal(@geometry.increment.to_s) +
                        BigDecimal(@geometry.minimum_value.to_s)
 
         next if @geometry.hide_line_numbers
@@ -271,7 +271,7 @@ module Rubyplot
         @d = @d.scale_annotation(@base_image,
                                  @graph_left - LABEL_MARGIN, 1.0,
                                  0.0, y,
-                                 label(marker_label, @increment), @scale)
+                                 label(marker_label, @geometry.increment), @scale)
       end
       @d = @d.stroke_antialias true
       # string = 'hello' + '.png'

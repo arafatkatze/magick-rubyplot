@@ -36,7 +36,6 @@ module Rubyplot
       @data = []
 
       @raw_rows = 800.0 * (@rows / @columns)
-      @increment = nil
       @labels = {}
       @labels_seen = {}
       @sort = false
