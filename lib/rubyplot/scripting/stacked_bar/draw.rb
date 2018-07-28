@@ -31,7 +31,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
     draw_line_markers!
     draw_title
     draw_axis_labels
-    return unless @has_data
+    return unless @geometry.has_data
 
     set_spacings
     @d = @d.stroke_opacity 0.0

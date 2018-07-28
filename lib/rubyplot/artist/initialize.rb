@@ -32,11 +32,10 @@ module Rubyplot
     # developers to change this values in their program.
     def initialize_variables
       # Internal for calculations
-      @raw_columns = 800.0
-      @raw_rows = 800.0 * (@rows / @columns)
+
       @data = []
-      @maximum_value = @geometry.minimum_value = nil
-      @has_data = false
+
+      @raw_rows = 800.0 * (@rows / @columns)
       @increment = nil
       @labels = {}
       @labels_seen = {}
@@ -44,7 +43,7 @@ module Rubyplot
       @title = nil
       @title_font = nil
 
-      @scale = @columns / @raw_columns
+      @scale = @columns / @geometry.raw_columns
 
       vera_font_path = File.expand_path('Vera.ttf', ENV['MAGICK_FONT_PATH'])
       @font = File.exist?(vera_font_path) ? vera_font_path : nil

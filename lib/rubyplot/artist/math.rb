@@ -21,7 +21,7 @@ module Rubyplot
 
     # Calculates the spread of the data.
     def calculate_spread
-      @spread = @maximum_value.to_f - @geometry.minimum_value.to_f
+      @spread = @geometry.maximum_value.to_f - @geometry.minimum_value.to_f
     end
 
     # Return the sum of values in an array.
@@ -32,7 +32,7 @@ module Rubyplot
     ##
     # Return a calculation of center
     def center(size)
-      (@raw_columns - size) / 2
+      (@geometry.raw_columns - size) / 2
     end
 
     # Return a comparable fontsize for the current graph.

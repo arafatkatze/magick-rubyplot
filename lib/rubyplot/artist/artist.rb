@@ -19,7 +19,7 @@ module Rubyplot
     # An alias to draw function to facilitate the ease of function calling
     # with subclasses.
     def artist_draw
-      return unless @has_data
+      return unless @geometry.has_data
       setup_drawing
       draw_legend
       draw_line_markers!
@@ -59,7 +59,7 @@ module Rubyplot
                                                    labels.values.inject('') { |value, memo| value.to_s.length > memo.to_s.length ? value : memo }) * 1.25
       else
         longest_left_label_width = calculate_width(@marker_font_size,
-                                                   label(@maximum_value.to_f, @increment))
+                                                   label(@geometry.maximum_value.to_f, @increment))
       end
 
       # Shift graph if left line numbers are hidden
@@ -79,8 +79,8 @@ module Rubyplot
 
       @graph_bottom_margin = @bottom_margin + @marker_caps_height + LABEL_MARGIN
 
-      @graph_right = @raw_columns - @graph_right_margin
-      @graph_width = @raw_columns - @graph_left - @graph_right_margin
+      @graph_right = @geometry.raw_columns - @graph_right_margin
+      @graph_width = @geometry.raw_columns - @graph_left - @graph_right_margin
 
       # When @hide title, leave a title_margin space for aesthetics.
       @graph_top = @geometry.legend_at_bottom ? @top_margin : (@top_margin +
@@ -108,7 +108,7 @@ module Rubyplot
         @d.pointsize = scale_fontsize(@marker_font_size)
         @d.gravity = NorthGravity
         @d = @d.scale_annotation(@base_image,
-                                 @raw_columns, 1.0,
+                                 @geometry.raw_columns, 1.0,
                                  0.0, x_axis_label_y_coordinate,
                                  @geometry.x_axis_label, @scale)
       end
@@ -136,7 +136,7 @@ module Rubyplot
       @d.font_weight = @bold_title ? BoldWeight : NormalWeight
       @d.gravity = NorthGravity
       @d = @d.scale_annotation(@base_image,
-                               @raw_columns, 1.0,
+                               @geometry.raw_columns, 1.0,
                                0, @top_margin,
                                @title, @scale)
     end
@@ -159,7 +159,7 @@ module Rubyplot
         label_width = metrics.width + legend_square_width * 2.7
         label_widths.last.push label_width
 
-        if sum(label_widths.last) > (@raw_columns * 0.9)
+        if sum(label_widths.last) > (@geometry.raw_columns * 0.9)
           label_widths.push [label_widths.last.pop]
         end
       end
@@ -178,7 +178,7 @@ module Rubyplot
         @d.font_weight = NormalWeight
         @d.gravity = WestGravity
         @d = @d.scale_annotation(@base_image,
-                                 @raw_columns, 1.0,
+                                 @geometry.raw_columns, 1.0,
                                  current_x_offset + (legend_square_width * 1.7), current_y_offset,
                                  legend_label.to_s, @scale)
 

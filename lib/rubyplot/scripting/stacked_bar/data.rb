@@ -10,9 +10,9 @@ class Rubyplot::StackedBar < Rubyplot::Bar
       end
     end
 
-    @maximum_value = 0
+    @geometry.maximum_value = 0
     max_hash.keys.each do |key|
-      @maximum_value = max_hash[key] if max_hash[key] > @maximum_value
+      @geometry.maximum_value = max_hash[key] if max_hash[key] > @geometry.maximum_value
     end
     @geometry.minimum_value = 0
   end

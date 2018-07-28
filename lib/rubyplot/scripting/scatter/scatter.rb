@@ -8,7 +8,7 @@
 class Rubyplot::Scatter < Rubyplot::Artist
   def draw
     super
-    return unless @has_data
+    return unless @geometry.has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
@@ -58,7 +58,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
       end
     else
       # TODO: Make this work for negative values
-      @geometry.maximum_x_value = [@maximum_value.ceil, @geometry.x_axis_increment].max
+      @geometry.maximum_x_value = [@geometry.maximum_value.ceil, @geometry.x_axis_increment].max
       @geometry.minimum_x_value = @geometry.minimum_x_value.floor
       calculate_spread
       normalize(true)

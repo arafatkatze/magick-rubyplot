@@ -14,7 +14,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     @geometry.center_labels_over_point = (@labels.keys.length > @geometry.column_count)
 
     super
-    return unless @has_data
+    return unless @geometry.has_data
 
     draw_bars
   end
@@ -50,7 +50,7 @@ class Rubyplot::Bar < Rubyplot::Artist
       @mode = :positive
     else
       # all bars go from 0 to negativ
-      if @maximum_value <= 0
+      if @geometry.maximum_value <= 0
         @mode = :negative
       else
         # bars either go from zero to negativ or to positiv

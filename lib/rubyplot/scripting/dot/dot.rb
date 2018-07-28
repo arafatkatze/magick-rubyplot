@@ -3,7 +3,7 @@ class Rubyplot::Dot < Rubyplot::Artist
   def draw
     @geometry.has_left_labels = true
     super
-    return unless @has_data # TODO: Raise error here or make an error raising class.
+    return unless @geometry.has_data # TODO: Raise error here or make an error raising class.
 
     # Setup spacing.
     spacing_factor = 1.0
