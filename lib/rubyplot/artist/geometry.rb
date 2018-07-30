@@ -108,7 +108,7 @@ module Rubyplot
     attr_accessor :column_count, :marker_count, :has_left_labels, :legend_margin, :raw_columns
     attr_accessor :raw_rows, :maximum_value, :has_data, :increment, :increment_x_scaled
     attr_accessor :all_colors_array, :plot_colors, :top_margin, :bottom_margin
-    attr_accessor :left_margin, :right_margin
+    attr_accessor :left_margin, :right_margin, :labels_seen
 
     def initialize(*)
       @spacing_factor = 0.9
@@ -150,6 +150,7 @@ module Rubyplot
       @bottom_margin = DEFAULT_MARGIN
       @left_margin = DEFAULT_MARGIN
       @right_margin = DEFAULT_MARGIN
+      @labels_seen = {}
     end
   end
 end

@@ -32,12 +32,10 @@ module Rubyplot
     # developers to change this values in their program.
     def initialize_variables
       # Internal for calculations
-
       @data = []
 
       @raw_rows = 800.0 * (@rows / @columns)
       @labels = {}
-      @labels_seen = {}
       @sort = false
       @title = nil
       @title_font = nil

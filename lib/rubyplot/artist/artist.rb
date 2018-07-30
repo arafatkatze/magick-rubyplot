@@ -306,7 +306,7 @@ module Rubyplot
     def draw_label(x_offset, index)
       return if @geometry.hide_line_markers
 
-      if !@labels[index].nil? && @labels_seen[index].nil?
+      if !@labels[index].nil? && @geometry.labels_seen[index].nil?
         y_offset = @graph_bottom + LABEL_MARGIN
 
         # TESTME
@@ -341,7 +341,7 @@ module Rubyplot
                                    x_offset, y_offset,
                                    label_text, @scale)
         end
-        @labels_seen[index] = 1
+        @geometry.labels_seen[index] = 1
       end
     end
 

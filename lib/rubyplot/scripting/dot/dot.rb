@@ -93,7 +93,7 @@ class Rubyplot::Dot < Rubyplot::Artist
   ##
   # Draw on the Y axis instead of the X
   def draw_label(y_offset, index)
-    if !@labels[index].nil? && @labels_seen[index].nil?
+    if !@labels[index].nil? && @geometry.labels_seen[index].nil?
       @d.fill = @font_color
       @d.font = @font if @font
       @d.stroke = 'transparent'
@@ -104,7 +104,7 @@ class Rubyplot::Dot < Rubyplot::Artist
                                1, 1,
                                -@graph_left + LABEL_MARGIN * 2.0, y_offset,
                                @labels[index], @scale)
-      @labels_seen[index] = 1
+      @geometry.labels_seen[index] = 1
     end
   end
 end
