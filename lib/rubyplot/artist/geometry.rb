@@ -107,11 +107,11 @@ module Rubyplot
     attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting, :minimum_value
     attr_accessor :column_count, :marker_count, :has_left_labels, :legend_margin, :raw_columns
     attr_accessor :raw_rows, :maximum_value, :has_data, :increment, :increment_x_scaled
-    attr_accessor :all_colors_array, :plot_colors
+    attr_accessor :all_colors_array, :plot_colors, :top_margin, :bottom_margin
+    attr_accessor :left_margin, :right_margin
 
     def initialize(*)
       @spacing_factor = 0.9
-      @top_margin = DEFAULT_MARGIN
       @minimum_value = nil
       @use_data_label = false
       @stacked = nil
@@ -146,6 +146,10 @@ module Rubyplot
 
       @all_colors_array = Magick.colors
       @plot_colors = []
+      @top_margin = DEFAULT_MARGIN
+      @bottom_margin = DEFAULT_MARGIN
+      @left_margin = DEFAULT_MARGIN
+      @right_margin = DEFAULT_MARGIN
     end
   end
 end

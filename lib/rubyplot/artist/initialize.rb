@@ -52,7 +52,6 @@ module Rubyplot
       @legend_font_size = 20.0
       @title_font_size = 36.0
 
-      @top_margin = @bottom_margin = @left_margin = @right_margin = DEFAULT_MARGIN
       @legend_margin = LEGEND_MARGIN
       @title_margin = TITLE_MARGIN
 

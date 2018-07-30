@@ -81,7 +81,7 @@ module Rubyplot
           0.0 : (longest_left_label_width + LABEL_MARGIN * 2)
 
       # Pixel offset from the left edge of the plot
-      @graph_left = @left_margin +
+      @graph_left = @geometry.left_margin +
                     line_number_width +
                     (@geometry.y_axis_label .nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
 
@@ -91,14 +91,14 @@ module Rubyplot
           calculate_width(@marker_font_size, @labels[last_label]) / 2.0 : 0
 
       # Margins
-      @graph_right_margin = @right_margin + extra_room_for_long_label
-      @graph_bottom_margin = @bottom_margin + @marker_caps_height + LABEL_MARGIN
+      @graph_right_margin = @geometry.right_margin + extra_room_for_long_label
+      @graph_bottom_margin = @geometry.bottom_margin + @marker_caps_height + LABEL_MARGIN
 
       @graph_right = @geometry.raw_columns - @graph_right_margin
       @graph_width = @geometry.raw_columns - @graph_left - @graph_right_margin
 
       # When @hide title, leave a title_margin space for aesthetics.
-      @graph_top = @geometry.legend_at_bottom ? @top_margin : (@top_margin +
+      @graph_top = @geometry.legend_at_bottom ? @geometry.top_margin : (@geometry.top_margin +
           (@geometry.hide_title ? title_margin : @title_caps_height + title_margin) +
           (@legend_caps_height + legend_margin))
 
@@ -136,7 +136,7 @@ module Rubyplot
         @d.gravity = CenterGravity
         @d = @d.scale_annotation(@base_image,
                                  1.0, @raw_rows,
-                                 @left_margin + @marker_caps_height / 2.0, 0.0,
+                                 @geometry.left_margin + @marker_caps_height / 2.0, 0.0,
                                  @geometry.y_axis_label, @scale)
         @d.rotation = 90.0
       end
@@ -154,7 +154,7 @@ module Rubyplot
       @d.gravity = NorthGravity
       @d = @d.scale_annotation(@base_image,
                                @geometry.raw_columns, 1.0,
-                               0, @top_margin,
+                               0, @geometry.top_margin,
                                @title, @scale)
     end
 
@@ -183,8 +183,8 @@ module Rubyplot
 
       current_x_offset = center(sum(label_widths.first))
       current_y_offset = @geometry.legend_at_bottom ? @graph_height + title_margin : (@geometry.hide_title ?
-          @top_margin + title_margin :
-          @top_margin + title_margin + @title_caps_height)
+          @geometry.top_margin + title_margin :
+          @geometry.top_margin + title_margin + @title_caps_height)
 
       @legend_labels.each_with_index do |legend_label, _index|
         # Draw label
