@@ -150,7 +150,7 @@ module Rubyplot
       @d.font = @title_font || @font if @title_font || @font
       @d.stroke('transparent')
       @d.pointsize = scale_fontsize(@title_font_size)
-      @d.font_weight = @bold_title ? BoldWeight : NormalWeight
+      @d.font_weight = BoldWeight
       @d.gravity = NorthGravity
       @d = @d.scale_annotation(@base_image,
                                @geometry.raw_columns, 1.0,
