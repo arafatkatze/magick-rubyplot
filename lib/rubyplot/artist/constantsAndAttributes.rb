@@ -16,18 +16,6 @@ module Rubyplot
 
     THOUSAND_SEPARATOR = ','.freeze
 
-    # Blank space above the graph
-    attr_accessor :top_margin
-
-    # Blank space below the graph
-    attr_accessor :bottom_margin
-
-    # Blank space to the right of the graph
-    attr_accessor :right_margin
-
-    # Blank space to the left of the graph
-    attr_accessor :left_margin
-
     # Blank space below the title
     attr_accessor :title_margin
 

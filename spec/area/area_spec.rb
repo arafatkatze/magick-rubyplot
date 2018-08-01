@@ -23,6 +23,6 @@ describe 'Area' do
     end
 
     # Default theme
-    g.write('spec/reference_images/area_keynote.png')
+    g.write('spec/reference_images/area_test.png')
   end
 end

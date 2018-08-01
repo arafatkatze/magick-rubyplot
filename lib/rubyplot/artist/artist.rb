@@ -2,6 +2,9 @@ module Rubyplot
   class Artist
     include Magick
 
+    # Makes an array of colors randomly selected from all the possible list of
+    # colors supported by RMagick. This function is used because it helps to decide
+    # the colors for data labels if user doesn't specify the colors for data labels.
     def construct_colors_array
       return unless @geometry.plot_colors.empty?
       0.upto(@geometry.norm_data.size - 1) do |_i|
@@ -9,6 +12,7 @@ module Rubyplot
       end
     end
 
+    # Sets the colors for the data labels of the plot.
     def set_colors_array(color_array)
       @geometry.plot_colors = color_array
     end
@@ -30,7 +34,7 @@ module Rubyplot
     end
 
     # An alias to draw function to facilitate the ease of function calling
-    # with subclasses.
+    # with subclasses used to define different plots.
     def artist_draw
       return unless @geometry.has_data
       setup_drawing
@@ -46,6 +50,8 @@ module Rubyplot
     # * line markers
     # * legend
     # * title
+    # * labels
+    # * X/Y offsets
     def setup_drawing
       calculate_spread
       normalize

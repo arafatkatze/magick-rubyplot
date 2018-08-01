@@ -53,7 +53,7 @@ class Rubyplot::Bar < Rubyplot::Artist
       if @geometry.maximum_value <= 0
         @mode = :negative
       else
-        # bars either go from zero to negativ or to positiv
+        # bars either go from zero to negativ or to positive
         @mode = :both
         @spread = @spread
         @minimum_value = @geometry.minimum_value
