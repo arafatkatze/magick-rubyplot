@@ -1,7 +1,7 @@
 class Rubyplot::Bubble < Rubyplot::Scatter
   def construct_colors_array
     return unless @plot_colors.empty?
-    0.upto(@norm_data.size - 1) do |_i|
+    0.upto(@geometry.norm_data.size - 1) do |_i|
       @plot_colors.push(@all_colors_array[rand(@all_colors_array.size)].name)
     end
   end
@@ -27,7 +27,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     draw_axis_labels
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
-    @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
     # ~ if (defined?(@norm_y_baseline)) then
     # ~ level = @graph_top + (@graph_height - @norm_baseline * @graph_height)
@@ -42,7 +42,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
 
     # ~ if (defined?(@norm_x_baseline)) then
     # ~ end
-    @norm_data.each_with_index do |data_row, data_row_index|
+    @geometry.norm_data.each_with_index do |data_row, data_row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
         x_value = data_row[DATA_VALUES_X_INDEX][index]
         next if data_point.nil? || x_value.nil?
@@ -54,7 +54,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
         @d = @d.stroke_opacity 1.0
         @d.fill_opacity(0.3)
         @d.fill_color(@plot_colors[data_row_index])
-        @d = @d.stroke_width @stroke_width || clip_value_if_greater_than(@columns / (@norm_data.first[1].size * 4), 5.0)
+        @d = @d.stroke_width @stroke_width || clip_value_if_greater_than(@columns / (@geometry.norm_data.first[1].size * 4), 5.0)
 
         circle_radius = 2 * @z_data[data_row_index][index]
         @d = @d.circle(new_x, new_y, new_x - circle_radius, new_y)

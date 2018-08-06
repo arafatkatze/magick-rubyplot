@@ -46,7 +46,7 @@ module Rubyplot
     def setup_graph_measurements
       @marker_caps_height = calculate_caps_height(@marker_font_size)
 
-      @title_caps_height = @hide_title || @title.nil? ? 0 :
+      @title_caps_height = @geometry.hide_title || @title.nil? ? 0 :
           calculate_caps_height(@title_font_size) * @title.lines.to_a.size
       # Initially the title is nil.
 
@@ -63,17 +63,17 @@ module Rubyplot
       end
 
       # Shift graph if left line numbers are hidden
-      line_number_width = @hide_line_numbers && !@has_left_labels ?
+      line_number_width = @geometry.hide_line_numbers && !@has_left_labels ?
           0.0 :
           (longest_left_label_width + LABEL_MARGIN * 2)
 
       @graph_left = @left_margin +
                     line_number_width +
-                    (@y_axis_label.nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
+                    (@geometry.y_axis_label .nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
 
       # Make space for half the width of the rightmost column label.
       last_label = @labels.keys.max.to_i
-      extra_room_for_long_label = last_label >= (@column_count - 1) && @center_labels_over_point ?
+      extra_room_for_long_label = last_label >= (@geometry.column_count - 1) && @geometry.center_labels_over_point ?
           calculate_width(@marker_font_size, @labels[last_label]) / 2.0 : 0
       @graph_right_margin = @right_margin + extra_room_for_long_label
 
@@ -83,11 +83,11 @@ module Rubyplot
       @graph_width = @raw_columns - @graph_left - @graph_right_margin
 
       # When @hide title, leave a title_margin space for aesthetics.
-      @graph_top = @legend_at_bottom ? @top_margin : (@top_margin +
-          (@hide_title ? title_margin : @title_caps_height + title_margin) +
+      @graph_top = @geometry.legend_at_bottom ? @top_margin : (@top_margin +
+          (@geometry.hide_title ? title_margin : @title_caps_height + title_margin) +
           (@legend_caps_height + legend_margin))
 
-      x_axis_label_height = @x_axis_label.nil? ? 0.0 :
+      x_axis_label_height = @geometry.x_axis_label .nil? ? 0.0 :
           @marker_caps_height + LABEL_MARGIN
       @graph_bottom = @raw_rows - @graph_bottom_margin - x_axis_label_height - @label_stagger_height
       @graph_height = @graph_bottom - @graph_top
@@ -95,7 +95,7 @@ module Rubyplot
 
     # Draw the optional labels for the x axis and y axis.
     def draw_axis_labels
-      unless @x_axis_label.nil?
+      unless @geometry.x_axis_label .nil?
         # X Axis
         # Centered vertically and horizontally by setting the
         # height to 1.0 and the width to the width of the graph.
@@ -110,24 +110,24 @@ module Rubyplot
         @d = @d.scale_annotation(@base_image,
                                  @raw_columns, 1.0,
                                  0.0, x_axis_label_y_coordinate,
-                                 @x_axis_label, @scale)
+                                 @geometry.x_axis_label, @scale)
       end
 
-      unless @y_axis_label.nil?
+      unless @geometry.y_axis_label .nil?
         # Y Axis, rotated vertically
         @d.rotation = -90.0
         @d.gravity = CenterGravity
         @d = @d.scale_annotation(@base_image,
                                  1.0, @raw_rows,
                                  @left_margin + @marker_caps_height / 2.0, 0.0,
-                                 @y_axis_label, @scale)
+                                 @geometry.y_axis_label, @scale)
         @d.rotation = 90.0
       end
     end
 
     # Draws a title on the graph.
     def draw_title
-      return if @hide_title || @title.nil?
+      return if @geometry.hide_title || @title.nil?
 
       @d.fill = @font_color
       @d.font = @title_font || @font if @title_font || @font
@@ -165,7 +165,7 @@ module Rubyplot
       end
 
       current_x_offset = center(sum(label_widths.first))
-      current_y_offset = @legend_at_bottom ? @graph_height + title_margin : (@hide_title ?
+      current_y_offset = @geometry.legend_at_bottom ? @graph_height + title_margin : (@geometry.hide_title ?
           @top_margin + title_margin :
           @top_margin + title_margin + @title_caps_height)
 
@@ -219,33 +219,33 @@ module Rubyplot
 
     # Draws horizontal background lines and labels
     def draw_line_markers!
-      return if @hide_line_markers
+      return if @geometry.hide_line_markers
 
       @d = @d.stroke_antialias false
 
-      if @y_axis_increment.nil?
+      if @geometry.y_axis_increment .nil?
         # Try to use a number of horizontal lines that will come out even.
         #
         # TODO Do the same for larger numbers...100, 75, 50, 25
-        if @marker_count.nil?
+        if @geometry.marker_count.nil?
           (3..7).each do |lines|
             if @spread % lines == 0.0
-              @marker_count = lines
+              @geometry.marker_count = lines
               break
             end
           end
-          @marker_count ||= 4
+          @geometry.marker_count ||= 4
         end
-        @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
+        @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
       else
         # TODO: Make this work for negative values
-        @marker_count = (@spread / @y_axis_increment).to_i
-        @increment = @y_axis_increment
+        @geometry.marker_count = (@spread / @geometry.y_axis_increment).to_i
+        @increment = @geometry.y_axis_increment
       end
       @increment_scaled = @graph_height.to_f / (@spread / @increment)
 
       # Draw horizontal line markers and annotate with numbers
-      (0..@marker_count).each do |index|
+      (0..@geometry.marker_count).each do |index|
         y = @graph_top + @graph_height - index.to_f * @increment_scaled
 
         @d = @d.fill(@marker_color)
@@ -258,9 +258,9 @@ module Rubyplot
         end
 
         marker_label = BigDecimal(index.to_s) * BigDecimal(@increment.to_s) +
-                       BigDecimal(@minimum_value.to_s)
+                       BigDecimal(@geometry.minimum_value.to_s)
 
-        next if @hide_line_numbers
+        next if @geometry.hide_line_numbers
         @d.fill = @font_color
         @d.font = @font if @font
         @d.stroke('transparent')
@@ -287,7 +287,7 @@ module Rubyplot
 
     # Draws column labels below graph, centered over x_offset
     def draw_label(x_offset, index)
-      return if @hide_line_markers
+      return if @geometry.hide_line_markers
 
       if !@labels[index].nil? && @labels_seen[index].nil?
         y_offset = @graph_bottom + LABEL_MARGIN
@@ -301,12 +301,12 @@ module Rubyplot
         # TESTME
         # FIXME: Consider chart types other than bar
         if label_text.size > @label_max_size
-          if @label_truncation_style == :trailing_dots
+          if @geometry.label_truncation_style == :trailing_dots
             if @label_max_size > 3
               # 4 because '...' takes up 3 chars
               label_text = "#{label_text[0..(@label_max_size - 4)]}..."
             end
-          else # @label_truncation_style is :absolute (default)
+          else # @geometry.label_truncation_style is :absolute (default)
             label_text = label_text[0..(@label_max_size - 1)]
           end
 
@@ -347,7 +347,7 @@ module Rubyplot
                 else
                   value.to_s
                 end
-              elsif (@spread.to_f % (@marker_count.to_f == 0 ? 1 : @marker_count.to_f) == 0) || !@y_axis_increment.nil?
+              elsif (@spread.to_f % (@geometry.marker_count.to_f == 0 ? 1 : @geometry.marker_count.to_f) == 0) || !@geometry.y_axis_increment .nil?
                 value.to_i.to_s
               elsif @spread > 10.0
                 format('%0i', value)

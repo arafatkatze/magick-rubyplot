@@ -46,10 +46,10 @@ class Rubyplot::Line < Rubyplot::Artist
     return unless @has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
-    @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
     if @geometry.show_vertical_markers # false in the base case
-      (0..@column_count).each do |column|
+      (0..@geometry.column_count).each do |column|
         x = @graph_left + @graph_width - column.to_f * @x_increment
 
         @d = @d.fill(@marker_color)
@@ -63,7 +63,7 @@ class Rubyplot::Line < Rubyplot::Artist
       end
     end
 
-    @norm_data.each do |data_row|
+    @geometry.norm_data.each do |data_row|
       # Initially the previous x,y points are nil and then
       # they are set with values.
       prev_x = prev_y = nil
@@ -91,10 +91,10 @@ class Rubyplot::Line < Rubyplot::Artist
         # @d = @d.fill data_row[DATA_COLOR_INDEX]
         @d = @d.stroke_opacity 1.0
         @d = @d.stroke_width line_width ||
-                             clip_value_if_greater_than(@columns / (@norm_data.first[DATA_VALUES_INDEX].size * 4), 5.0)
+                             clip_value_if_greater_than(@columns / (@geometry.norm_data.first[DATA_VALUES_INDEX].size * 4), 5.0)
 
         circle_radius = dot_radius ||
-                        clip_value_if_greater_than(@columns / (@norm_data.first[DATA_VALUES_INDEX].size * 2.5), 5.0)
+                        clip_value_if_greater_than(@columns / (@geometry.norm_data.first[DATA_VALUES_INDEX].size * 2.5), 5.0)
 
         if !@geometry.hide_lines && !prev_x.nil? && !prev_y.nil?
           @d = @d.line(prev_x, prev_y, new_x, new_y)

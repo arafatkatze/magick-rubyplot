@@ -15,21 +15,21 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     color = []
     @data << [name, data_points, color]
     # Set column count if this is larger than previous column counts
-    @column_count = data_points.length > @column_count ? data_points.length : @column_count
+    @geometry.column_count = data_points.length > @geometry.column_count ? data_points.length : @geometry.column_count
 
     y_z_array_sum = [data_points, z_data_points].transpose.map { |x| x.reduce(:+) }
     y_z_array_diff = [data_points, z_data_points].transpose.map { |x| x.reduce(:-) }
     if @maximum_value.nil? && @maximum_value.nil?
-      @maximum_value = @minimum_value = data_points.first
+      @maximum_value = @geometry.minimum_value = data_points.first
     end
     @maximum_value = y_z_array_sum.max > @maximum_value ?
                         y_z_array_sum.max : @maximum_value
-    @minimum_value = y_z_array_sum.min < @minimum_value ?
-                        y_z_array_sum.min : @minimum_value
+    @geometry.minimum_value = y_z_array_sum.min < @geometry.minimum_value ?
+                        y_z_array_sum.min : @geometry.minimum_value
     @maximum_value = y_z_array_diff.max > @maximum_value ?
                         y_z_array_diff.max : @maximum_value
-    @minimum_value = y_z_array_diff.min < @minimum_value ?
-                        y_z_array_diff.min : @minimum_value
+    @geometry.minimum_value = y_z_array_diff.min < @geometry.minimum_value ?
+                        y_z_array_diff.min : @geometry.minimum_value
     @has_data = true
   end
 

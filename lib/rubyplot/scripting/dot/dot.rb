@@ -7,12 +7,12 @@ class Rubyplot::Dot < Rubyplot::Artist
 
     # Setup spacing.
     spacing_factor = 1.0
-    @items_width = @graph_height / @column_count.to_f
-    @item_width = @items_width * spacing_factor / @norm_data.size
+    @items_width = @graph_height / @geometry.column_count.to_f
+    @item_width = @items_width * spacing_factor / @geometry.norm_data.size
     @d = @d.stroke_opacity 0.0
     padding = (@items_width * (1 - spacing_factor)) / 2
 
-    @norm_data.each_with_index do |data_row, row_index|
+    @geometry.norm_data.each_with_index do |data_row, row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
         x_pos = @graph_left + (data_point * @graph_width)
         y_pos = @graph_top + (@items_width * point_index) + padding + (@items_width.to_f / 2.0).round
@@ -53,28 +53,28 @@ class Rubyplot::Dot < Rubyplot::Artist
       # Try to use a number of horizontal lines that will come out even.
       #
       # TODO Do the same for larger numbers...100, 75, 50, 25
-      if @marker_count.nil?
+      if @geometry.marker_count.nil?
         (3..7).each do |lines|
           if @spread % lines == 0.0
-            @marker_count = lines
+            @geometry.marker_count = lines
             break
           end
         end
-        @marker_count ||= 5
+        @geometry.marker_count ||= 5
       end
       # TODO: Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
-      @increment = @spread > 0 && @marker_count > 0 ? significant(@spread / @marker_count) : 1
+      @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
 
-      number_of_lines = @marker_count
+      number_of_lines = @geometry.marker_count
       increment = @increment
     end
 
     (0..number_of_lines).each do |index|
-      marker_label = @minimum_value + index * increment
-      x = @graph_left + (marker_label - @minimum_value) * @graph_width / @spread
+      marker_label = @geometry.minimum_value + index * increment
+      x = @graph_left + (marker_label - @geometry.minimum_value) * @graph_width / @spread
       @d = @d.line(x, @graph_bottom, x, @graph_bottom + 0.5 * LABEL_MARGIN)
 
-      unless @hide_line_numbers
+      unless @geometry.hide_line_numbers
         @d.fill = @font_color
         @d.font = @font if @font
         @d.stroke = 'transparent'

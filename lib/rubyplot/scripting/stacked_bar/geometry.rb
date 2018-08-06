@@ -11,6 +11,7 @@ module Rubyplot
     attr_accessor :segment_spacing, :column_count
 
     def initialize(*)
+      super
       @all_colors_array = Magick.colors
       @plot_colors = []
     end
