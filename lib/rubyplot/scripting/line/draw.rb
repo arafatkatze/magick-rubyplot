@@ -1,5 +1,8 @@
 # This class helps draw line graphs for both "y axis data" and for "x-y axis data".
 class Rubyplot::Line < Rubyplot::Artist
+  # Dimensions of lines and dots; calculated based on dataset size if left unspecified
+  attr_accessor :line_width
+  attr_accessor :dot_radius
   # Call with target pixel width of graph (800, 400, 300), and/or 'false' to omit lines (points only).
   #  g = Rubyplot::Line.new(400) # 400px wide with lines.
   #
@@ -14,27 +17,18 @@ class Rubyplot::Line < Rubyplot::Artist
       super args.shift # TODO: Figure out a better alternative here.
     end
 
-    @reference_lines = {}
-    @reference_line_default_color = 'red'
-    @reference_line_default_width = 5
-
-    @hide_dots = @hide_lines = false
-    @show_vertical_markers = false
-    @dot_style = 'circle' # Options present for Circle and Square dot style.
-
-    @maximum_x_value = nil
-    @minimum_x_value = nil
+    @geometry = Rubyplot::LineGeometry.new
   end
 
   # Get the value if somebody has defined it.
   def baseline_value
-    @reference_lines[:baseline][:value] if @reference_lines.key?(:baseline)
+    @geometry.reference_lines[:baseline][:value] if @geometry.reference_lines.key?(:baseline)
   end
 
   # Set a value for a baseline reference line.
   def baseline_value=(new_value)
-    @reference_lines[:baseline] ||= {}
-    @reference_lines[:baseline][:value] = new_value
+    @geometry.reference_lines[:baseline] ||= {}
+    @geometry.reference_lines[:baseline][:value] = new_value
   end
 
   def draw_reference_line(reference_line, left, right, top, bottom)
@@ -54,7 +48,7 @@ class Rubyplot::Line < Rubyplot::Artist
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @column_count > 1 ? (@graph_width / (@column_count - 1).to_f) : @graph_width
 
-    if @show_vertical_markers # false in the base case
+    if @geometry.show_vertical_markers # false in the base case
       (0..@column_count).each do |column|
         x = @graph_left + @graph_width - column.to_f * @x_increment
 
@@ -84,7 +78,7 @@ class Rubyplot::Line < Rubyplot::Artist
         else
           new_x = get_x_coord(x_data[index], @graph_width, @graph_left)
           @labels.each do |label_pos, _|
-            draw_label(@graph_left + ((label_pos - @minimum_x_value) * @graph_width) / (@maximum_x_value - @minimum_x_value), label_pos)
+            draw_label(@graph_left + ((label_pos - @geometry.minimum_x_value) * @graph_width) / (@geometry.maximum_x_value - @geometry.minimum_x_value), label_pos)
           end
         end
         unless data_point # we can't draw a line for a null data point, we can still label the axis though
@@ -102,15 +96,15 @@ class Rubyplot::Line < Rubyplot::Artist
         circle_radius = dot_radius ||
                         clip_value_if_greater_than(@columns / (@norm_data.first[DATA_VALUES_INDEX].size * 2.5), 5.0)
 
-        if !@hide_lines && !prev_x.nil? && !prev_y.nil?
+        if !@geometry.hide_lines && !prev_x.nil? && !prev_y.nil?
           @d = @d.line(prev_x, prev_y, new_x, new_y)
         elsif @one_point
           # Show a circle if there's just one_point
-          @d = DotRenderers.renderer(@dot_style).render(@d, new_x, new_y, circle_radius)
+          @d = DotRenderers.renderer(@geometry.dot_style).render(@d, new_x, new_y, circle_radius)
         end
 
-        unless @hide_dots
-          @d = DotRenderers.renderer(@dot_style).render(@d, new_x, new_y, circle_radius)
+        unless @geometry.hide_dots
+          @d = DotRenderers.renderer(@geometry.dot_style).render(@d, new_x, new_y, circle_radius)
         end
 
         prev_x = new_x

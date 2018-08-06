@@ -4,7 +4,7 @@ class Rubyplot::Bar < Rubyplot::Artist
 
   def initialize(*args)
     super
-    @spacing_factor = 0.9
+    @geometry = Rubyplot::BarGeometry.new
   end
 
   def draw
@@ -26,15 +26,15 @@ class Rubyplot::Bar < Rubyplot::Artist
   #
   # Default value is 0.9.
   def spacing_factor=(space_percent)
-    raise ArgumentError, 'spacing_factor must be between 0.00 and 1.00' unless (space_percent >= 0) && (space_percent <= 1)
-    @spacing_factor = (1 - space_percent)
+    raise ArgumentError, 'geometry.spacing_factor must be between 0.00 and 1.00' unless (space_percent >= 0) && (space_percent <= 1)
+    @geometry.spacing_factor = (1 - space_percent)
   end
 
   def draw_bars
     # Setup spacing.
     #
     # Columns sit side-by-side.
-    @bar_spacing ||= @spacing_factor # space between the bars
+    @bar_spacing ||= @geometry.spacing_factor # space between the bars
     @bar_width = @graph_width / (@column_count * @data.length).to_f
     padding = (@bar_width * (1 - @bar_spacing)) / 2
 
