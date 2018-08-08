@@ -7,7 +7,7 @@ module Rubyplot
     attr_accessor :hide_lines
     attr_accessor :show_vertical_markers
     attr_accessor :dot_style
-    def initialize(*)
+    def initialize
       super
       @reference_lines = {}
       @reference_line_default_color = 'red'

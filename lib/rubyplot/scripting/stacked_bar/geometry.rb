@@ -10,7 +10,7 @@ module Rubyplot
     # Number of pixels between bar segments
     attr_accessor :segment_spacing, :column_count
 
-    def initialize(*)
+    def initialize
       super
       @all_colors_array = Magick.colors
       @plot_colors = []

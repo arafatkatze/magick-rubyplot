@@ -4,7 +4,7 @@ module Rubyplot
     attr_accessor :z_data
     attr_accessor :plot_colors
 
-    def initialize(*)
+    def initialize
       super
       @all_colors_array = Magick.colors
       @plot_colors = []
