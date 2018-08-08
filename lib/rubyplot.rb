@@ -2,6 +2,9 @@ require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
 
+# SubPlots
+require 'rubyplot/artist/subplots'
+
 # Artist Layer Base
 require 'rubyplot/artist/constantsAndAttributes'
 require 'rubyplot/artist/geometry'
