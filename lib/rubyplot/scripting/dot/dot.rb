@@ -1,7 +1,7 @@
 # Creates dot type plots
 class Rubyplot::Dot < Rubyplot::Artist
   def draw
-    @has_left_labels = true
+    @geometry.has_left_labels = true
     super
     return unless @has_data # TODO: Raise error here or make an error raising class.
 
