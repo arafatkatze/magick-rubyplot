@@ -32,35 +32,28 @@ module Rubyplot
     # developers to change this values in their program.
     def initialize_variables
       # Internal for calculations
-      @raw_columns = 800.0
-      @raw_rows = 800.0 * (@rows / @columns)
       @data = []
-      @maximum_value = @geometry.minimum_value = nil
-      @has_data = false
-      @increment = nil
+
+      @raw_rows = 800.0 * (@rows / @columns)
       @labels = {}
-      @labels_seen = {}
       @sort = false
       @title = nil
       @title_font = nil
 
-      @scale = @columns / @raw_columns
+      @scale = @columns / @geometry.raw_columns
 
       vera_font_path = File.expand_path('Vera.ttf', ENV['MAGICK_FONT_PATH'])
       @font = File.exist?(vera_font_path) ? vera_font_path : nil
-      @bold_title = true
 
       @marker_font_size = 21.0
       @legend_font_size = 20.0
       @title_font_size = 36.0
 
-      @top_margin = @bottom_margin = @left_margin = @right_margin = DEFAULT_MARGIN
       @legend_margin = LEGEND_MARGIN
       @title_margin = TITLE_MARGIN
 
       @legend_box_size = 20.0
 
-      @has_left_labels = false
       @label_stagger_height = 0
       @label_max_size = 0
       @label_truncation_style = :absolute

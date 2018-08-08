@@ -1,15 +1,4 @@
 class Rubyplot::StackedBar < Rubyplot::Bar
-  def construct_colors_array
-    return unless @geometry.plot_colors.empty?
-    0.upto(@geometry.norm_data.size - 1) do |_i|
-      @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
-    end
-  end
-
-  def set_colors_array(color_array)
-    @geometry.plot_colors = color_array
-  end
-
   def set_spacings
     # Setup spacing.
     #
@@ -31,7 +20,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
     draw_line_markers!
     draw_title
     draw_axis_labels
-    return unless @has_data
+    return unless @geometry.has_data
 
     set_spacings
     @d = @d.stroke_opacity 0.0
