@@ -47,6 +47,7 @@ require 'rubyplot/scripting/stacked_bar/draw'
 require 'rubyplot/scripting/stacked_bar/init'
 
 # Area
+require 'rubyplot/scripting/area/geometry'
 require 'rubyplot/scripting/area/area'
 
 # Version

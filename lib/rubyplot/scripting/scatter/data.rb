@@ -60,7 +60,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
   def normalize(force = nil)
     if @geometry.norm_data.nil? || force
       @geometry.norm_data = []
-      return unless @has_data
+      return unless @geometry.has_data
 
       @data.each do |data_row|
         norm_data_points = [data_row[DATA_LABEL_INDEX]]
@@ -75,7 +75,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
         @geometry.norm_data << norm_data_points
       end
     end
-    # ~ @norm_y_baseline = (@geometry.baseline_y_value.to_f / @maximum_value.to_f) if @geometry.baseline_y_value
+    # ~ @norm_y_baseline = (@geometry.baseline_y_value.to_f / @geometry.maximum_value.to_f) if @geometry.baseline_y_value
     # ~ @norm_x_baseline = (@geometry.baseline_x_value.to_f / @geometry.maximum_x_value.to_f) if @geometry.baseline_x_value
   end
 end

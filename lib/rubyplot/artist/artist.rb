@@ -2,7 +2,24 @@ module Rubyplot
   class Artist
     include Magick
 
+    # Makes an array of colors randomly selected from all the possible list of
+    # colors supported by RMagick. This function is used because it helps to decide
+    # the colors for data labels if user doesn't specify the colors for data labels.
+    def construct_colors_array
+      return unless @geometry.plot_colors.empty?
+      0.upto(@geometry.norm_data.size - 1) do |_i|
+        @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+      end
+    end
+
+    # Sets the colors for the data labels of the plot.
+    def set_colors_array(color_array)
+      @geometry.plot_colors = color_array
+    end
+
     # Writes the plot to a file. Defaults to 'plot.png'
+    # All file writing formats supported by RMagicks are supported by this
+    # function.
     def write(filename = 'plot.png')
       draw
       @base_image.write(filename)
@@ -17,9 +34,9 @@ module Rubyplot
     end
 
     # An alias to draw function to facilitate the ease of function calling
-    # with subclasses.
+    # with subclasses used to define different plots.
     def artist_draw
-      return unless @has_data
+      return unless @geometry.has_data
       setup_drawing
       draw_legend
       draw_line_markers!
@@ -27,11 +44,14 @@ module Rubyplot
       draw_axis_labels
     end
 
+    ##
     # Calculates size of drawable area and generates normalized data.
     #
     # * line markers
     # * legend
     # * title
+    # * labels
+    # * X/Y offsets
     def setup_drawing
       calculate_spread
       normalize
@@ -42,7 +62,7 @@ module Rubyplot
     # Calculates size of drawable area, general font dimensions, etc.
     # This is the most crucial part of the code and is based on geometry.
     # It calcuates the measurments in pixels to figure out the positioning
-    # gap pixels of Legends, Labels and Titles.
+    # gap pixels of Legends, Labels and Titles from the picture edge.
     def setup_graph_measurements
       @marker_caps_height = calculate_caps_height(@marker_font_size)
 
@@ -52,22 +72,22 @@ module Rubyplot
 
       @legend_caps_height = calculate_caps_height(@legend_font_size)
 
-      # For Now the labels feature only focuses on the dot graph so it makes sense to only have
+      # For now, the labels feature only focuses on the dot graph so it makes sense to only have
       # this as an attribute for this kind of graph and not for others.
       if @geometry.has_left_labels
         longest_left_label_width = calculate_width(@marker_font_size,
                                                    labels.values.inject('') { |value, memo| value.to_s.length > memo.to_s.length ? value : memo }) * 1.25
       else
         longest_left_label_width = calculate_width(@marker_font_size,
-                                                   label(@maximum_value.to_f, @increment))
+                                                   label(@geometry.maximum_value.to_f, @geometry.increment))
       end
 
       # Shift graph if left line numbers are hidden
       line_number_width = @geometry.hide_line_numbers && !@geometry.has_left_labels ?
-          0.0 :
-          (longest_left_label_width + LABEL_MARGIN * 2)
+          0.0 : (longest_left_label_width + LABEL_MARGIN * 2)
 
-      @graph_left = @left_margin +
+      # Pixel offset from the left edge of the plot
+      @graph_left = @geometry.left_margin +
                     line_number_width +
                     (@geometry.y_axis_label .nil? ? 0.0 : @marker_caps_height + LABEL_MARGIN * 2)
 
@@ -75,20 +95,23 @@ module Rubyplot
       last_label = @labels.keys.max.to_i
       extra_room_for_long_label = last_label >= (@geometry.column_count - 1) && @geometry.center_labels_over_point ?
           calculate_width(@marker_font_size, @labels[last_label]) / 2.0 : 0
-      @graph_right_margin = @right_margin + extra_room_for_long_label
 
-      @graph_bottom_margin = @bottom_margin + @marker_caps_height + LABEL_MARGIN
+      # Margins
+      @graph_right_margin = @geometry.right_margin + extra_room_for_long_label
+      @graph_bottom_margin = @geometry.bottom_margin + @marker_caps_height + LABEL_MARGIN
 
-      @graph_right = @raw_columns - @graph_right_margin
-      @graph_width = @raw_columns - @graph_left - @graph_right_margin
+      @graph_right = @geometry.raw_columns - @graph_right_margin
+      @graph_width = @geometry.raw_columns - @graph_left - @graph_right_margin
 
       # When @hide title, leave a title_margin space for aesthetics.
-      @graph_top = @geometry.legend_at_bottom ? @top_margin : (@top_margin +
+      @graph_top = @geometry.legend_at_bottom ? @geometry.top_margin : (@geometry.top_margin +
           (@geometry.hide_title ? title_margin : @title_caps_height + title_margin) +
           (@legend_caps_height + legend_margin))
 
       x_axis_label_height = @geometry.x_axis_label .nil? ? 0.0 :
           @marker_caps_height + LABEL_MARGIN
+
+      # The actual height of the graph inside the whole image in pixels.
       @graph_bottom = @raw_rows - @graph_bottom_margin - x_axis_label_height - @label_stagger_height
       @graph_height = @graph_bottom - @graph_top
     end
@@ -108,7 +131,7 @@ module Rubyplot
         @d.pointsize = scale_fontsize(@marker_font_size)
         @d.gravity = NorthGravity
         @d = @d.scale_annotation(@base_image,
-                                 @raw_columns, 1.0,
+                                 @geometry.raw_columns, 1.0,
                                  0.0, x_axis_label_y_coordinate,
                                  @geometry.x_axis_label, @scale)
       end
@@ -119,7 +142,7 @@ module Rubyplot
         @d.gravity = CenterGravity
         @d = @d.scale_annotation(@base_image,
                                  1.0, @raw_rows,
-                                 @left_margin + @marker_caps_height / 2.0, 0.0,
+                                 @geometry.left_margin + @marker_caps_height / 2.0, 0.0,
                                  @geometry.y_axis_label, @scale)
         @d.rotation = 90.0
       end
@@ -133,11 +156,11 @@ module Rubyplot
       @d.font = @title_font || @font if @title_font || @font
       @d.stroke('transparent')
       @d.pointsize = scale_fontsize(@title_font_size)
-      @d.font_weight = @bold_title ? BoldWeight : NormalWeight
+      @d.font_weight = BoldWeight
       @d.gravity = NorthGravity
       @d = @d.scale_annotation(@base_image,
-                               @raw_columns, 1.0,
-                               0, @top_margin,
+                               @geometry.raw_columns, 1.0,
+                               0, @geometry.top_margin,
                                @title, @scale)
     end
 
@@ -159,15 +182,15 @@ module Rubyplot
         label_width = metrics.width + legend_square_width * 2.7
         label_widths.last.push label_width
 
-        if sum(label_widths.last) > (@raw_columns * 0.9)
+        if sum(label_widths.last) > (@geometry.raw_columns * 0.9)
           label_widths.push [label_widths.last.pop]
         end
       end
 
       current_x_offset = center(sum(label_widths.first))
       current_y_offset = @geometry.legend_at_bottom ? @graph_height + title_margin : (@geometry.hide_title ?
-          @top_margin + title_margin :
-          @top_margin + title_margin + @title_caps_height)
+          @geometry.top_margin + title_margin :
+          @geometry.top_margin + title_margin + @title_caps_height)
 
       @legend_labels.each_with_index do |legend_label, _index|
         # Draw label
@@ -178,7 +201,7 @@ module Rubyplot
         @d.font_weight = NormalWeight
         @d.gravity = WestGravity
         @d = @d.scale_annotation(@base_image,
-                                 @raw_columns, 1.0,
+                                 @geometry.raw_columns, 1.0,
                                  current_x_offset + (legend_square_width * 1.7), current_y_offset,
                                  legend_label.to_s, @scale)
 
@@ -236,17 +259,17 @@ module Rubyplot
           end
           @geometry.marker_count ||= 4
         end
-        @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
+        @geometry.increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
       else
         # TODO: Make this work for negative values
         @geometry.marker_count = (@spread / @geometry.y_axis_increment).to_i
-        @increment = @geometry.y_axis_increment
+        @geometry.increment = @geometry.y_axis_increment
       end
-      @increment_scaled = @graph_height.to_f / (@spread / @increment)
+      @geometry.increment_scaled = @graph_height.to_f / (@spread / @geometry.increment)
 
       # Draw horizontal line markers and annotate with numbers
       (0..@geometry.marker_count).each do |index|
-        y = @graph_top + @graph_height - index.to_f * @increment_scaled
+        y = @graph_top + @graph_height - index.to_f * @geometry.increment_scaled
 
         @d = @d.fill(@marker_color)
 
@@ -257,7 +280,7 @@ module Rubyplot
           @d = @d.line(@graph_left, y + 1, @graph_right, y + 1)
         end
 
-        marker_label = BigDecimal(index.to_s) * BigDecimal(@increment.to_s) +
+        marker_label = BigDecimal(index.to_s) * BigDecimal(@geometry.increment.to_s) +
                        BigDecimal(@geometry.minimum_value.to_s)
 
         next if @geometry.hide_line_numbers
@@ -271,7 +294,7 @@ module Rubyplot
         @d = @d.scale_annotation(@base_image,
                                  @graph_left - LABEL_MARGIN, 1.0,
                                  0.0, y,
-                                 label(marker_label, @increment), @scale)
+                                 label(marker_label, @geometry.increment), @scale)
       end
       @d = @d.stroke_antialias true
       # string = 'hello' + '.png'
@@ -289,7 +312,7 @@ module Rubyplot
     def draw_label(x_offset, index)
       return if @geometry.hide_line_markers
 
-      if !@labels[index].nil? && @labels_seen[index].nil?
+      if !@labels[index].nil? && @geometry.labels_seen[index].nil?
         y_offset = @graph_bottom + LABEL_MARGIN
 
         # TESTME
@@ -324,7 +347,7 @@ module Rubyplot
                                    x_offset, y_offset,
                                    label_text, @scale)
         end
-        @labels_seen[index] = 1
+        @geometry.labels_seen[index] = 1
       end
     end
 

@@ -1,4 +1,5 @@
 require 'rubyplot'
+
 # Makes a Bar graph with random graph numbers
 def random_bar_graph
   base = Rubyplot::Bar.new(600)

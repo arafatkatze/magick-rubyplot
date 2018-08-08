@@ -19,18 +19,18 @@ class Rubyplot::Bubble < Rubyplot::Scatter
 
     y_z_array_sum = [data_points, z_data_points].transpose.map { |x| x.reduce(:+) }
     y_z_array_diff = [data_points, z_data_points].transpose.map { |x| x.reduce(:-) }
-    if @maximum_value.nil? && @maximum_value.nil?
-      @maximum_value = @geometry.minimum_value = data_points.first
+    if @geometry.maximum_value.nil? && @geometry.maximum_value.nil?
+      @geometry.maximum_value = @geometry.minimum_value = data_points.first
     end
-    @maximum_value = y_z_array_sum.max > @maximum_value ?
-                        y_z_array_sum.max : @maximum_value
+    @geometry.maximum_value = y_z_array_sum.max > @geometry.maximum_value ?
+                        y_z_array_sum.max : @geometry.maximum_value
     @geometry.minimum_value = y_z_array_sum.min < @geometry.minimum_value ?
                         y_z_array_sum.min : @geometry.minimum_value
-    @maximum_value = y_z_array_diff.max > @maximum_value ?
-                        y_z_array_diff.max : @maximum_value
+    @geometry.maximum_value = y_z_array_diff.max > @geometry.maximum_value ?
+                        y_z_array_diff.max : @geometry.maximum_value
     @geometry.minimum_value = y_z_array_diff.min < @geometry.minimum_value ?
                         y_z_array_diff.min : @geometry.minimum_value
-    @has_data = true
+    @geometry.has_data = true
   end
 
   # The first parameter is the name of the dataset.  The next two are the

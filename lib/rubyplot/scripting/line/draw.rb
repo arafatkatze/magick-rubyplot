@@ -43,7 +43,7 @@ class Rubyplot::Line < Rubyplot::Artist
 
   def draw
     super
-    return unless @has_data
+    return unless @geometry.has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width

@@ -20,7 +20,7 @@ class Rubyplot::Area < Rubyplot::Artist
     draw_title
     draw_axis_labels
 
-    return unless @has_data
+    return unless @geometry.has_data
 
     @x_increment = @graph_width / (@geometry.column_count - 1).to_f
     @d = @d.stroke 'transparent'

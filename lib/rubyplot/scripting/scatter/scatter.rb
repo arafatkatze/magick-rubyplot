@@ -8,7 +8,7 @@
 class Rubyplot::Scatter < Rubyplot::Artist
   def draw
     super
-    return unless @has_data
+    return unless @geometry.has_data
 
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
@@ -58,7 +58,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
       end
     else
       # TODO: Make this work for negative values
-      @geometry.maximum_x_value = [@maximum_value.ceil, @geometry.x_axis_increment].max
+      @geometry.maximum_x_value = [@geometry.maximum_value.ceil, @geometry.x_axis_increment].max
       @geometry.minimum_x_value = @geometry.minimum_x_value.floor
       calculate_spread
       normalize(true)
@@ -66,13 +66,13 @@ class Rubyplot::Scatter < Rubyplot::Artist
       @geometry.marker_count = (@x_spread / @geometry.x_axis_increment).to_i
       @x_increment = @geometry.x_axis_increment
     end
-    @increment_x_scaled = @graph_width.to_f / (@x_spread / @x_increment)
+    @geometry.increment_x_scaled = @graph_width.to_f / (@x_spread / @x_increment)
 
     # Draw vertical line markers and annotate with numbers
     (0..@geometry.marker_x_count).each do |index|
       # TODO: Fix the vertical lines, and enable them by default. Not pretty when they don't match up with top y-axis line
       if @geometry.enable_vertical_line_markers
-        x = @graph_left + @graph_width - index.to_f * @increment_x_scaled
+        x = @graph_left + @graph_width - index.to_f * @geometry.increment_x_scaled
         @d = @d.stroke(@marker_color)
         @d = @d.stroke_width 1
         @d = @d.line(x, @graph_top, x, @graph_bottom)
@@ -81,7 +81,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
       next if @geometry.hide_line_numbers
       marker_label = index * @x_increment + @geometry.minimum_x_value.to_f
       y_offset = @graph_bottom + (@geometry.x_label_margin || LABEL_MARGIN)
-      x_offset = get_x_coord(index.to_f, @increment_x_scaled, @graph_left)
+      x_offset = get_x_coord(index.to_f, @geometry.increment_x_scaled, @graph_left)
 
       @d.fill = @font_color
       @d.font = @font if @font

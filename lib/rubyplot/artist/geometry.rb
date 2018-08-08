@@ -1,6 +1,6 @@
 module Rubyplot
   class ArtistGeometry
-    # Used for navigating the array of data to plot
+    # Used for navigating the array of data to plot.
     DATA_LABEL_INDEX = 0
     DATA_VALUES_INDEX = 1
     DATA_COLOR_INDEX = 2
@@ -93,23 +93,39 @@ module Rubyplot
     # the graph object.
     attr_accessor :maximum_value
 
-    # Blank space above the graph
-    attr_accessor :top_margin
-    attr_accessor :labels, :labels_seen, :increment, :increment_scaled
-    attr_accessor :use_data_label, :stacked, :y_axis_increment
-    attr_accessor :x_axis_increment, :norm_data, :theme_options, :additional_line_colors
-    attr_accessor :additional_line_values
+    # Blank space on the sides of the actual plot. Set in pixels
+    # to make appropriate space for the actual plot.
+    attr_accessor :top_margin, :left_margin, :right_margin, :bottom_margin
+
+    # Label values
+    attr_accessor :labels, :labels_seen, :has_left_labels, :label_formatting
     attr_accessor :label_truncation_style, :label_max_size, :label_stagger_height
+    attr_accessor :label_stagger_height, :label_max_size
+
+    # Offset
+    attr_accessor :increment, :increment_scaled, :x_axis_increment
+    attr_accessor :y_axis_increment, :increment_x_scaled
+
+    # Arrays for setting the colors for different labels of dataset.
+    attr_accessor :all_colors_array, :plot_colors, :additional_line_colors
+
+    # Legends
+    attr_accessor :legend_at_bottom, :legend_box_size, :legend_margin
+
+    # Helper variables to hide geometry objects
     attr_accessor :hide_line_markers, :hide_legend, :hide_title, :hide_line_numbers
-    attr_accessor :legend_at_bottom
-    attr_accessor :show_labels_for_bar_values, :center_labels_over_point
-    attr_accessor :legend_box_size, :has_left_labels, :label_stagger_height, :label_max_size
-    attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting, :minimum_value
-    attr_accessor :column_count, :marker_count, :has_left_labels, :legend_margin
+    attr_accessor :show_labels_for_bar_values
+    attr_accessor :center_labels_over_point, :label_truncation_style
+
+    # Data Variables
+    attr_accessor :use_data_label, :norm_data, :has_data, :raw_rows, :minimum_value
+    attr_accessor :raw_columns, :maximum_value, :sorted_drawing, :column_count
+
+    # Drawing
+    attr_accessor :stacked, :theme_options, :marker_count, :additional_line_values
 
     def initialize(*)
       @spacing_factor = 0.9
-      @top_margin = DEFAULT_MARGIN
       @minimum_value = nil
       @use_data_label = false
       @stacked = nil
@@ -126,7 +142,8 @@ module Rubyplot
       @label_stagger_height = 0
       @label_truncation_style = :absolute
       @label_max_size = 0
-      @hide_line_markers = @hide_legend = @hide_title = @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
+      @hide_line_markers = @hide_legend = @hide_title = false
+      @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
       @center_labels_over_point = true
 
       @legend_box_size = 20.0
@@ -136,6 +153,19 @@ module Rubyplot
       @has_left_labels = false
       @marker_count = nil
       @legend_margin = LEGEND_MARGIN
+      @raw_columns = 800.0
+      @maximum_value = nil
+      @has_data = false
+
+      @increment = nil
+
+      @all_colors_array = Magick.colors
+      @plot_colors = []
+      @top_margin = DEFAULT_MARGIN
+      @bottom_margin = DEFAULT_MARGIN
+      @left_margin = DEFAULT_MARGIN
+      @right_margin = DEFAULT_MARGIN
+      @labels_seen = {}
     end
   end
 end

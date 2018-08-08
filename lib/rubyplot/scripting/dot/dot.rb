@@ -3,7 +3,7 @@ class Rubyplot::Dot < Rubyplot::Artist
   def draw
     @geometry.has_left_labels = true
     super
-    return unless @has_data # TODO: Raise error here or make an error raising class.
+    return unless @geometry.has_data # TODO: Raise error here or make an error raising class.
 
     # Setup spacing.
     spacing_factor = 1.0
@@ -63,10 +63,10 @@ class Rubyplot::Dot < Rubyplot::Artist
         @geometry.marker_count ||= 5
       end
       # TODO: Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
-      @increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
+      @geometry.increment = @spread > 0 && @geometry.marker_count > 0 ? significant(@spread / @geometry.marker_count) : 1
 
       number_of_lines = @geometry.marker_count
-      increment = @increment
+      increment = @geometry.increment
     end
 
     (0..number_of_lines).each do |index|
@@ -93,7 +93,7 @@ class Rubyplot::Dot < Rubyplot::Artist
   ##
   # Draw on the Y axis instead of the X
   def draw_label(y_offset, index)
-    if !@labels[index].nil? && @labels_seen[index].nil?
+    if !@labels[index].nil? && @geometry.labels_seen[index].nil?
       @d.fill = @font_color
       @d.font = @font if @font
       @d.stroke = 'transparent'
@@ -104,7 +104,7 @@ class Rubyplot::Dot < Rubyplot::Artist
                                1, 1,
                                -@graph_left + LABEL_MARGIN * 2.0, y_offset,
                                @labels[index], @scale)
-      @labels_seen[index] = 1
+      @geometry.labels_seen[index] = 1
     end
   end
 end
