@@ -5,3 +5,5 @@ rvm:
  - 2.3
  - 2.4
  - rbx-3
+before_install:
+  sudo apt-get install build-essential libgtk-3-dev
