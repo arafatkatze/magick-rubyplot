@@ -17,18 +17,18 @@ module Rubyplot
       color = []
       @data << [name, data_points, color]
       # Set column count if this is larger than previous column counts
-      @column_count = data_points.length > @column_count ? data_points.length : @column_count
+      @geometry.column_count = data_points.length > @geometry.column_count ? data_points.length : @geometry.column_count
 
       # Pre-normalize => Set the max and min values of the data.
       data_points.each do |data_point|
         # Initialize the maximum and minimum values so that the spread starts
         # at the lowest points in the data and then changes as iteration.
-        if @maximum_value.nil? && @minimum_value.nil?
-          @maximum_value = @minimum_value = data_point
+        if @maximum_value.nil? && @geometry.minimum_value.nil?
+          @maximum_value = @geometry.minimum_value = data_point
         end
 
         @maximum_value = data_point > @maximum_value ? data_point : @maximum_value
-        @minimum_value = data_point < @minimum_value ? data_point : @minimum_value
+        @geometry.minimum_value = data_point < @geometry.minimum_value ? data_point : @geometry.minimum_value
         @has_data = true
       end
     end

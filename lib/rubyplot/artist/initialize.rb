@@ -17,6 +17,7 @@ module Rubyplot
         @columns = geometric_width.to_f
         @rows = geometric_height.to_f
       end
+      @geometry = Rubyplot::ArtistGeometry.new
       initialize_variables
 
       reset_themes
@@ -33,17 +34,13 @@ module Rubyplot
       # Internal for calculations
       @raw_columns = 800.0
       @raw_rows = 800.0 * (@rows / @columns)
-      @column_count = 0
       @data = []
-      @marker_count = nil
-      @maximum_value = @minimum_value = nil
+      @maximum_value = @geometry.minimum_value = nil
       @has_data = false
       @increment = nil
       @labels = {}
-      @label_formatting = nil
       @labels_seen = {}
       @sort = false
-      @sorted_drawing = false
       @title = nil
       @title_font = nil
 
@@ -63,25 +60,10 @@ module Rubyplot
 
       @legend_box_size = 20.0
 
-      @no_data_message = 'No Data'
-
-      @hide_line_markers = @hide_legend = @hide_title = @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
-      @center_labels_over_point = true
       @has_left_labels = false
       @label_stagger_height = 0
       @label_max_size = 0
       @label_truncation_style = :absolute
-
-      @additional_line_values = []
-      @additional_line_colors = []
-      @theme_options = {}
-
-      @use_data_label = false
-      @x_axis_increment = nil
-      @x_axis_label = @y_axis_label = nil
-      @y_axis_increment = nil
-      @stacked = nil
-      @norm_data = nil
     end
   end
 end

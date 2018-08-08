@@ -1,5 +1,5 @@
 module Rubyplot
-  class Artist
+  class ArtistGeometry
     # Used for navigating the array of data to plot
     DATA_LABEL_INDEX = 0
     DATA_VALUES_INDEX = 1
@@ -92,5 +92,48 @@ module Rubyplot
     # If you use this, you must set it after you have given all your data to
     # the graph object.
     attr_accessor :maximum_value
+
+    # Blank space above the graph
+    attr_accessor :top_margin
+    attr_accessor :labels, :labels_seen, :increment, :increment_scaled
+    attr_accessor :use_data_label, :stacked, :y_axis_increment
+    attr_accessor :x_axis_increment, :norm_data, :theme_options, :additional_line_colors
+    attr_accessor :additional_line_values
+    attr_accessor :label_truncation_style, :label_max_size, :label_stagger_height
+    attr_accessor :hide_line_markers, :hide_legend, :hide_title, :hide_line_numbers
+    attr_accessor :legend_at_bottom
+    attr_accessor :show_labels_for_bar_values, :center_labels_over_point
+    attr_accessor :legend_box_size, :has_left_labels, :label_stagger_height, :label_max_size
+    attr_accessor :label_truncation_style, :sorted_drawing, :label_formatting, :minimum_value
+    attr_accessor :column_count, :marker_count
+
+    def initialize(*)
+      @spacing_factor = 0.9
+      @top_margin = DEFAULT_MARGIN
+      @minimum_value = nil
+      @use_data_label = false
+      @stacked = nil
+      @x_axis_label = @y_axis_label = nil
+      @y_axis_increment = nil
+
+      @x_axis_increment = nil
+      @norm_data = nil
+
+      @additional_line_values = []
+      @additional_line_colors = []
+      @theme_options = {}
+
+      @label_stagger_height = 0
+      @label_truncation_style = :absolute
+      @label_max_size = 0
+      @hide_line_markers = @hide_legend = @hide_title = @hide_line_numbers = @legend_at_bottom = @show_labels_for_bar_values = false
+      @center_labels_over_point = true
+
+      @legend_box_size = 20.0
+      @label_formatting = nil
+      @sorted_drawing = false
+      @column_count = 0
+      @marker_count = nil
+    end
   end
 end

@@ -22,10 +22,10 @@ module Rubyplot
         font_color: 'black',
         background_image: nil
       }
-      @theme_options = defaults.merge options
-      @marker_color = @theme_options[:marker_color]
-      @font_color = @theme_options[:font_color] || @marker_color
-      @base_image = render_gradiated_background(@theme_options[:background_colors][0], @theme_options[:background_colors][1], @theme_options[:background_direction])
+      @geometry.theme_options = defaults.merge options
+      @marker_color = @geometry.theme_options[:marker_color]
+      @font_color = @geometry.theme_options[:font_color] || @marker_color
+      @base_image = render_gradiated_background(@geometry.theme_options[:background_colors][0], @geometry.theme_options[:background_colors][1], @geometry.theme_options[:background_direction])
     end
 
     # Resets the themes to defaults.
