@@ -13,6 +13,7 @@ def random_dots
   plot.minimum_value = 0
 
   plot.write('spec/reference_images/dot.png')
+  plot.get_colors_array
 end
 
 def setup_basic_dot_graph(size = 800)

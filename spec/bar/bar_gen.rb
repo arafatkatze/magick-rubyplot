@@ -6,7 +6,9 @@ def random_bar_graph
   base.title = 'Random Bar Numbers'
   base.marker_count = 8
   base.data('data', [5, 12, 9, 6, 7])
+  base.set_colors_array(['yellow'])
   base.write('spec/reference_images/bar.png')
+  base.get_colors_array
 end
 
 # Makes a bar graph with a preset title margin.
@@ -18,6 +20,7 @@ def bar_graph_with_title_margin
   plot.title = 'Bar Graph with Title Margin = 100'
   plot.title_margin = 100
   plot.write('spec/reference_images/bar_title.png')
+  plot.get_colors_array
 end
 
 # Sets up basic bar graph

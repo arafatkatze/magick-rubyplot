@@ -52,24 +52,24 @@ class Rubyplot::Line < Rubyplot::Artist
       (0..@geometry.column_count).each do |column|
         x = @graph_left + @graph_width - column.to_f * @x_increment
 
-        @d = @d.fill(@marker_color)
+        @d = @d.fill @plot_colors[column]
 
         @d = @d.line(x, @graph_bottom, x, @graph_top)
         # If the user specified a marker shadow color, draw a shadow just below it
         unless @marker_shadow_color.nil?
-          @d = @d.fill(@marker_shadow_color)
           @d = @d.line(x + 1, @graph_bottom, x + 1, @graph_top)
         end
       end
     end
 
-    @geometry.norm_data.each do |data_row|
+    @geometry.norm_data.each_with_index do |data_row, row_num|
       # Initially the previous x,y points are nil and then
       # they are set with values.
       prev_x = prev_y = nil
 
       @one_point = contains_one_point_only?(data_row)
 
+      @d = @d.fill @plot_colors[row_num]
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
         x_data = data_row[DATA_VALUES_X_INDEX]
         if x_data.nil?

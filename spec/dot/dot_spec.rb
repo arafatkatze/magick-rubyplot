@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe 'Graph' do
   it 'Makes a dot plot of a graph' do
-    random_dots
+    colors_array = random_dots
     plot = Rubyplot::Dot.new
     plot.labels = {
       0 => '5/6',
@@ -12,7 +12,7 @@ describe 'Graph' do
     plot.data(:Cars, [0, 5, 8, 15])
     plot.data(:Bus, [10, 3, 2, 8])
     plot.data(:Science, [2, 15, 8, 11])
-
+    plot.set_colors_array(colors_array)
     plot.minimum_value = 0
     plot.write('spec/reference_images/dot_test_1.png')
     expect(compare_with_reference?('dot.png', 'dot_test_1.png', 10)).to eq(true)

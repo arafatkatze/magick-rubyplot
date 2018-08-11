@@ -14,13 +14,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
   # stacked on top of each other.
   def draw
     max_stack_height
-    setup_drawing
-    construct_colors_array
-    draw_legend
-    draw_line_markers!
-    draw_title
-    draw_axis_labels
-    return unless @geometry.has_data
+    artist_draw
 
     set_spacings
     @d = @d.stroke_opacity 0.0
@@ -28,7 +22,7 @@ class Rubyplot::StackedBar < Rubyplot::Bar
 
     @geometry.norm_data.each_with_index do |data_row, _row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
-        @d = @d.fill @geometry.plot_colors[_row_index]
+        @d = @d.fill @plot_colors[_row_index]
 
         # Calculate center based on bar_width and current row
         label_center = @graph_left + (@bar_width * point_index) + (@bar_width * @bar_spacing / 2.0)

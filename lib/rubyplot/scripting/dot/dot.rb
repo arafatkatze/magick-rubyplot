@@ -3,7 +3,7 @@ class Rubyplot::Dot < Rubyplot::Artist
   def draw
     @geometry.has_left_labels = true
     super
-    return unless @geometry.has_data # TODO: Raise error here or make an error raising class.
+    return unless @geometry.has_data
 
     # Setup spacing.
     spacing_factor = 1.0
@@ -27,17 +27,13 @@ class Rubyplot::Dot < Rubyplot::Artist
           @d = @d.fill_opacity 1
         end
 
-        @d = @d.fill('white')
+        @d = @d.fill @plot_colors[row_index]
         @d = @d.circle(x_pos, y_pos, x_pos + (@item_width.to_f / 3.0).round, y_pos)
-        # string = 'hello' + row_index.to_s + '_' + point_index.to_s + '.png'
-        # @base_image.write(string)
         draw_label(y_pos, point_index)
       end
     end
     @d.draw(@base_image)
   end
-
-  
 
   # Instead of base class version, draws vertical background lines and label
   def draw_line_markers

@@ -15,6 +15,7 @@ module Rubyplot
     attr_accessor :x_axis_label_format
     attr_accessor :x_label_margin
     attr_accessor :y_axis_label_format
+
     def initialize(*)
       super
       @baseline_x_color = @baseline_y_color = 'red'

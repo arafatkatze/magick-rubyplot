@@ -13,8 +13,9 @@ class Rubyplot::Scatter < Rubyplot::Artist
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
-    @geometry.norm_data.each do |data_row|
+    @geometry.norm_data.each_with_index do |data_row, row_num|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
+        @d = @d.fill @plot_colors[row_num]
         x_value = data_row[DATA_VALUES_X_INDEX][index]
         next if data_point.nil? || x_value.nil?
 
@@ -117,7 +118,7 @@ class Rubyplot::Scatter < Rubyplot::Artist
 
   private
 
-  def get_x_coord(x_data_point, width, offset) #:nodoc:
+  def get_x_coord(x_data_point, width, offset)
     x_data_point * width + offset
   end
-end # end Rubyplot::Scatter
+end

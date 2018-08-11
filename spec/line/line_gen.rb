@@ -12,4 +12,5 @@ def random_lines
   plot.data(:John, [1, 53, 76, 18])
   # Starting the Write script of the whole plot.
   plot.write('spec/reference_images/line.png')
+  plot.get_colors_array
 end

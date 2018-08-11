@@ -1,11 +1,12 @@
 require 'spec_helper'
 describe 'Bar' do
   it 'Sets up a basic reference image for bar graph with random numbers' do
-    random_bar_graph
+    colors_array = random_bar_graph
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar Numbers'
     plot.marker_count = 8
     plot.data('data', [5, 12, 9, 6, 7])
+    plot.set_colors_array(colors_array)
     plot.write('spec/reference_images/bar_test_1.png')
 
     expect(compare_with_reference?('bar.png', 'bar_test_1.png', 10)).to eq(true)
@@ -25,13 +26,14 @@ describe 'Bar' do
 
   it 'Bar graph with Title Margin' do
     # This margin width separates the actual plot from the title.
-    bar_graph_with_title_margin
+    colors_array = bar_graph_with_title_margin
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar numbers'
     plot.marker_count = 8
     plot.data('data', [5, 12, 9, 6, 6])
     plot.title = 'Bar Graph with Title Margin = 100'
     plot.title_margin = 100 # Set Title Margin.
+    plot.set_colors_array(colors_array)
     plot.write('spec/reference_images/bar_title_test.png')
 
     expect(compare_with_reference?('bar_title.png', 'bar_title_test.png', 10)).to eq(true)

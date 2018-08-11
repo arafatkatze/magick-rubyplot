@@ -64,6 +64,7 @@ class Rubyplot::Bar < Rubyplot::Artist
     # iterate over all normalised data
     @geometry.norm_data.each_with_index do |data_row, row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
+        @d = @d.fill @plot_colors[row_index]
         # Use incremented x and scaled y
         # x
         left_x = @graph_left + (@bar_width * (row_index + point_index + ((@data.length - 1) * point_index))) + padding
