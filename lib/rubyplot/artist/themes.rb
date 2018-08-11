@@ -9,7 +9,6 @@ module Rubyplot
     # possible.
     #
     #  graph.theme = {
-    #    :colors => %w(orange purple green white red),
     #    :marker_color => 'blue',
     #    :background_colors => ['black', 'grey', :top_bottom]
     #  }
@@ -17,7 +16,6 @@ module Rubyplot
     def theme=(options)
       reset_themes
       defaults = {
-        colors: %w[black white],
         marker_color: 'white',
         font_color: 'black',
         background_image: nil
