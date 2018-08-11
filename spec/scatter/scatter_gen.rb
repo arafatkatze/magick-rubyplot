@@ -3,6 +3,7 @@ def random_scatter
   plot = Rubyplot::Scatter.new(400)
   plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 65])
   plot.write('spec/reference_images/scatter.png')
+  plot.get_colors_array
 end
 
 def setup_basic_scatter(size = 800)

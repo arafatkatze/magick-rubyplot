@@ -80,5 +80,8 @@ module Rubyplot
     # If you use this, you must set it after you have given all your data to
     # the graph object.
     attr_accessor :maximum_value
+
+    # Accessor base image
+    attr_accessor :base_image
   end
 end

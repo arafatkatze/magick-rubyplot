@@ -21,7 +21,7 @@ module Rubyplot
       initialize_variables
 
       reset_themes
-      self.theme = Themes::BASIC
+      self.theme = Themes::RITA
     end
 
     # Set instance variables for this object.
@@ -57,6 +57,7 @@ module Rubyplot
       @label_stagger_height = 0
       @label_max_size = 0
       @label_truncation_style = :absolute
+      @plot_colors = []
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe 'Graph' do
   it 'Make a line plot of a graph' do
-    random_lines
+    colors_array = random_lines
     plot = Rubyplot::Line.new
     plot.title = 'A Line Graph'
     plot.labels = {
@@ -12,6 +12,7 @@ describe 'Graph' do
     plot.data(:Marco, [20, 23, 19, 8])
     plot.data(:John, [1, 53, 76, 18])
     # Starting the ultimate Write script of the whole thinplot.
+    plot.set_colors_array(colors_array)
     plot.write('spec/reference_images/line_test_1.png')
 
     expect(compare_with_reference?('line.png', 'line_test_1.png', 10)).to eq(true)

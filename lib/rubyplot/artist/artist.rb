@@ -6,15 +6,20 @@ module Rubyplot
     # colors supported by RMagick. This function is used because it helps to decide
     # the colors for data labels if user doesn't specify the colors for data labels.
     def construct_colors_array
-      return unless @geometry.plot_colors.empty?
+      return unless @plot_colors.empty?
       0.upto(@geometry.norm_data.size - 1) do |_i|
-        @geometry.plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+        @plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
       end
     end
 
     # Sets the colors for the data labels of the plot.
     def set_colors_array(color_array)
-      @geometry.plot_colors = color_array
+      @plot_colors = color_array
+    end
+
+    # Returns the current color array for the labels
+    def get_colors_array
+      @plot_colors
     end
 
     # Writes the plot to a file. Defaults to 'plot.png'
@@ -38,6 +43,7 @@ module Rubyplot
     def artist_draw
       return unless @geometry.has_data
       setup_drawing
+      construct_colors_array
       draw_legend
       draw_line_markers!
       draw_title
@@ -303,8 +309,21 @@ module Rubyplot
     end
 
     # Use with a theme definition method to draw a gradiated background.
-    def render_gradiated_background(top_color, _bottom_color, _direct = :top_bottom)
-      gradient_fill = GradientFill.new(0, 0, 100, 0, '#FF6A6A', top_color)
+    def render_gradiated_background(top_color, bottom_color, direct = :top_bottom)
+      gradient_fill = case direct
+                      when :bottom_top
+                        GradientFill.new(0, 0, 100, 0, bottom_color, top_color)
+                      when :left_right
+                        GradientFill.new(0, 0, 0, 100, top_color, bottom_color)
+                      when :right_left
+                        GradientFill.new(0, 0, 0, 100, bottom_color, top_color)
+                      when :topleft_bottomright
+                        GradientFill.new(0, 100, 100, 0, top_color, bottom_color)
+                      when :topright_bottomleft
+                        GradientFill.new(0, 0, 100, 100, bottom_color, top_color)
+                      else
+                        GradientFill.new(0, 0, 100, 0, top_color, bottom_color)
+                      end
       Image.new(@columns, @rows, gradient_fill)
     end
 

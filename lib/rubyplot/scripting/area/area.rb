@@ -3,23 +3,10 @@ class Rubyplot::Area < Rubyplot::Artist
     super
     @sorted_drawing = true
     @all_colors_array = Magick.colors
-    @plot_colors = []
-  end
-
-  def construct_colors_array
-    0.upto(@geometry.norm_data.size - 1) do |_i|
-      @plot_colors.push(@all_colors_array[rand(@all_colors_array.size)].name)
-    end
   end
 
   def draw
-    setup_drawing
-    construct_colors_array
-    draw_legend
-    draw_line_markers!
-    draw_title
-    draw_axis_labels
-
+    super
     return unless @geometry.has_data
 
     @x_increment = @graph_width / (@geometry.column_count - 1).to_f
@@ -49,7 +36,7 @@ class Rubyplot::Area < Rubyplot::Artist
       poly_points << @graph_bottom - 1
       poly_points << @graph_left
       poly_points << @graph_bottom - 1
-
+      @d.fill_opacity(0.3)
       @d = @d.polyline(*poly_points)
     end
 
