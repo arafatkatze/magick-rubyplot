@@ -18,5 +18,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'rmagick',  '>= 2.13.4'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'gtk3'
-  s.add_development_dependency 'phashion'
 end
