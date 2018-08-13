@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
   s.add_dependency 'rmagick',  '>= 2.13.4'
-  s.add_development_dependency 'rspec'
   s.add_development_dependency 'gtk3'
-  s.add_development_dependency 'phashion'
+  s.add_development_dependency 'rspec'
 end
