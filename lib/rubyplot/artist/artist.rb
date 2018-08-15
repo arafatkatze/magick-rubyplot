@@ -5,7 +5,7 @@ module Rubyplot
     # Makes an array of colors randomly selected from all the possible list of
     # colors supported by RMagick. This function is used because it helps to decide
     # the colors for data labels if user doesn't specify the colors for data labels.
-    def construct_colors_array
+    def construct_colors_array!
       return unless @plot_colors.empty?
       0.upto(@geometry.norm_data.size - 1) do |_i|
         @plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
@@ -43,11 +43,11 @@ module Rubyplot
     def artist_draw
       return unless @geometry.has_data
       setup_drawing
-      construct_colors_array
-      draw_legend
+      construct_colors_array!
+      draw_legend!
       draw_line_markers!
-      draw_title
-      draw_axis_labels
+      draw_title!
+      draw_axis_labels!
     end
 
     ##
@@ -123,7 +123,7 @@ module Rubyplot
     end
 
     # Draw the optional labels for the x axis and y axis.
-    def draw_axis_labels
+    def draw_axis_labels!
       unless @geometry.x_axis_label .nil?
         # X Axis
         # Centered vertically and horizontally by setting the
@@ -155,7 +155,7 @@ module Rubyplot
     end
 
     # Draws a title on the graph.
-    def draw_title
+    def draw_title!
       return if @geometry.hide_title || @title.nil?
 
       @d.fill = @font_color
@@ -173,7 +173,7 @@ module Rubyplot
     ##
     # Draws a legend with the names of the datasets matched
     # to the colors used to draw them.
-    def draw_legend
+    def draw_legend!
       @legend_labels = @data.collect { |item| item[DATA_LABEL_INDEX] }
 
       legend_square_width = @legend_box_size # small square with color of this item
