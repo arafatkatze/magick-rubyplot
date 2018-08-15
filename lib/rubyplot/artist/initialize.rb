@@ -21,7 +21,7 @@ module Rubyplot
       initialize_variables
 
       reset_themes
-      self.theme = Themes::RITA
+      self.theme = Themes::CLASSIC_WHITE
     end
 
     # Set instance variables for this object.
