@@ -276,6 +276,7 @@ module Rubyplot
       # Draw horizontal line markers and annotate with numbers
       (0..@geometry.marker_count).each do |index|
         y = @graph_top + @graph_height - index.to_f * @geometry.increment_scaled
+        y_next = @graph_top + @graph_height - (index.to_f + 1) * @geometry.increment_scaled
 
         @d = @d.fill(@marker_color)
 
@@ -285,6 +286,7 @@ module Rubyplot
           @d = @d.fill(@marker_shadow_color)
           @d = @d.line(@graph_left, y + 1, @graph_right, y + 1)
         end
+        @d = @d.line(@graph_left, y + 1, @graph_left, y_next + 1)
 
         marker_label = BigDecimal(index.to_s) * BigDecimal(@geometry.increment.to_s) +
                        BigDecimal(@geometry.minimum_value.to_s)
