@@ -9,12 +9,11 @@ module Rubyplot
     #
     # Example:
     #   data("Arafat", [95, 45, 78, 89, 88, 76])
-    def data(name, data_points = [])
+    def data(name, data_points = [], color = nil)
       data_points = Array(data_points) # make sure it's an array
       # TODO: Adding an empty color array which can be developed later
       # to make graphs super customizable with regards to coloring of
       # individual data points.
-      color = []
       @data << [name, data_points, color]
       # Set column count if this is larger than previous column counts
       @geometry.column_count = data_points.length > @geometry.column_count ? data_points.length : @geometry.column_count

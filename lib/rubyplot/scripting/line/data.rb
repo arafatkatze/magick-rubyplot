@@ -13,7 +13,6 @@ class Rubyplot::Line < Rubyplot::Artist
   #   name: string, the title of the dataset.
   #   xy_data_points: an array containing both x and y data points for the graph.
   #
-  # TODO: Add Color features.
   #
   #  Notes:
   #   -if (x_data_points.length != y_data_points.length) an error is
@@ -66,7 +65,7 @@ class Rubyplot::Line < Rubyplot::Artist
     end
   end
 
-  def normalize!
+  def normalize
     # First call the standard math function to normalize the values based on spread.
     super
     # TODO: Take care of the reference_lines

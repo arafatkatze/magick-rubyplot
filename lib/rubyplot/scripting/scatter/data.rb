@@ -33,9 +33,9 @@ class Rubyplot::Scatter < Rubyplot::Artist
   # g.data('oranges', [1,1,1], [2,3,4])
   # g.data('bitter_melon', [3,5,6], [6,7,8], '#000000')
   #
-  def data(name, x_data_points = [], y_data_points = [], _color = nil)
+  def data(name, x_data_points = [], y_data_points = [], color = nil)
     # Call the existing data routine for the y axis data
-    super(name, y_data_points)
+    super(name, y_data_points, color)
 
     # append the x data to the last entry that was just added in the @data member
     last_elem = @data.length - 1

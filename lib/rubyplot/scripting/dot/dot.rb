@@ -86,7 +86,6 @@ class Rubyplot::Dot < Rubyplot::Artist
     end
   end
 
-  ##
   # Draw on the Y axis instead of the X
   def draw_label(y_offset, index)
     if !@labels[index].nil? && @geometry.labels_seen[index].nil?

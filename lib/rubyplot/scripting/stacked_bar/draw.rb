@@ -20,10 +20,9 @@ class Rubyplot::StackedBar < Rubyplot::Bar
     @d = @d.stroke_opacity 0.0
     height = Array.new(@geometry.column_count, 0)
 
-    @geometry.norm_data.each_with_index do |data_row, _row_index|
+    @geometry.norm_data.each_with_index do |data_row, row_index|
       data_row[DATA_VALUES_INDEX].each_with_index do |data_point, point_index|
-        @d = @d.fill @plot_colors[_row_index]
-
+        @d = @d.fill @plot_colors[row_index]
         # Calculate center based on bar_width and current row
         label_center = @graph_left + (@bar_width * point_index) + (@bar_width * @bar_spacing / 2.0)
         draw_label(label_center, point_index)

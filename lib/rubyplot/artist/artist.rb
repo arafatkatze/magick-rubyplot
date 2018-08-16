@@ -5,10 +5,14 @@ module Rubyplot
     # Makes an array of colors randomly selected from all the possible list of
     # colors supported by RMagick. This function is used because it helps to decide
     # the colors for data labels if user doesn't specify the colors for data labels.
-    def construct_colors_array!
+    def construct_colors_array
       return unless @plot_colors.empty?
-      0.upto(@geometry.norm_data.size - 1) do |_i|
-        @plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+      0.upto(@geometry.norm_data.size - 1) do |i|
+        if @data[i][DATA_COLOR_INDEX]
+          @plot_colors.push(@data[i][DATA_COLOR_INDEX])
+        else
+          @plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+        end
       end
     end
 
@@ -43,7 +47,7 @@ module Rubyplot
     def artist_draw
       return unless @geometry.has_data
       setup_drawing
-      construct_colors_array!
+      construct_colors_array
       draw_legend!
       draw_line_markers!
       draw_title!
