@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
+require 'gtk3'
 
 # SubPlots
 require 'rubyplot/artist/subplots'
@@ -56,3 +57,4 @@ require 'rubyplot/scripting/area/area'
 # Version
 require 'rubyplot/version'
 # Backend
+require 'rubyplot/backend/gui.rb'

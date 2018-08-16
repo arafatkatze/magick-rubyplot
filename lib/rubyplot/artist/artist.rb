@@ -30,6 +30,16 @@ module Rubyplot
       @base_image.write(filename)
     end
 
+    def show
+      draw
+      tmp_file_name = rand(36**7).to_s(36) + '.png'
+      @base_image.write(tmp_file_name)
+      gtk = GTK_Show.new
+      gtk.show_file(tmp_file_name)
+      Gtk.main
+      File.delete(tmp_file_name)
+    end
+
     # Basic Rendering function that takes pre-processed input and plots it on
     # a figure canvas. This function only contains the generalized layout of a
     # plot. Based on individual cases the actual drawing function of a plot will
