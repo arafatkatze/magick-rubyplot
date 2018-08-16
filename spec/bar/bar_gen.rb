@@ -16,7 +16,7 @@ def bar_graph_with_title_margin
   plot = Rubyplot::Bar.new(600)
   plot.title = 'Random Bar Numbers'
   plot.marker_count = 8
-  plot.data('data', [5, 12, 9, 6, 6])
+  plot.data('data', [5, 12, 9, 6, 6], 'green')
   plot.title = 'Bar Graph with Title Margin = 100'
   plot.title_margin = 100
   plot.write('spec/reference_images/bar_title.png')
