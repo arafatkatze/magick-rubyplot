@@ -248,8 +248,6 @@ module Rubyplot
 
     # Draws horizontal background lines and labels
     def draw_line_markers!
-      return if @geometry.hide_line_markers
-
       @d = @d.stroke_antialias false
 
       if @geometry.y_axis_increment .nil?
@@ -280,7 +278,7 @@ module Rubyplot
 
         @d = @d.fill(@marker_color)
 
-        @d = @d.line(@graph_left, y, @graph_right, y)
+        @d = @d.line(@graph_left, y, @graph_right, y) if !@geometry.hide_line_markers || (index == 0)
         # If the user specified a marker shadow color, draw a shadow just below it
         unless @marker_shadow_color.nil?
           @d = @d.fill(@marker_shadow_color)

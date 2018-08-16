@@ -14,11 +14,11 @@ module Rubyplot
       @reference_line_default_width = 5
 
       @hide_dots = @hide_lines = false
-      @show_vertical_markers = false
       @dot_style = 'circle' # Options present for Circle and Square dot style.
 
       @maximum_x_value = nil
       @minimum_x_value = nil
+      @hide_line_markers = true
     end
   end
 end

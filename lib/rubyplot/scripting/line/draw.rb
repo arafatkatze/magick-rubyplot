@@ -48,20 +48,6 @@ class Rubyplot::Line < Rubyplot::Artist
     # Check to see if more than one datapoint was given. NaN can result otherwise.
     @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
 
-    if @geometry.show_vertical_markers # false in the base case
-      (0..@geometry.column_count).each do |column|
-        x = @graph_left + @graph_width - column.to_f * @x_increment
-
-        @d = @d.fill @plot_colors[column]
-
-        @d = @d.line(x, @graph_bottom, x, @graph_top)
-        # If the user specified a marker shadow color, draw a shadow just below it
-        unless @marker_shadow_color.nil?
-          @d = @d.line(x + 1, @graph_bottom, x + 1, @graph_top)
-        end
-      end
-    end
-
     @geometry.norm_data.each_with_index do |data_row, row_num|
       # Initially the previous x,y points are nil and then
       # they are set with values.
