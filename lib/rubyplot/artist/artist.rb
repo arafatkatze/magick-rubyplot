@@ -333,8 +333,6 @@ module Rubyplot
 
     # Draws column labels below graph, centered over x_offset
     def draw_label(x_offset, index)
-      return if @geometry.hide_line_markers
-
       if !@labels[index].nil? && @geometry.labels_seen[index].nil?
         y_offset = @graph_bottom + LABEL_MARGIN
 
