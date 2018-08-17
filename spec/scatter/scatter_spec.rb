@@ -1,10 +1,9 @@
 require 'spec_helper'
 describe 'Scatter' do
   it 'Make a scatter plot of a graph' do
-    colors_array = random_scatter
+    random_scatter
     plot = Rubyplot::Scatter.new(400)
-    plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 65])
-    plot.set_colors_array(colors_array)
+    plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 65],:plum_purple)
     plot.write('spec/reference_images/scatterplot_testplot_1.png')
 
     expect(compare_with_reference?('scatter.png', 'scatterplot_testplot_1.png', 10)).to eq(true)

@@ -929,7 +929,7 @@ module Rubyplot
       lime_green: '#89fe05',
       grey: '#929591',
       sky_blue: '#75bbfd',
-      yellow: '#ffff14',
+      yellow: '#FFFF00',
       magenta: '#c20078',
       light_green: '#96f97b',
       orange: '#f97306',
@@ -938,8 +938,8 @@ module Rubyplot
       red: '#e50000',
       brown: '#653700',
       pink: '#ff81c0',
-      blue: '#0343df',
-      green: '#15b01a',
+      blue: '#0000FF',
+      green: '#008000',
       purple: '#7e1e9c'
     }.freeze
   end

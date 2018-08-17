@@ -129,7 +129,7 @@ module Rubyplot
 
       @additional_line_values = []
       @additional_line_colors = []
-      @theme_options = {}
+      @theme_options = Rubyplot::Themes::CLASSIC_WHITE
 
       @label_stagger_height = 0
       @label_truncation_style = :absolute

@@ -7,9 +7,9 @@ def random_dots
     2 => '5/24',
     3 => '5/30'
   }
-  plot.data(:Cars, [0, 5, 8, 15], 'maroon')
-  plot.data(:Bus, [10, 3, 2, 8], '#00FF7F ')
-  plot.data(:Science, [2, 15, 8, 11], '#FFA500')
+  plot.data(:Cars, [0, 5, 8, 15], :maroon)
+  plot.data(:Bus, [10, 3, 2, 8], :grey)
+  plot.data(:Science, [2, 15, 8, 11], :yellow)
   plot.minimum_value = 0
 
   plot.write('spec/reference_images/dot.png')
