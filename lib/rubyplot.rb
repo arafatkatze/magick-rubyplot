@@ -6,6 +6,7 @@ require 'bigdecimal'
 require 'rubyplot/artist/subplots'
 
 # Artist Layer Base
+require 'rubyplot/artist/colorConstants'
 require 'rubyplot/artist/constantsAndAttributes'
 require 'rubyplot/artist/geometry'
 require 'rubyplot/artist/initialize'
