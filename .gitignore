@@ -16,3 +16,8 @@ spec_script
 !spec/*.DS_Store
 *.gem
 *test*png
+*grruby.time
+*.bundle
+*.o
+ ext/grruby/Makefile
+ *Makefile

@@ -2,6 +2,9 @@ require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
 
+# External GR Ruby Extension
+require 'grruby/grruby'
+
 # SubPlots
 require 'rubyplot/artist/subplots'
 
