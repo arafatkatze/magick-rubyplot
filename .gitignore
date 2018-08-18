@@ -21,3 +21,4 @@ spec_script
 *.o
  ext/grruby/Makefile
  *Makefile
+a_test.rb

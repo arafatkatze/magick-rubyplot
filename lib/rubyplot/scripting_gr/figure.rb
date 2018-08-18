@@ -20,27 +20,32 @@ module Rubyplot
     # @param backend [Symbol] Loads the desired backend, :GR by default
     def initialize(backend: :default)
       @backend = backend
-      @subplotGRs_list = [Rubyplot::SubplotGR.new(1, 1, 1)]
-      @tasks = []
-      @x_title = ''
-      @y_title = ''
-      @x_range = [0, 0]
-      @y_range = [0, 0]
-      @origin = %i[default default]
-      @x_tick_count = :default
-      @y_tick_count = :default
-      @title = nil
-      @title_shift = 0
-      @text_font = :default
-      @grid = true
-      @bounding_box = true
-      @x_axis_padding = :default
-      @y_axis_padding = :default
-      if @backend == :default || @backend == :GR
-        #  require(__dir__.to_s << '/scripting_backends/gr/gr_backend')
+      if @backend == :default
+        @subplotGRs_list = [Rubyplot::SubplotGR.new(1, 1, 1)]
+        @tasks = []
+        @x_title = ''
+        @y_title = ''
+        @x_range = [0, 0]
+        @y_range = [0, 0]
+        @origin = %i[default default]
+        @x_tick_count = :default
+        @y_tick_count = :default
+        @title = nil
+        @title_shift = 0
+        @text_font = :default
+        @grid = true
+        @bounding_box = true
+        @x_axis_padding = :default
+        @y_axis_padding = :default
+        if @backend == :default || @backend == :GR
+          #  require(__dir__.to_s << '/scripting_backends/gr/gr_backend')
+        end
+        @active_subplotGR = @subplotGRs_list[0]
+        @no_subplotGR = true
+      else
+        @init = 0
+        @plot = []
       end
-      @active_subplotGR = @subplotGRs_list[0]
-      @no_subplotGR = true
     end
 
     # Clears the figure by resetting the state to the state to default
