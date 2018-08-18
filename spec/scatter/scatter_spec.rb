@@ -1,10 +1,9 @@
 require 'spec_helper'
 describe 'Scatter' do
   it 'Make a scatter plot of a graph' do
-    colors_array = random_scatter
+    random_scatter
     plot = Rubyplot::Scatter.new(400)
-    plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 65])
-    plot.set_colors_array(colors_array)
+    plot.data([1, 2, 3, 4, 5], [11, 2, 33, 4, 65],label: :data1, color: :plum_purple)
     plot.write('spec/reference_images/scatterplot_testplot_1.png')
 
     expect(compare_with_reference?('scatter.png', 'scatterplot_testplot_1.png', 10)).to eq(true)
@@ -13,7 +12,7 @@ describe 'Scatter' do
   it 'Fails to match with the reference image' do
     random_scatter
     plot = Rubyplot::Scatter.new(400)
-    plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 66])
+    plot.data( [1, 2, 3, 4, 5], [11, 2, 33, 4, 66],label: :data1)
     plot.write('spec/reference_images/scatterplot_testplot_2.png')
 
     expect(compare_with_reference?('scatter.png', 'scatterplot_testplot_2.png', 10)).to eq(false)
@@ -24,7 +23,7 @@ describe 'Scatter' do
     plot.title = 'Many Datapoint Graph Test'
     y_values = (0..50).map { rand(100) }
     x_values = (0..50).map { rand(100) }
-    plot.data('many points', x_values, y_values)
+    plot.data( x_values, y_values,label: 'many points')
 
     # Default theme
     plot.write('spec/reference_images/scatter_many_test.png')
@@ -33,7 +32,7 @@ describe 'Scatter' do
   # Done
   it 'Test No Title' do
     plot = Rubyplot::Scatter.new(400)
-    plot.data(:data1, [1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
+    plot.data( [1, 2, 3, 4, 5], [1, 2, 3, 4, 5],label: :data1)
 
     plot.write('spec/reference_images/scatter_no_title_test.png')
   end

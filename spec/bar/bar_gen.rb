@@ -5,8 +5,7 @@ def random_bar_graph
   base = Rubyplot::Bar.new(600)
   base.title = 'Random Bar Numbers'
   base.marker_count = 8
-  base.data('data', [5, 12, 9, 6, 7])
-  base.set_colors_array(['yellow'])
+  base.data [5, 12, 9, 6, 7],  color:  :yellow, label: :data
   base.write('spec/reference_images/bar.png')
   base.get_colors_array
 end
@@ -16,7 +15,7 @@ def bar_graph_with_title_margin
   plot = Rubyplot::Bar.new(600)
   plot.title = 'Random Bar Numbers'
   plot.marker_count = 8
-  plot.data('data', [5, 12, 9, 6, 6], 'green')
+  plot.data( [5, 12, 9, 6, 6], label: :data, color:  :green)
   plot.title = 'Bar Graph with Title Margin = 100'
   plot.title_margin = 100
   plot.write('spec/reference_images/bar_title.png')
@@ -35,7 +34,7 @@ def setup_basic_bar_graph(size = 800)
     3 => '5/36'
   }
   @datasets.each do |data|
-    plot.data(data[0], data[1])
+    plot.data( data[1])
   end
   plot
 end

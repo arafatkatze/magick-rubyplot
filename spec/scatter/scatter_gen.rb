@@ -1,9 +1,8 @@
 require 'rubyplot'
 def random_scatter
   plot = Rubyplot::Scatter.new(400)
-  plot.data(:data1, [1, 2, 3, 4, 5], [11, 2, 33, 4, 65], 'royalblue')
+  plot.data( [1, 2, 3, 4, 5], [11, 2, 33, 4, 65],label: :data1, color:  :plum_purple)
   plot.write('spec/reference_images/scatter.png')
-  plot.get_colors_array
 end
 
 def setup_basic_scatter(size = 800)
@@ -11,7 +10,7 @@ def setup_basic_scatter(size = 800)
   plot = Rubyplot::Scatter.new(size)
   plot.title = 'Rad Graph'
   @datasets.each do |data|
-    plot.data(data[0], data[1], data[2])
+    plot.data( data[1], data[2],label: data[0])
   end
   plot
 end
@@ -19,15 +18,15 @@ end
 def setup_pos_neg(size = 800)
   plot = Rubyplot::Scatter.new(size)
   plot.title = 'Pos/Neg Scatter Graph Test'
-  plot.data(:apples, [-1, 0, 4, -4], [-5, -1, 3, 4])
-  plot.data(:peaches, [10, 8, 6, 3], [-1, 1, 3, 3])
+  plot.data([-1, 0, 4, -4], [-5, -1, 3, 4], label: :apples)
+  plot.data( [10, 8, 6, 3], [-1, 1, 3, 3],  label:  :peaches)
   plot
 end
 
 def setup_all_neg(size = 800)
   plot = Rubyplot::Scatter.new(size)
   plot.title = 'Neg Scatter Graph Test'
-  plot.data(:apples, [-1, -1, -4, -4], [-5, -1, -3, -4])
-  plot.data(:peaches, [-10, -8, -6, -3], [-1, -1, -3, -3])
+  plot.data([-1, -1, -4, -4], [-5, -1, -3, -4],label:  :apples)
+  plot.data([-10, -8, -6, -3], [-1, -1, -3, -3],label: :peaches)
   plot
 end

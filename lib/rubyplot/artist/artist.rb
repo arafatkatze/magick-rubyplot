@@ -8,10 +8,10 @@ module Rubyplot
     def construct_colors_array
       return unless @plot_colors.empty?
       0.upto(@geometry.norm_data.size - 1) do |i|
-        if @data[i][DATA_COLOR_INDEX]
-          @plot_colors.push(@data[i][DATA_COLOR_INDEX])
+        if (@data[i][DATA_COLOR_INDEX] == :default)
+          @plot_colors.push(@geometry.theme_options[:label_colors][i])
         else
-          @plot_colors.push(@geometry.all_colors_array[rand(@geometry.all_colors_array.size)].name)
+          @plot_colors.push(Rubyplot::Color::COLOR_INDEX[@data[i][DATA_COLOR_INDEX]])
         end
       end
     end

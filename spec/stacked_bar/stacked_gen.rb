@@ -20,9 +20,8 @@ def setup_stack_bar_test_image
   }
 
   @datasets.each do |data|
-    plot.data(data[0], data[1])
+    plot.data(data[1],label: data[0])
   end
 
-  plot.set_colors_array(%w[blue red yellow])
   plot.write('spec/reference_images/stacked_bar.png')
 end
