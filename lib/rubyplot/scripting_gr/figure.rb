@@ -20,7 +20,7 @@ module Rubyplot
     # @param backend [Symbol] Loads the desired backend, :GR by default
     def initialize(backend: :default)
       @backend = backend
-      if @backend == :default
+      if @backend == :default || @backend == :GR
         @subplotGRs_list = [Rubyplot::SubplotGR.new(1, 1, 1)]
         @tasks = []
         @x_title = ''

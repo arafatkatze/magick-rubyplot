@@ -9,8 +9,8 @@ module Rubyplot
     # @param marker_type [Symbol] A symbol for Marker type from
     #  Rubyplot::GRWrapper::Tasks::GR_MARKER_SHAPES
     def scatter!(x_coordinates, y_coordinates, marker_size: :default,
-                 marker_color: :default, marker_type: :default)
-      if @backend == :default
+                 marker_color: :default, marker_type: :default, label: :default)
+      if @backend == :default || @backend == :GR
         @active_subplotGR.x_range[0] = x_coordinates.min if @active_subplotGR.x_range[0].nil?
         @active_subplotGR.x_range[1] = x_coordinates.max if @active_subplotGR.x_range[1].nil?
         @active_subplotGR.x_range[0] = x_coordinates.min if x_coordinates.min < @active_subplotGR.x_range[0]
@@ -28,9 +28,9 @@ module Rubyplot
         @init += 1
         if @init == 1
           @plot = Rubyplot::Scatter.new(400)
-          @plot.data x_coordinates, y_coordinates
+          @plot.data x_coordinates, y_coordinates, color: marker_color, label: label
         else
-          @plot.data x_coordinates, y_coordinates
+          @plot.data x_coordinates, y_coordinates, color: marker_color, label: label
         end
       end
     end
@@ -45,7 +45,7 @@ module Rubyplot
     #  this is an internal error in  GR Framework
     # @param file_name [String] name of the file where the figure needs to be saved
     def save(file_name)
-      if @backend == :default
+      if @backend == :default || @backend == :GR
         Rubyplot::Plotspace.new(self).save!(file_name)
       else
         @plot.write(file_name)
