@@ -2,14 +2,22 @@ require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
 
+require 'rubyplot/artist/colorConstants'
 # External GR Ruby Extension
 require 'grruby/grruby'
+require 'grruby/tasks/gr_function_classes'
+
+require 'rubyplot/scripting_gr/scripting_backends/gr/plots'
+require 'rubyplot/scripting_gr/scripting_backends/gr/plot/scatter'
+require 'rubyplot/scripting_gr/figure'
+require 'rubyplot/scripting_gr/scripting_backends/gr/gr_backend'
+require 'rubyplot/scripting_gr/scripting_backends/gr/plotspace'
+require 'rubyplot/scripting_gr/scripting_backends/gr/subplot'
 
 # SubPlots
 require 'rubyplot/artist/subplots'
 
 # Artist Layer Base
-require 'rubyplot/artist/colorConstants'
 require 'rubyplot/artist/constantsAndAttributes'
 require 'rubyplot/artist/geometry'
 require 'rubyplot/artist/initialize'
