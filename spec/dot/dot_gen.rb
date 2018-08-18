@@ -7,9 +7,9 @@ def random_dots
     2 => '5/24',
     3 => '5/30'
   }
-  plot.data( [0, 5, 8, 15], :Cars, color:  :maroon)
-  plot.data( [10, 3, 2, 8],:Bus, color:  :grey)
-  plot.data( [2, 15, 8, 11], :Science, color:  :yellow)
+  plot.data( [0, 5, 8, 15],label: :Cars, color:  :maroon)
+  plot.data( [10, 3, 2, 8],label: :Bus, color:  :grey)
+  plot.data( [2, 15, 8, 11],label:  :Science, color:  :yellow)
   plot.minimum_value = 0
 
   plot.write('spec/reference_images/dot.png')
@@ -24,7 +24,7 @@ def setup_basic_dot_graph(size = 800)
     0 => '5/6'
   }
   @datasets.each do |data|
-    plot.data( data[1],data[0])
+    plot.data( data[1],label: data[0])
   end
   plot
 end

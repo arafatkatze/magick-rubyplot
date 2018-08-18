@@ -17,7 +17,7 @@ describe 'Area' do
       6 => '6'
     }
     @datasets.each do |data|
-      g.data( data[1],data[0])
+      g.data( data[1],label: data[0])
     end
     # Default theme
     g.theme = Rubyplot::Themes::CLASSIC_WHITE

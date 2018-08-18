@@ -24,7 +24,8 @@ class Rubyplot::Bubble < Rubyplot::Scatter
   # plot.data(:peaches, [20, 30, -6, -3], [-1, 5, -27, -3], [13, 10, 20, 10])
   # plot.write('spec/reference_images/bubble_test_1.png')
   #
-  def data( x_data_points = [], y_data_points = [], z_data_points = [], name = 'ca', color: :default)
+  def data(x_data_points = [], y_data_points = [], z_data_points = [], label: :default, color: :default)
+    name = (label == :default) ? ' ' : label.to_s
     #  the existing data routine for the y axis data
     data_y(name, y_data_points, z_data_points, color)
     # append the x data to the last entry that was just added in the @data member

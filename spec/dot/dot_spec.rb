@@ -9,9 +9,9 @@ describe 'Graph' do
       2 => '5/24',
       3 => '5/30'
     }
-    plot.data([0, 5, 8, 15],:Cars, color:  :maroon)
-    plot.data( [10, 3, 2, 8],:Bus, color:  :grey)
-    plot.data( [2, 15, 8, 11],:Science, color:  :yellow)
+    plot.data([0, 5, 8, 15],label: :Cars, color:  :maroon)
+    plot.data( [10, 3, 2, 8],label: :Bus, color:  :grey)
+    plot.data( [2, 15, 8, 11],label: :Science, color:  :yellow)
     plot.minimum_value = 0
     plot.write('spec/reference_images/dot_test_1.png')
     expect(compare_with_reference?('dot.png', 'dot_test_1.png', 10)).to eq(true)
@@ -24,9 +24,9 @@ describe 'Graph' do
       1 => '5/15',
       2 => '5/24'
     }
-    plot.data( [0, 5, 8, 15],:Cars)
-    plot.data( [10, 3, 2, 8],:Bus)
-    plot.data( [2, 15, 8, 11],:Science)
+    plot.data( [0, 5, 8, 15])
+    plot.data( [10, 3, 2, 8])
+    plot.data( [2, 15, 8, 11])
 
     plot.minimum_value = 0
     plot.write('spec/reference_images/dot_test_2.png')
@@ -80,8 +80,8 @@ describe 'Graph' do
     plot.labels = {
       0 => '5/6'
     }
-    plot.data( [-1, 0, 4, -4],:apples)
-    plot.data( [10, 8, 6, 3],:peaches)
+    plot.data( [-1, 0, 4, -4])
+    plot.data( [10, 8, 6, 3])
 
     plot.write('spec/reference_images/dot_pos_neplot_test.png')
   end
@@ -92,8 +92,8 @@ describe 'Graph' do
     plot.labels = {
       0 => '5/6'
     }
-    plot.data( [1, 2, 3, 4],:apples)
-    plot.data( [4, 3, 2, 1],:peaches)
+    plot.data( [1, 2, 3, 4])
+    plot.data( [4, 3, 2, 1])
     plot.minimum_value = 0
     plot.maximum_value = 10
     plot.write('spec/reference_images/dot_nearly_zero_max_10_test.png')

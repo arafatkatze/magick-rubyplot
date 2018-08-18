@@ -22,7 +22,7 @@ describe :StackedBar do
     }
 
     @datasets.each do |data|
-      plot.data(data[1], data[0])
+      plot.data(data[1],label: data[0])
     end
     plot.write('spec/reference_images/stacked_bar_test_1.png')
     expect(compare_with_reference?('stacked_bar.png', 'stacked_bar_test_1.png', 10)).to eq(true)
@@ -39,7 +39,7 @@ describe :StackedBar do
       3 => '5/30'
     }
     @datasets2.each do |data|
-      plot.data(data[1], data[0])
+      plot.data(data[1],label: data[0])
     end
     plot.write('spec/reference_images/stacked_bar_test_2.png')
   end

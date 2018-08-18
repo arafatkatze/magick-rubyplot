@@ -9,8 +9,8 @@ module Rubyplot
     #
     # Example:
     #   data("Arafat", [95, 45, 78, 89, 88, 76])
-    def data(data_points = [], name = 'default', color: :default)
-    #  name = (name == :default) ? '' : name.to_s
+    def data(data_points = [], label: :default, color: :default)
+      name = (label == :default) ? ' ' : label.to_s
       data_points = Array(data_points) # make sure it's an array
       # TODO: Adding an empty color array which can be developed later
       # to make graphs super customizable with regards to coloring of

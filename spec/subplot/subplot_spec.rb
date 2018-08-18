@@ -9,15 +9,15 @@ describe :SubPlot do
       1 => 'Hello ruby'
     }
     # Data inputted and normalized like the usual cases.
-    plot1.data([20, 23, 19, 8],:Marco)
-    plot1.data( [1, 53, 76, 18],:John)
+    plot1.data([20, 23, 19, 8],label: :Marco)
+    plot1.data( [1, 53, 76, 18],label: :John)
     # Starting the ultimate Write script of the whole thinplot.
     plot1.set_colors_array(%w[orange blue])
 
     plot2 = Rubyplot::Bar.new(600)
     plot2.title = 'Random Bar Numbers'
     plot2.marker_count = 8
-    plot2.data( [5, 12, 9, 6, 7],'data')
+    plot2.data( [5, 12, 9, 6, 7],label: 'data')
 
     plot3 = Rubyplot::Dot.new
     plot3.labels = {
@@ -25,9 +25,9 @@ describe :SubPlot do
       1 => '5/15',
       2 => '5/24'
     }
-    plot3.data( [0, 5, 8, 15],:Cars)
-    plot3.data([10, 3, 2, 8],:Bus)
-    plot3.data( [2, 15, 8, 11],:Science)
+    plot3.data( [0, 5, 8, 15],label: :Cars)
+    plot3.data([10, 3, 2, 8],label: :Bus)
+    plot3.data( [2, 15, 8, 11],label: :Science)
     plot3.minimum_value = 0
 
     setup_stack_bar_data
@@ -40,7 +40,7 @@ describe :SubPlot do
       3 => '5/30'
     }
     @datasets2.each do |data|
-      plot4.data( data[1],data[0])
+      plot4.data( data[1],label: data[0])
     end
 
     SubPlot1 = Rubyplot::SubPlot.new(1, 2)
