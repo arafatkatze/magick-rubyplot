@@ -9,8 +9,8 @@ describe 'Graph' do
       1 => 'Hello ruby'
     }
     # Data inputted and normalized like the usual cases.
-    plot.data(:Marco, [20, 23, 19, 8],:blue)
-    plot.data(:John, [1, 53, 76, 18],:green)
+    plot.data( [20, 23, 19, 8],:Marco,:blue)
+    plot.data( [1, 53, 76, 18],:John,:green)
     # Starting the ultimate Write script of the whole thinplot.
     plot.write('spec/reference_images/line_test_1.png')
 
@@ -25,8 +25,8 @@ describe 'Graph' do
       1 => 'Hello ruby'
     }
     # Data inputted and normalized like the usual cases.
-    plot.data(:Marco, [20, 23, 19, 8])
-    plot.data(:John, [1, 53, 76, 19])
+    plot.data( [20, 23, 19, 8],:Marco)
+    plot.data([1, 53, 76, 19],:John)
     # Starting the ultimate Write script of the whole thinplot.
     plot.write('spec/reference_images/line_test_2.png')
     expect(compare_with_reference?('line.png', 'line_test_2.png', 10)).to eq(false)
@@ -37,7 +37,7 @@ describe 'Graph' do
     plot = Rubyplot::Line.new(200)
     plot.title = 'Very Small Line Chart 200px'
     @datasets.each do |data|
-      plot.data(data[0], data[1])
+      plot.data(data[1], data[0])
     end
     plot.write('spec/reference_images/line_very_small_test.png')
   end
@@ -45,15 +45,15 @@ describe 'Graph' do
   it 'test_should_not_hang_with_0_0_100' do
     plot = Rubyplot::Line.new(320)
     plot.title = 'Hang Value Graph Test'
-    plot.data('test', [0, 0, 100])
+    plot.data( [0, 0, 100],'test')
 
     plot.write('spec/reference_images/line_hang_value_test.png')
   end
 
   it 'test_line_small_values' do
     @datasets = [
-      [:small, [0.1, 0.14356, 0.0, 0.5674839, 0.456]],
-      [:small2, [0.2, 0.3, 0.1, 0.05, 0.9]]
+      [[0.1, 0.14356, 0.0, 0.5674839, 0.456],:small],
+      [[0.2, 0.3, 0.1, 0.05, 0.9],:small2]
     ]
 
     plot = Rubyplot::Line.new
@@ -73,8 +73,8 @@ describe 'Graph' do
 
   it 'test_line_starts_with_zero' do
     @datasets = [
-      [:first0, [0, 5, 10, 8, 18]],
-      [:normal, [1, 2, 3, 4, 5]]
+      [[0, 5, 10, 8, 18],:first0],
+      [[1, 2, 3, 4, 5],:normal]
     ]
 
     plot = Rubyplot::Line.new
@@ -106,7 +106,7 @@ describe 'Graph' do
     plot.dot_radius = 15
     plot.line_width = 3
     @datasets.each do |data|
-      plot.data(data[0], data[1])
+      plot.data(data[1],data[0])
     end
 
     plot.write('spec/reference_images/line_large_test.png')

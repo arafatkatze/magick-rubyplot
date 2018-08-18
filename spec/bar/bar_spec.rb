@@ -5,7 +5,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar Numbers'
     plot.marker_count = 8
-    plot.data('data', [5, 12, 9, 6, 7], :yellow)
+    plot.data( [5, 12, 9, 6, 7],'data', :yellow)
     plot.write('spec/reference_images/bar_test_1.png')
 
     expect(compare_with_reference?('bar.png', 'bar_test_1.png', 10)).to eq(true)
@@ -16,7 +16,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar Numbers'
     plot.marker_count = 8
-    plot.data('data', [5, 12, 9, 6, 6])
+    plot.data( [5, 12, 9, 6, 6],'data')
     # the data is different from the reference image.
     plot.write('spec/reference_images/bar_test_2.png')
 
@@ -29,7 +29,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar numbers'
     plot.marker_count = 8
-    plot.data('data', [5, 12, 9, 6, 6],:green)
+    plot.data( [5, 12, 9, 6, 6],'data',:green)
     plot.title = 'Bar Graph with Title Margin = 100'
     plot.title_margin = 100 # Set Title Margin.
     plot.write('spec/reference_images/bar_title_test.png')
@@ -42,7 +42,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Large Number'
     plot.marker_count = 8
-    plot.data('data', [7025, 1024, 40_257, 933_672, 1_560_496])
+    plot.data( [7025, 1024, 40_257, 933_672, 1_560_496],'data')
     plot.write('spec/reference_images/bar_geometry_test.png')
   end
 
@@ -83,8 +83,8 @@ describe 'Bar' do
       2 => '5/24',
       3 => '5/30'
     }
-    plot.data(:apples, [-1, 0, 4, -4])
-    plot.data(:peaches, [10, 8, 6, 3])
+    plot.data( [-1, 0, 4, -4], :apples)
+    plot.data( [10, 8, 6, 3],:peaches)
 
     plot.write('spec/reference_images/bar_pos_neplot_test.png')
   end
@@ -98,8 +98,8 @@ describe 'Bar' do
       2 => '5/24',
       3 => '5/30'
     }
-    plot.data(:apples, [-1, -0, -4, -4])
-    plot.data(:peaches, [-10, -8, -6, -3])
+    plot.data( [-1, -0, -4, -4],:apples)
+    plot.data([-10, -8, -6, -3], :peaches )
 
     plot.write('spec/reference_images/bar_neg_plot_test_test.png')
   end
@@ -114,8 +114,8 @@ describe 'Bar' do
       2 => '5/24',
       3 => '5/30'
     }
-    plot.data(:apples, [1, 2, 3, 4])
-    plot.data(:peaches, [4, 3, 2, 1])
+    plot.data( [1, 2, 3, 4],:apples)
+    plot.data( [4, 3, 2, 1],:peaches)
 
     plot.minimum_value = 0
     plot.maximum_value = 10
@@ -129,10 +129,10 @@ describe 'Bar' do
     # and the legends self adjust in the plot.
     plot = Rubyplot::Bar.new(400)
     plot.title = 'My Graph'
-    plot.data('Apples Oranges Watermelon Apples Oranges', [1, 2, 3, 4, 4, 3])
-    plot.data('Oranges', [4, 8, 7, 9, 8, 9])
-    plot.data('Watermelon', [2, 3, 1, 5, 6, 8])
-    plot.data('Peaches', [9, 9, 10, 8, 7, 9])
+    plot.data( [1, 2, 3, 4, 4, 3], 'Apples Oranges Watermelon Apples Oranges')
+    plot.data( [4, 8, 7, 9, 8, 9],'Oranges')
+    plot.data( [2, 3, 1, 5, 6, 8],'Watermelon')
+    plot.data( [9, 9, 10, 8, 7, 9],'Peaches')
     plot.labels = { 0 => '2003', 2 => '2004', 4 => '2005' }
 
     plot.write('spec/reference_images/bar_long_legend_test.png')

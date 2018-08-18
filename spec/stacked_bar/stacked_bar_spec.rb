@@ -22,9 +22,8 @@ describe :StackedBar do
     }
 
     @datasets.each do |data|
-      plot.data(data[0], data[1])
+      plot.data(data[1], data[0])
     end
-    plot.set_colors_array(%w[blue red yellow])
     plot.write('spec/reference_images/stacked_bar_test_1.png')
     expect(compare_with_reference?('stacked_bar.png', 'stacked_bar_test_1.png', 10)).to eq(true)
   end
@@ -40,7 +39,7 @@ describe :StackedBar do
       3 => '5/30'
     }
     @datasets2.each do |data|
-      plot.data(data[0], data[1])
+      plot.data(data[1], data[0])
     end
     plot.write('spec/reference_images/stacked_bar_test_2.png')
   end

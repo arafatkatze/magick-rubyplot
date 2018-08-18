@@ -9,8 +9,8 @@ describe :Themes do
       1 => 'Hello ruby'
     }
     # Data inputted and normalized like the usual cases.
-    plot.data(:Marco, [20, 23, 19, 8])
-    plot.data(:John, [1, 53, 76, 18])
+    plot.data( [20, 23, 19, 8],:Marco)
+    plot.data( [1, 53, 76, 18],:John)
     # Starting the ultimate Write script of the whole thinplot.
     plot.set_colors_array(%w[orange blue])
     plot.write('spec/reference_images/theme_test.png')
