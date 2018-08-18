@@ -8,8 +8,8 @@ def random_lines
     1 => 'Hello ruby'
   }
   # Data inputted and normalized like the usual cases.
-  plot.data( [20, 23, 19, 8], :Marco, :blue)
-  plot.data( [1, 53, 76, 18],:John, :green)
+  plot.data( [20, 23, 19, 8], :Marco, color:  :blue)
+  plot.data( [1, 53, 76, 18],:John, color:  :green)
   # Starting the Write script of the whole plot.
   plot.write('spec/reference_images/line.png')
 end

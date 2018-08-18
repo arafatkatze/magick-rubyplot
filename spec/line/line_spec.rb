@@ -9,8 +9,8 @@ describe 'Graph' do
       1 => 'Hello ruby'
     }
     # Data inputted and normalized like the usual cases.
-    plot.data( [20, 23, 19, 8],:Marco,:blue)
-    plot.data( [1, 53, 76, 18],:John,:green)
+    plot.data( [20, 23, 19, 8],:Marco, color: :blue)
+    plot.data( [1, 53, 76, 18],:John, color: :green)
     # Starting the ultimate Write script of the whole thinplot.
     plot.write('spec/reference_images/line_test_1.png')
 

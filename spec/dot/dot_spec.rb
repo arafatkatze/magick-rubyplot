@@ -9,9 +9,9 @@ describe 'Graph' do
       2 => '5/24',
       3 => '5/30'
     }
-    plot.data([0, 5, 8, 15],:Cars, :maroon)
-    plot.data( [10, 3, 2, 8],:Bus, :grey)
-    plot.data( [2, 15, 8, 11],:Science, :yellow)
+    plot.data([0, 5, 8, 15],:Cars, color:  :maroon)
+    plot.data( [10, 3, 2, 8],:Bus, color:  :grey)
+    plot.data( [2, 15, 8, 11],:Science, color:  :yellow)
     plot.minimum_value = 0
     plot.write('spec/reference_images/dot_test_1.png')
     expect(compare_with_reference?('dot.png', 'dot_test_1.png', 10)).to eq(true)

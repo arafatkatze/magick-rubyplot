@@ -5,7 +5,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar Numbers'
     plot.marker_count = 8
-    plot.data( [5, 12, 9, 6, 7],'data', :yellow)
+    plot.data( [5, 12, 9, 6, 7],'data', color:  :yellow)
     plot.write('spec/reference_images/bar_test_1.png')
 
     expect(compare_with_reference?('bar.png', 'bar_test_1.png', 10)).to eq(true)
@@ -29,7 +29,7 @@ describe 'Bar' do
     plot = Rubyplot::Bar.new(600)
     plot.title = 'Random Bar numbers'
     plot.marker_count = 8
-    plot.data( [5, 12, 9, 6, 6],'data',:green)
+    plot.data( [5, 12, 9, 6, 6],'data', color:  :green)
     plot.title = 'Bar Graph with Title Margin = 100'
     plot.title_margin = 100 # Set Title Margin.
     plot.write('spec/reference_images/bar_title_test.png')
