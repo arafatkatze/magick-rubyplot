@@ -8,6 +8,7 @@ require 'grruby/grruby'
 require 'grruby/tasks/gr_function_classes'
 
 require 'rubyplot/scripting_gr/scripting_backends/gr/plots'
+require 'rubyplot/scripting_gr/scripting_backends/gr/plot/bar'
 require 'rubyplot/scripting_gr/scripting_backends/gr/plot/scatter'
 require 'rubyplot/scripting_gr/figure'
 require 'rubyplot/scripting_gr/scripting_backends/gr/gr_backend'

@@ -12,3 +12,4 @@ g.save('scatter.png')
 
 g3 = Rubyplot::Figure.new(backend: :GR)
 g3.bar! @x1
+g3.view
