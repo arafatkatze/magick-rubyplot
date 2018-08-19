@@ -35,6 +35,38 @@ module Rubyplot
       end
     end
 
+    # Plots a bar graph
+    # @param data [Float Array] Array containing values of bars
+    # @param bar_color [String or Symbol] Color of bars, can be a hex String
+    #  (#rrbbgg) or symbol from Rubyplot::Color
+    # @param bar_width [Float] Width of bar
+    # @param bar_gap [Float] Gap between consecutive bars
+    # @param bar_edge [Boolean] Argument to draw edge for bar (True by default)
+    # @param bar_edge_color [String or Symbol] Color of bar's edge, can be a hex
+    #  string (#rrbbgg) or symbol from Rubyplot::Color
+    # @param bar_edge_width [Float] Width of bar edge
+    def bar!(data, bar_color: :default, bar_width: :default,
+             bar_gap: :default, bar_edge: :default, bar_edge_color: :default,
+             bar_edge_width: :default)
+
+      @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
+      @active_subplotGR.x_range[1] = data.length if @active_subplotGR.x_range[0].nil?
+      bar_gap = 0 if bar_gap == :default
+      bar_width = 1 if bar_width == :default
+      bar_edge_width = 0.03 if bar_edge_width == :default
+      x_length = data.length * (bar_width + bar_gap) + bar_width + bar_edge_width
+      @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
+
+      @active_subplotGR.y_range[0] = data.min if @active_subplotGR.y_range[0].nil?
+      @active_subplotGR.y_range[1] = data.max if @active_subplotGR.y_range[1].nil?
+      @active_subplotGR.y_range[0] = data.min if data.min < @active_subplotGR.y_range[0]
+      @active_subplotGR.y_range[1] = data.max if data.max > @active_subplotGR.y_range[1]
+      @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::Bar.new(data, bar_color: bar_color, bar_width: bar_width,
+                                                                             bar_gap: bar_gap, bar_edge: bar_edge,
+                                                                             bar_edge_color: bar_edge_color,
+                                                                             bar_edge_width: bar_edge_width))
+    end
+
     # To view the Figure
     def view
       Rubyplot::Plotspace.new(self).view!
