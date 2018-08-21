@@ -27,7 +27,7 @@ module Rubyplot
       else
         @init += 1
         if @init == 1
-          @plot = Rubyplot::Scatter.new(400)
+          @plot = Rubyplot::Scatter.new(1000)
           @plot.data x_coordinates, y_coordinates, color: marker_color, label: label
         else
           @plot.data x_coordinates, y_coordinates, color: marker_color, label: label
@@ -47,24 +47,34 @@ module Rubyplot
     # @param bar_edge_width [Float] Width of bar edge
     def bar!(data, bar_color: :default, bar_width: :default,
              bar_gap: :default, bar_edge: :default, bar_edge_color: :default,
-             bar_edge_width: :default)
+             bar_edge_width: :default, label: :default)
 
-      @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
-      @active_subplotGR.x_range[1] = data.length if @active_subplotGR.x_range[0].nil?
-      bar_gap = 0 if bar_gap == :default
-      bar_width = 1 if bar_width == :default
-      bar_edge_width = 0.03 if bar_edge_width == :default
-      x_length = data.length * (bar_width + bar_gap) + bar_width + bar_edge_width
-      @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
+      if @backend == :default || @backend == :GR
+        @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
+        @active_subplotGR.x_range[1] = data.length if @active_subplotGR.x_range[0].nil?
+        bar_gap = 0 if bar_gap == :default
+        bar_width = 1 if bar_width == :default
+        bar_edge_width = 0.03 if bar_edge_width == :default
+        x_length = data.length * (bar_width + bar_gap) + bar_width + bar_edge_width
+        @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
 
-      @active_subplotGR.y_range[0] = data.min if @active_subplotGR.y_range[0].nil?
-      @active_subplotGR.y_range[1] = data.max if @active_subplotGR.y_range[1].nil?
-      @active_subplotGR.y_range[0] = data.min if data.min < @active_subplotGR.y_range[0]
-      @active_subplotGR.y_range[1] = data.max if data.max > @active_subplotGR.y_range[1]
-      @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::Bar.new(data, bar_color: bar_color, bar_width: bar_width,
-                                                                             bar_gap: bar_gap, bar_edge: bar_edge,
-                                                                             bar_edge_color: bar_edge_color,
-                                                                             bar_edge_width: bar_edge_width))
+        @active_subplotGR.y_range[0] = data.min if @active_subplotGR.y_range[0].nil?
+        @active_subplotGR.y_range[1] = data.max if @active_subplotGR.y_range[1].nil?
+        @active_subplotGR.y_range[0] = data.min if data.min < @active_subplotGR.y_range[0]
+        @active_subplotGR.y_range[1] = data.max if data.max > @active_subplotGR.y_range[1]
+        @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::Bar.new(data, bar_color: bar_color, bar_width: bar_width,
+                                                                               bar_gap: bar_gap, bar_edge: bar_edge,
+                                                                               bar_edge_color: bar_edge_color,
+                                                                               bar_edge_width: bar_edge_width))
+      else
+        @init += 1
+        if @init == 1
+          @plot = Rubyplot::Bar.new(1000)
+          @plot.data data, color: bar_color, label: label
+        else
+          @plot.data data, color: bar_color, label: label
+        end
+      end
     end
 
     # To view the Figure
