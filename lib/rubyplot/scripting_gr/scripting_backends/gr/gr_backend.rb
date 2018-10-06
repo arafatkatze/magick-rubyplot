@@ -15,12 +15,10 @@ module Rubyplot
         @active_subplotGR.x_range[1] = x_coordinates.max if @active_subplotGR.x_range[1].nil?
         @active_subplotGR.x_range[0] = x_coordinates.min if x_coordinates.min < @active_subplotGR.x_range[0]
         @active_subplotGR.x_range[1] = x_coordinates.max if x_coordinates.max > @active_subplotGR.x_range[1]
-
         @active_subplotGR.y_range[0] = y_coordinates.min if @active_subplotGR.y_range[0].nil?
         @active_subplotGR.y_range[1] = y_coordinates.max if @active_subplotGR.y_range[1].nil?
         @active_subplotGR.y_range[0] = y_coordinates.min if y_coordinates.min < @active_subplotGR.y_range[0]
         @active_subplotGR.y_range[1] = y_coordinates.max if y_coordinates.max > @active_subplotGR.y_range[1]
-
         @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::Scatter.new(x_coordinates, y_coordinates,
                                                                              marker_size: marker_size, marker_color: marker_color,
                                                                              marker_type: marker_type))
@@ -75,6 +73,38 @@ module Rubyplot
           @plot.data data, color: bar_color, label: label
         end
       end
+    end
+
+    # Plots a regular bar graph  in Z axis
+    # @param data [Float Array] Array of Arrays containing values of bars
+    # @param bar_color [Array of Strings or Array of Symbols] Array containing
+    #  color of bars corresponding to eash list in data, an element can be a hex
+    #  string(#rrbbgg) or symbol from Rubyplot::Color
+    # @param bar_width [Float] Width of bar
+    # @param bar_gap [Float] Gap between consecutive bars
+    # @param bar_edge [Boolean] Argument to draw edge for bar (True by default)
+    # @param bar_edge_color [String or Symbol] Color of bar's edge, can be a hex
+    #  string (#rrbbgg) or symbol from Rubyplot::Color
+    # @param bar_edge_width [Float] Width of bar edge
+    def stacked_bar!(data, bar_colors: :default, bar_width: :default,
+                     bar_gap: :default, bar_edge: :default, bar_edge_color: :default,
+                     bar_edge_width: :default)
+      # Return error if negative data
+      @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
+      @active_subplotGR.x_range[1] = data[0].length if @active_subplotGR.x_range[1].nil?
+      bar_gap = 0 if bar_gap == :default
+      bar_width = 1 if bar_width == :default
+      bar_edge_width = 0.03 if bar_edge_width == :default
+      x_length = data[0].length * (bar_width + bar_gap) + bar_width + bar_edge_width
+      @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
+      summed_heights = data.transpose.map { |x| x.reduce(:+) }
+      @active_subplotGR.y_range[0] = 0 if @active_subplotGR.y_range[0].nil?
+      @active_subplotGR.y_range[1] = summed_heights.max if @active_subplotGR.y_range[1].nil?
+      @active_subplotGR.y_range[1] = summed_heights.max if summed_heights.max > @active_subplotGR.y_range[1]
+      @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::StackedBar.new(data, bar_colors: bar_colors, bar_width: bar_width,
+                                                                                    bar_gap: bar_gap, bar_edge: bar_edge,
+                                                                                    bar_edge_color: bar_edge_color,
+                                                                                    bar_edge_width: bar_edge_width))
     end
 
     # To view the Figure
