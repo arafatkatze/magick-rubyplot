@@ -89,22 +89,32 @@ module Rubyplot
     def stacked_bar!(data, bar_colors: :default, bar_width: :default,
                      bar_gap: :default, bar_edge: :default, bar_edge_color: :default,
                      bar_edge_width: :default)
-      # Return error if negative data
-      @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
-      @active_subplotGR.x_range[1] = data[0].length if @active_subplotGR.x_range[1].nil?
-      bar_gap = 0 if bar_gap == :default
-      bar_width = 1 if bar_width == :default
-      bar_edge_width = 0.03 if bar_edge_width == :default
-      x_length = data[0].length * (bar_width + bar_gap) + bar_width + bar_edge_width
-      @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
-      summed_heights = data.transpose.map { |x| x.reduce(:+) }
-      @active_subplotGR.y_range[0] = 0 if @active_subplotGR.y_range[0].nil?
-      @active_subplotGR.y_range[1] = summed_heights.max if @active_subplotGR.y_range[1].nil?
-      @active_subplotGR.y_range[1] = summed_heights.max if summed_heights.max > @active_subplotGR.y_range[1]
-      @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::StackedBar.new(data, bar_colors: bar_colors, bar_width: bar_width,
-                                                                                    bar_gap: bar_gap, bar_edge: bar_edge,
-                                                                                    bar_edge_color: bar_edge_color,
-                                                                                    bar_edge_width: bar_edge_width))
+      if @backend == :default || @backend == :GR
+        # Return error if negative data
+        @active_subplotGR.x_range[0] = 0 if @active_subplotGR.x_range[0].nil?
+        @active_subplotGR.x_range[1] = data[0].length if @active_subplotGR.x_range[1].nil?
+        bar_gap = 0 if bar_gap == :default
+        bar_width = 1 if bar_width == :default
+        bar_edge_width = 0.03 if bar_edge_width == :default
+        x_length = data[0].length * (bar_width + bar_gap) + bar_width + bar_edge_width
+        @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
+        summed_heights = data.transpose.map { |x| x.reduce(:+) }
+        @active_subplotGR.y_range[0] = 0 if @active_subplotGR.y_range[0].nil?
+        @active_subplotGR.y_range[1] = summed_heights.max if @active_subplotGR.y_range[1].nil?
+        @active_subplotGR.y_range[1] = summed_heights.max if summed_heights.max > @active_subplotGR.y_range[1]
+        @active_subplotGR.tasks.push(Rubyplot::Scripting::Plots::StackedBar.new(data, bar_colors: bar_colors, bar_width: bar_width,
+                                                                                      bar_gap: bar_gap, bar_edge: bar_edge,
+                                                                                      bar_edge_color: bar_edge_color,
+                                                                                      bar_edge_width: bar_edge_width))
+      else
+        @init += 1
+        if @init == 1
+          @plot = Rubyplot::StackedBar.new(1000)
+          @plot.data data
+        else
+          @plot.data data
+        end
+      end
     end
 
     # To view the Figure

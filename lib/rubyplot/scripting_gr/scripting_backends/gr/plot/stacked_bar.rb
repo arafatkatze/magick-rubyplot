@@ -18,9 +18,9 @@ module Rubyplot
           @bar_edge_width = 0.053 if @bar_edge_width == :default
           @bar_edge = true if @bar_edge == :default
           @bar_edge = true if @bar_edge == :default
-          @bar_colors = CONTRASTING_COLORS if @bar_colors == :default
-          @bar_edge_color = COLOR_INDEX[:black] if @bar_edge_color == :default
-          @bar_edge_color = COLOR_INDEX[marker_color] if @bar_edge_color.is_a? Symbol
+          @bar_colors = Rubyplot::Color::CONTRASTING_COLORS if @bar_colors == :default
+          @bar_edge_color = Rubyplot::Color::COLOR_INDEX[:black] if @bar_edge_color == :default
+          @bar_edge_color = Rubyplot::Color::COLOR_INDEX[marker_color] if @bar_edge_color.is_a? Symbol
           @data = data
           # All this will be repurposed
         end
@@ -31,8 +31,8 @@ module Rubyplot
           # tasks wont be pushed, rather they will be instantiated and called directly
           (0..@data[0].size - 1).to_a.each do |i|
             base = state.origin[1]
-            bars = @data.map{|row| row[i]}
-            (0..bars.size-1).to_a.each do |j|
+            bars = @data.map { |row| row[i] }
+            (0..bars.size - 1).to_a.each do |j|
               if @bar_edge
                 SetFillColorIndex.new(hex_color_to_gr_color_index(@bar_edge_color)).call
                 SetFillInteriorStyle.new(GR_FILL_INTERIOR_STYLES[:solid]).call
@@ -41,7 +41,7 @@ module Rubyplot
                                   base, base + bars[j] + 2 * @bar_edge_width).call
               end
               bar_color = @bar_colors[j]
-              bar_color = COLOR_INDEX[bar_color] if bar_color.is_a? Symbol
+              bar_color = Rubyplot::Color::COLOR_INDEX[bar_color] if bar_color.is_a? Symbol
               SetFillColorIndex.new(hex_color_to_gr_color_index(bar_color)).call
               SetFillInteriorStyle.new(GR_FILL_INTERIOR_STYLES[:solid]).call
               FillRectangle.new(i * (@bar_width + @bar_gap),
