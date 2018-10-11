@@ -1,12 +1,21 @@
+# Common Dependencies
 require 'rubygems'
 require 'rmagick'
 require 'bigdecimal'
 
+# Color constants used by GR Plot and Magick Plot
 require 'rubyplot/artist/colorConstants'
-# External GR Ruby Extension
+
+#
+#
+# GR PLOT FILES::START
+#
+#
+
+# GR Ruby C Extension Files
 require 'grruby/grruby'
 require 'grruby/tasks/gr_function_classes'
-
+# Scripting Layer files of GR Plot.
 require 'rubyplot/scripting_gr/scripting_backends/gr/plots'
 require 'rubyplot/scripting_gr/scripting_backends/gr/plot/bar'
 require 'rubyplot/scripting_gr/scripting_backends/gr/plot/scatter'
@@ -15,6 +24,18 @@ require 'rubyplot/scripting_gr/figure'
 require 'rubyplot/scripting_gr/scripting_backends/gr/gr_backend'
 require 'rubyplot/scripting_gr/scripting_backends/gr/plotspace'
 require 'rubyplot/scripting_gr/scripting_backends/gr/subplot'
+
+#
+#
+# GR Plot Files::END
+#
+#
+
+#
+#
+# Magick Plot Files::START
+#
+#
 
 # SubPlots
 require 'rubyplot/artist/subplots'
@@ -67,6 +88,11 @@ require 'rubyplot/scripting/stacked_bar/init'
 require 'rubyplot/scripting/area/geometry'
 require 'rubyplot/scripting/area/area'
 
+#
+#
+# Magick Plot Files::END
+#
+#
+
 # Version
 require 'rubyplot/version'
-# Backend
