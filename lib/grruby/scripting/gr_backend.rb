@@ -55,7 +55,6 @@ module Rubyplot
         bar_edge_width = 0.03 if bar_edge_width == :default
         x_length = data.length * (bar_width + bar_gap) + bar_width + bar_edge_width
         @active_subplotGR.x_range[1] = x_length if x_length > @active_subplotGR.x_range[1]
-
         @active_subplotGR.y_range[0] = data.min if @active_subplotGR.y_range[0].nil?
         @active_subplotGR.y_range[1] = data.max if @active_subplotGR.y_range[1].nil?
         @active_subplotGR.y_range[0] = data.min if data.min < @active_subplotGR.y_range[0]
