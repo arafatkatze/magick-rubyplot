@@ -1,5 +1,4 @@
 require 'rubyplot'
-
 g = Rubyplot::Figure.new
 values = [[12, 4, 53, 24],
           [4, 34, 8, 25],
