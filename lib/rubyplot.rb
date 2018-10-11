@@ -16,14 +16,14 @@ require 'rubyplot/artist/colorConstants'
 require 'grruby/grruby'
 require 'grruby/tasks/gr_function_classes'
 # Scripting Layer files of GR Plot.
-require 'rubyplot/scripting_gr/scripting_backends/gr/plots'
-require 'rubyplot/scripting_gr/scripting_backends/gr/plot/bar'
-require 'rubyplot/scripting_gr/scripting_backends/gr/plot/scatter'
-require 'rubyplot/scripting_gr/scripting_backends/gr/plot/stacked_bar'
-require 'rubyplot/scripting_gr/figure'
-require 'rubyplot/scripting_gr/scripting_backends/gr/gr_backend'
-require 'rubyplot/scripting_gr/scripting_backends/gr/plotspace'
-require 'rubyplot/scripting_gr/scripting_backends/gr/subplot'
+require 'grruby/scripting/plots'
+require 'grruby/scripting/plot/bar'
+require 'grruby/scripting/plot/scatter'
+require 'grruby/scripting/plot/stacked_bar'
+require 'grruby/scripting/figure'
+require 'grruby/scripting/gr_backend'
+require 'grruby/scripting/plotspace'
+require 'grruby/scripting/subplot'
 
 #
 #
