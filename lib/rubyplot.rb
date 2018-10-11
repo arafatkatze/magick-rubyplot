@@ -95,4 +95,4 @@ require 'magick/scripting/area/area'
 #
 
 # Version
-require 'magick/version'
+require 'version'
