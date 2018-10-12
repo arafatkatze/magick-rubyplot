@@ -13,7 +13,7 @@ require 'common/colorConstants'
 #
 
 # GR Ruby C Extension Files
-require 'grruby/grruby'
+require 'grruby.so'
 require 'grruby/tasks/gr_function_classes'
 # Scripting Layer files of GR Plot.
 require 'grruby/scripting/plots'

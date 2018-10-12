@@ -21,3 +21,4 @@ spec_script
 *.o
 a_test.rb
 tmp/
+*.so
