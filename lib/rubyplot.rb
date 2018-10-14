@@ -96,3 +96,9 @@ require 'magick/scripting/area/area'
 
 # Version
 require 'common/version'
+
+module Rubyplot
+  class << self
+    attr_accessor :backend
+  end
+end

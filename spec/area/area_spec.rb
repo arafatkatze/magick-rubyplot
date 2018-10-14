@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Area' do
+RubyplotSpec.describe 'Area' do
   it 'test_area_graph' do
     @datasets = [
       [:Jimmy, [25, 36, 86, 39, 25, 31, 79, 88]],
