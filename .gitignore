@@ -22,3 +22,7 @@ spec_script
 a_test.rb
 tmp/
 *.so
+TAGS
+spec/reference_images/file_magick.png
+spec/reference_images/file_name.bmp
+
