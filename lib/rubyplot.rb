@@ -4,7 +4,7 @@ require 'rmagick'
 require 'bigdecimal'
 
 # Color constants used by GR Plot and Magick Plot
-require 'common/color_constants'
+require 'rubyplot/color_constants'
 
 #
 #
@@ -20,8 +20,8 @@ require 'grruby/scripting/plots'
 require 'grruby/scripting/plot/bar'
 require 'grruby/scripting/plot/scatter'
 require 'grruby/scripting/plot/stacked_bar'
-require 'common/figure/figure'
-require 'common/figure/backend_switch'
+require  'rubyplot/figure/figure'
+require  'rubyplot/figure/backend_switch'
 require 'grruby/scripting/plotspace'
 require 'grruby/scripting/subplot'
 
@@ -92,4 +92,4 @@ require 'magick/scripting/area/area'
 #
 
 # Version
-require 'common/version'
+require 'rubyplot/version'
