@@ -28,6 +28,7 @@ describe 'Scatter' do
     # Default theme
     plot.write('spec/reference_images/scatter_many_test.png')
   end
+
   # Done
   it 'Test No Title' do
     plot = Rubyplot::Scatter.new(400)
