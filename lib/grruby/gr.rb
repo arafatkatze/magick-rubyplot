@@ -1,6 +1,7 @@
 require 'grruby/grruby'
 require 'grruby/tasks/gr_function_classes'
-# Scripting Layer files of GR Plot.
+
+# Scripting Layer
 require 'grruby/scripting/plots'
 require 'grruby/scripting/plot/bar'
 require 'grruby/scripting/plot/scatter'
