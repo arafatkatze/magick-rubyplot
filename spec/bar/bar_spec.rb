@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'Bar' do
+RubyplotSpec.describe 'Bar' do
   it 'Sets up a basic reference image for bar graph with random numbers' do
     random_bar_graph
     plot = Rubyplot::Bar.new(600)

@@ -19,6 +19,10 @@ spec_script
 *grruby.time
 *.bundle
 *.o
- ext/grruby/Makefile
- *Makefile
 a_test.rb
+tmp/
+*.so
+TAGS
+spec/reference_images/file_magick.png
+spec/reference_images/file_name.bmp
+
