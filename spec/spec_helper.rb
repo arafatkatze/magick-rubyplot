@@ -10,6 +10,21 @@ require 'scatter/scatter_gen'
 require 'bubble/bubble_gen'
 require 'stacked_bar/stacked_gen'
 
+class RubyplotSpec
+  def self.describe(*args, &block)
+    %i[GR magick].each do |backend|
+      Rubyplot.backend = backend
+      ::RSpec.describe args, &block
+    end
+  end
+end
+
+RSpec::Matchers.define :eq_image do |expected_image, delta|
+  match do |actual_image|
+    compare_with_reference? actual_image, expected_image, delta
+  end
+end
+
 def compare_with_reference?(test_image, reference_image, tolerance)
   compute_rms(test_image, reference_image) < tolerance
 end

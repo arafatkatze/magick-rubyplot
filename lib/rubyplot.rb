@@ -4,7 +4,7 @@ require 'rmagick'
 require 'bigdecimal'
 
 # Color constants used by GR Plot and Magick Plot
-require 'common/colorConstants'
+require 'common/color_constants'
 
 #
 #
