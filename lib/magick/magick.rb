@@ -32,15 +32,11 @@ require 'magick/scripting/scatter/geometry'
 
 # Bubble
 require 'magick/scripting/bubble/geometry'
-require 'magick/scripting/bubble/init'
-require 'magick/scripting/bubble/draw'
-require 'magick/scripting/bubble/data'
+require 'magick/scripting/bubble/bubble'
 
 # Stacked Bar
 require 'magick/scripting/stacked_bar/geometry'
-require 'magick/scripting/stacked_bar/data'
-require 'magick/scripting/stacked_bar/draw'
-require 'magick/scripting/stacked_bar/init'
+require 'magick/scripting/stacked_bar/stacked_bar'
 
 # Area
 require 'magick/scripting/area/geometry'

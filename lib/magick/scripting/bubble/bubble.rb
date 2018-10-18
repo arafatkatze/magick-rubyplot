@@ -1,4 +1,16 @@
 class Rubyplot::Bubble < Rubyplot::Scatter
+  # Rubyplot::Bubble takes the same parameters as the Rubyplot::Bubble graph
+  #
+  # ==== Example
+  # g = Rubyplot::Bubble.new
+  #
+  def initialize(*)
+    super
+    @all_colors_array = Magick.colors
+    @plot_colors = []
+    @z_data = []
+  end
+
   # The first parameter is the name of the dataset.  The next two are the
   # x and y axis data points contain in their own array in that respective
   # order. Then the Z axis data points refer to the radius of the bubble plots.
@@ -25,7 +37,7 @@ class Rubyplot::Bubble < Rubyplot::Scatter
   # plot.write('spec/reference_images/bubble_test_1.png')
   #
   def data(x_data_points = [], y_data_points = [], z_data_points = [], label: :default, color: :default)
-    name = (label == :default) ? ' ' : label.to_s
+    name = label == :default ? ' ' : label.to_s
     #  the existing data routine for the y axis data
     data_y(name, y_data_points, z_data_points, color)
     # append the x data to the last entry that was just added in the @data member
@@ -76,5 +88,33 @@ class Rubyplot::Bubble < Rubyplot::Scatter
     @geometry.minimum_value = y_z_array_diff.min < @geometry.minimum_value ?
                         y_z_array_diff.min : @geometry.minimum_value
     @geometry.has_data = true
+  end
+
+  def draw
+    super
+
+    # Check to see if more than one datapoint was given. NaN can result otherwise.
+    @x_increment = @geometry.column_count > 1 ? (@graph_width / (@geometry.column_count - 1).to_f) : @graph_width
+
+    @geometry.norm_data.each_with_index do |data_row, data_row_index|
+      data_row[DATA_VALUES_INDEX].each_with_index do |data_point, index|
+        @d = @d.fill @plot_colors[data_row_index]
+        x_value = data_row[DATA_VALUES_X_INDEX][index]
+        next if data_point.nil? || x_value.nil?
+
+        new_x = get_x_coord(x_value, @graph_width, @graph_left)
+        new_y = @graph_top + (@graph_height - data_point * @graph_height)
+
+        # Reset each time to avoid thin-line errors
+        @d = @d.stroke_opacity 1.0
+        @d.fill_opacity(0.3)
+        @d.fill_color(@plot_colors[data_row_index])
+        @d = @d.stroke_width @stroke_width || clip_value_if_greater_than(@columns / (@geometry.norm_data.first[1].size * 4), 5.0)
+
+        circle_radius = 2 * @z_data[data_row_index][index]
+        @d = @d.circle(new_x, new_y, new_x - circle_radius, new_y)
+      end
+    end
+    @d.draw(@base_image)
   end
 end
