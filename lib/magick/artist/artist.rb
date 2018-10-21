@@ -8,7 +8,7 @@ module Rubyplot
     def construct_colors_array
       return unless @plot_colors.empty?
       0.upto(@geometry.norm_data.size - 1) do |i|
-        if (@data[i][DATA_COLOR_INDEX] == :default)
+        if @data[i][DATA_COLOR_INDEX] == :default
           @plot_colors.push(@geometry.theme_options[:label_colors][i])
         else
           @plot_colors.push(Rubyplot::Color::COLOR_INDEX[@data[i][DATA_COLOR_INDEX]])
@@ -128,7 +128,7 @@ module Rubyplot
 
     # Draw the optional labels for the x axis and y axis.
     def draw_axis_labels!
-      unless @geometry.x_axis_label .nil?
+      unless @geometry.x_axis_label.nil?
         # X Axis
         # Centered vertically and horizontally by setting the
         # height to 1.0 and the width to the width of the graph.

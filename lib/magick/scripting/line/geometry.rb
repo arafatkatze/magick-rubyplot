@@ -1,5 +1,5 @@
 module Rubyplot
-  class LineGeometry < Rubyplot::ArtistGeometry
+  class LineGeometry < ArtistGeometry
     attr_accessor :reference_lines
     attr_accessor :reference_line_default_color
     attr_accessor :reference_line_default_width
@@ -7,6 +7,9 @@ module Rubyplot
     attr_accessor :hide_lines
     attr_accessor :show_vertical_markers
     attr_accessor :dot_style
+    attr_accessor :maximum_x_value
+    attr_accessor :minimum_x_value
+
     def initialize
       super
       @reference_lines = {}
